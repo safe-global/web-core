@@ -39,6 +39,7 @@ export class CodedException extends Error {
 
     // Log only the message on prod, and the full error on dev
     console.error(IS_PRODUCTION ? this.message : this)
+    console.error('Error', this)
   }
 
   public track(): void {
