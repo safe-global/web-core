@@ -57,7 +57,7 @@
     "@safe-global/api-kit": "^2.3.2",
     "@safe-global/protocol-kit": "^4.0.1",
     "@safe-global/safe-apps-sdk": "^9.1.0",
-    "@safe-global/safe-deployments": "^1.37.2",
+    "@safe-global/safe-deployments": "^1.37.3",
     "@safe-global/safe-gateway-typescript-sdk": "3.22.1",
     "@safe-global/safe-modules-deployments": "^1.2.0",
     "@sentry/react": "^7.91.0",
