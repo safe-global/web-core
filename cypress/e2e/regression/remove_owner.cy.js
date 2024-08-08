@@ -49,6 +49,7 @@ describe('Remove Owners tests', () => {
     owner.getThresholdOptions().should('have.length', 1)
   })
 
+  // TODO: Added to prod
   it('Verify owner deletion transaction has been created', () => {
     wallet.connectSigner(signer)
     owner.waitForConnectionStatus()

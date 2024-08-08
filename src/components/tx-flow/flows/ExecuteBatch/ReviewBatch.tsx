@@ -10,7 +10,6 @@ import useSafeInfo from '@/hooks/useSafeInfo'
 import { encodeMultiSendData } from '@safe-global/protocol-kit/dist/src/utils/transactions/utils'
 import { useState, useMemo, useContext } from 'react'
 import type { SyntheticEvent } from 'react'
-import { generateDataRowValue } from '@/components/transactions/TxDetails/Summary/TxDataRow'
 import ErrorMessage from '@/components/tx/ErrorMessage'
 import { ExecutionMethod, ExecutionMethodSelector } from '@/components/tx/ExecutionMethodSelector'
 import DecodedTxs from '@/components/tx-flow/flows/ExecuteBatch/DecodedTxs'
@@ -39,6 +38,7 @@ import { isWalletRejection } from '@/utils/wallets'
 import WalletRejectionError from '@/components/tx/SignOrExecuteForm/WalletRejectionError'
 import { LATEST_SAFE_VERSION } from '@/config/constants'
 import useUserNonce from '@/components/tx/AdvancedParams/useUserNonce'
+import { HexEncodedData } from '@/components/transactions/HexEncodedData'
 
 export const ReviewBatch = ({ params }: { params: ExecuteBatchFlowProps }) => {
   const [isSubmittable, setIsSubmittable] = useState<boolean>(true)
@@ -158,20 +158,13 @@ export const ReviewBatch = ({ params }: { params: ExecuteBatchFlowProps }) => {
         <Typography variant="body2">
           This transaction batches a total of {params.txs.length} transactions from your queue into a single Ethereum
           transaction. Please check every included transaction carefully, especially if you have rejection transactions,
-          and make sure you want to execute all of them. Included transactions are highlighted in green when you hover
-          over the execute button.
+          and make sure you want to execute all of them. Included transactions are highlighted when you hover over the
+          execute button.
         </Typography>
 
         {multiSendContract && <SendToBlock address={multisendContractAddress} title="Interact with" />}
 
-        {multiSendTxData && (
-          <div>
-            <Typography variant="body2" color="text.secondary">
-              Data (hex encoded)
-            </Typography>
-            {generateDataRowValue(multiSendTxData, 'rawData')}
-          </div>
-        )}
+        {multiSendTxData && <HexEncodedData title="Data (hex-encoded)" hexData={multiSendTxData} />}
 
         <div>
           <DecodedTxs txs={txsWithDetails} />

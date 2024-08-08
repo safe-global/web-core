@@ -24,6 +24,7 @@ describe('Sidebar tests', () => {
     sideBar.verifyNetworkIsDisplayed(constants.networks.sepolia)
   })
 
+  // TODO: Added to prod
   it('Verify current safe details', () => {
     sideBar.verifySafeHeaderDetails(sideBar.testSafeHeaderDetails)
   })
@@ -33,25 +34,24 @@ describe('Sidebar tests', () => {
     sideBar.verifyQRModalDisplayed()
   })
 
-  it.skip('Verify Copy button copies the address', () => {
-    sideBar.verifyCopyAddressBtn(staticSafes.SEP_STATIC_SAFE_9.substring(4))
-  })
-
   it('Verify Open blockexplorer button contain etherscan link', () => {
     sideBar.verifyEtherscanLinkExists()
   })
 
+  // TODO: Added to prod
   it('Verify New transaction button enabled for owners', () => {
     wallet.connectSigner(signer)
     sideBar.verifyNewTxBtnStatus(constants.enabledStates.enabled)
   })
 
+  // TODO: Added to prod
   it('Verify New transaction button enabled for beneficiaries who are non-owners', () => {
     cy.visit(constants.homeUrl + staticSafes.SEP_STATIC_SAFE_11)
     wallet.connectSigner(signer)
     sideBar.verifyNewTxBtnStatus(constants.enabledStates.enabled)
   })
 
+  // TODO: Added to prod
   it('Verify New Transaction button disabled for non-owners', () => {
     main.verifyElementsCount(navigation.newTxBtn, 0)
   })

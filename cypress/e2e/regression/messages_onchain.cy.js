@@ -21,21 +21,13 @@ describe('Onchain Messages tests', () => {
 
   it('Verify exapanded details for signed on-chain message', () => {
     createTx.clickOnTransactionItemByName(typeMessagesOnchain.contractName)
-    createTx.verifyExpandedDetails([
-      typeMessagesOnchain.contractName,
-      typeMessagesOnchain.contractAddress,
-      typeMessagesOnchain.delegateCall,
-    ])
+    createTx.verifyExpandedDetails([typeMessagesOnchain.contractName, typeMessagesOnchain.delegateCall])
   })
 
   it('Verify exapanded details for unsigned on-chain message', () => {
     cy.visit(constants.transactionQueueUrl + staticSafes.SEP_STATIC_SAFE_10)
     createTx.clickOnTransactionItemByName(typeMessagesOnchain.contractName)
-    createTx.verifyExpandedDetails([
-      typeMessagesOnchain.contractName,
-      typeMessagesOnchain.contractAddress,
-      typeMessagesOnchain.delegateCall,
-    ])
+    createTx.verifyExpandedDetails([typeMessagesOnchain.contractName, typeMessagesOnchain.delegateCall])
   })
 
   it('Verify summary for unsigned on-chain message', () => {
@@ -47,6 +39,7 @@ describe('Onchain Messages tests', () => {
     )
   })
 
+  // TODO: Added to prod
   it('Verify summary for signed on-chain message', () => {
     createTx.verifySummaryByName(
       typeMessagesOnchain.contractName,

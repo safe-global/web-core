@@ -8,7 +8,7 @@ Cypress.Commands.add('visitSafeApp', (appUrl) => {
     window.localStorage.setItem(
       INFO_MODAL_KEY,
       JSON.stringify({
-        5: { consentsAccepted: true, warningCheckedCustomApps: allowedApps },
+        11155111: { consentsAccepted: true, warningCheckedCustomApps: allowedApps },
       }),
     )
   })

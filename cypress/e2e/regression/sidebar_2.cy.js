@@ -48,15 +48,8 @@ describe('Sidebar added sidebar tests', () => {
     sideBar.checkCurrencyInHeader(assets.currency$)
   })
 
-  // Waiting for endpoint from CGW
-  it.skip('Verify "wallet" tag counter if the safe has tx ready for execution', () => {
+  it('Verify "wallet" tag counter if the safe has tx ready for execution', () => {
     sideBar.openSidebar()
-    sideBar.verifyMissingSignature(staticSafe200)
-  })
-
-  // Waiting for endpoint from CGW
-  it.skip('Verify "Wallet" tag counter only shows for owners', () => {
-    sideBar.openSidebar()
-    sideBar.verifyQueuedTx(staticSafe200)
+    sideBar.verifyNumberOfPendingTxTag(1)
   })
 })

@@ -218,12 +218,10 @@ export function verifyAppDescription(descr) {
 
 export function clickOnOpenSafeAppBtn() {
   cy.get(openSafeAppBtn).click()
-  cy.wait(2000)
 }
 
 export function verifyDisclaimerIsDisplayed() {
   verifyDisclaimerIsVisible()
-  cy.wait(500)
 }
 
 function verifyDisclaimerIsVisible() {
@@ -249,20 +247,17 @@ export function verifyMicrofoneCheckBoxExists() {
   return cy.findByRole('checkbox', { name: microfoneCheckBoxStr }).should('exist')
 }
 
-export function storeAndVerifyPermissions() {
+export function verifyInfoModalAcceptance() {
   cy.waitForSelector(() => {
     return cy
       .findByRole('button', { name: continueBtnStr })
       .click()
       .wait(500)
       .should(() => {
-        const storedBrowserPermissions = JSON.parse(localStorage.getItem(constants.BROWSER_PERMISSIONS_KEY))
-        const browserPermissions = Object.values(storedBrowserPermissions)[0][0]
-        const storedInfoModal = JSON.parse(localStorage.getItem(constants.INFO_MODAL_KEY))
-
-        expect(browserPermissions.feature).to.eq('camera')
-        expect(browserPermissions.status).to.eq('granted')
-        expect(storedInfoModal['11155111'].consentsAccepted).to.eq(true)
+        const storedInfoModal = JSON.parse(
+          localStorage.getItem(constants.localStorageKeys.SAFE_v2__SafeApps__infoModal),
+        )
+        expect(storedInfoModal[constants.networkKeys.sepolia].consentsAccepted).to.eq(true)
       })
   })
 }

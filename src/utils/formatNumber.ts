@@ -74,10 +74,10 @@ export const formatCurrency = (number: string | number, currency: string, maxLen
     result = getCurrencyFormatter(currency, true, 2).format(float)
   }
 
-  return result.replace(/^(\D+)/, '$1 ')
+  return result.replace(/^(\D+)/, '$1 ')
 }
 
 export const formatCurrencyPrecise = (number: string | number, currency: string): string => {
   const result = getCurrencyFormatter(currency, false, 2, 2).format(Number(number))
-  return result.replace(/^(\D+)/, '$1 ')
+  return result.replace(/^(\D+)/, '$1 ')
 }

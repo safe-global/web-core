@@ -35,6 +35,7 @@ describe('Swaps history tests 2', () => {
     ])
   })
 
+  // TODO: Added to prod
   it('Verify swap buy operation with 2 actions: approve & swap', { defaultCommandTimeout: 30000 }, () => {
     cy.visit(constants.transactionUrl + staticSafes.SEP_STATIC_SAFE_1 + swaps.swapTxs.buy2actions)
     main.acceptCookies()
@@ -112,6 +113,7 @@ describe('Swaps history tests 2', () => {
     create_tx.verifyExpandedDetails([swapsHistory.sellOrder, swapsHistory.sell, usdc, eq, swapsHistory.filled])
   })
 
+  // TODO: Added to prod
   it(
     'Verify no decoding if tx was created using CowSwap safe-app in the history',
     { defaultCommandTimeout: 30000 },

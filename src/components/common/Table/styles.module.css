@@ -5,6 +5,11 @@
   justify-content: flex-start;
   max-width: 900px;
   overflow-x: auto;
+  margin-top: 4px;
+}
+
+.gridRow:first-of-type {
+  margin-bottom: 0;
 }
 
 .gridEmptyRow {
@@ -17,6 +22,7 @@
   margin-bottom: var(--space-1);
   border-top: 1px solid var(--color-border-light);
 }
+
 .title {
   color: var(--color-primary-light);
   font-weight: 400;

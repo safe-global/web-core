@@ -55,6 +55,11 @@ export const undeployedSafesSlice = createSlice({
       }
     },
 
+    addUndeployedSafes: (_, { payload }: PayloadAction<UndeployedSafesState>) => {
+      // We must return as we are overwriting the entire state
+      return payload
+    },
+
     updateUndeployedSafeStatus: (
       state,
       action: PayloadAction<{ chainId: string; address: string; status: Omit<UndeployedSafeStatus, 'type'> }>,

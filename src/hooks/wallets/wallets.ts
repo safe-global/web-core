@@ -1,4 +1,4 @@
-import { IS_PRODUCTION, TREZOR_APP_URL, TREZOR_EMAIL, WC_PROJECT_ID } from '@/config/constants'
+import { TREZOR_APP_URL, TREZOR_EMAIL, WC_PROJECT_ID } from '@/config/constants'
 import type { ChainInfo } from '@safe-global/safe-gateway-typescript-sdk'
 import type { InitOptions } from '@web3-onboard/core'
 import coinbaseModule from '@web3-onboard/coinbase'
@@ -45,11 +45,7 @@ const WALLET_MODULES: Partial<{ [key in WALLET_KEYS]: (chain: ChainInfo) => Wall
   [WALLET_KEYS.LEDGER]: () => ledgerModule() as WalletInit,
   [WALLET_KEYS.TREZOR]: () => trezorModule({ appUrl: TREZOR_APP_URL, email: TREZOR_EMAIL }) as WalletInit,
   [WALLET_KEYS.KEYSTONE]: () => keystoneModule() as WalletInit,
-}
-
-// Testing wallet module
-if (!IS_PRODUCTION) {
-  WALLET_MODULES[WALLET_KEYS.PK] = (chain) => pkModule(chain.chainId, chain.rpcUri) as WalletInit
+  [WALLET_KEYS.PK]: (chain) => pkModule(chain.chainId, chain.rpcUri) as WalletInit,
 }
 
 export const getAllWallets = (chain: ChainInfo): WalletInits => {

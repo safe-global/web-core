@@ -12,6 +12,7 @@ concurrency:
 jobs:
   e2e:
     runs-on: ubuntu-20.04
+    timeout-minutes: 60
     name: Cypress Happy path on demand tests
     strategy:
       fail-fast: false

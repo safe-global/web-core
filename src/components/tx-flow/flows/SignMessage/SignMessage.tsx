@@ -305,7 +305,7 @@ const SignMessage = ({ message, safeAppId, requestId }: ProposeProps | ConfirmPr
           </Typography>
           <DecodedMsg message={decodedMessage} isInModal />
 
-          <Accordion sx={{ my: 2, '&.Mui-expanded': { mt: 2 } }}>
+          <Accordion sx={{ mt: 2 }}>
             <AccordionSummary data-testid="message-details" expandIcon={<ExpandMoreIcon />}>
               SafeMessage details
             </AccordionSummary>
@@ -315,7 +315,9 @@ const SignMessage = ({ message, safeAppId, requestId }: ProposeProps | ConfirmPr
             </AccordionDetails>
           </Accordion>
 
-          <Redefine />
+          <Box sx={{ '&:not(:empty)': { mt: 2 } }}>
+            <Redefine />
+          </Box>
         </CardContent>
       </TxCard>
 

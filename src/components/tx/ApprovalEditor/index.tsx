@@ -62,7 +62,7 @@ export const ApprovalEditor = ({
     (safeTransaction && safeTransaction.signatures.size > 0) || safeMessage !== undefined || isErc721Approval
 
   return (
-    <Box display="flex" flexDirection="column" gap={2} className={css.container}>
+    <Box display="flex" flexDirection="column" gap={2} className={css.container} mb={1}>
       <Title isErc721={isErc721Approval} />
 
       {error ? (

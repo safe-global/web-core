@@ -59,7 +59,6 @@ const DecodedTxs = ({ txs }: { txs: TransactionDetails[] | undefined }) => {
               }}
               txData={transaction.txData}
               actionTitle={`${idx + 1}`}
-              showDelegateCallWarning={false}
               expanded={openMap?.[idx] ?? false}
               onChange={onChange}
             />

@@ -6,8 +6,10 @@ import ExternalStore from '@/services/ExternalStore'
 /**
  * Infura and other RPC providers limit the max amount included in a batch RPC call.
  * Ethers uses 100 by default which is too high for i.e. Infura.
+ *
+ * Some networks like Scroll only support a batch size of 3.
  */
-const BATCH_MAX_COUNT = 10
+const BATCH_MAX_COUNT = 3
 
 // RPC helpers
 const formatRpcServiceUrl = ({ authentication, value }: RpcUri, token: string): string => {

@@ -7,6 +7,7 @@ import type { AddressBook, AddressBookState } from '@/store/addressBookSlice'
 import type { AddedSafesState } from '@/store/addedSafesSlice'
 import type { SafeAppsState } from '@/store/safeAppsSlice'
 import type { SettingsState } from '@/store/settingsSlice'
+import type { UndeployedSafesState } from '@/features/counterfactual/store/undeployedSafesSlice'
 
 import { useMemo } from 'react'
 
@@ -67,6 +68,7 @@ type Data = {
   addressBook?: AddressBookState
   settings?: SettingsState
   safeApps?: SafeAppsState
+  undeployedSafes?: UndeployedSafesState
   error?: ImportErrors
   addressBookEntriesCount: number
   addedSafesCount: number
@@ -81,6 +83,7 @@ export const useGlobalImportJsonParser = (jsonData: string | undefined): Data =>
       addedSafes: undefined,
       settings: undefined,
       safeApps: undefined,
+      undeployedSafes: undefined,
     }
 
     if (!jsonData) {
@@ -116,6 +119,7 @@ export const useGlobalImportJsonParser = (jsonData: string | undefined): Data =>
         data.addedSafes = parsedFile.data.addedSafes
         data.settings = parsedFile.data.settings
         data.safeApps = parsedFile.data.safeApps
+        data.undeployedSafes = parsedFile.data.undeployedSafes
 
         break
       }

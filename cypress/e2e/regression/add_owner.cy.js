@@ -21,10 +21,12 @@ describe('Add Owners tests', () => {
     cy.contains(owner.safeAccountNonceStr, { timeout: 10000 })
   })
 
+  // TODO: Added to prod
   it('Verify add owner button is disabled for disconnected user', () => {
     owner.verifyAddOwnerBtnIsDisabled()
   })
 
+  // TODO: Added to prod
   it('Verify the Add New Owner Form can be opened', () => {
     wallet.connectSigner(signer)
     owner.openAddOwnerWindow()

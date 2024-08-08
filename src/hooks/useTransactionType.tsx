@@ -9,7 +9,13 @@ import {
 } from '@safe-global/safe-gateway-typescript-sdk'
 import SwapIcon from '@/public/images/common/swap.svg'
 
-import { isCancellationTxInfo, isModuleExecutionInfo, isOutgoingTransfer, isTxQueued } from '@/utils/transaction-guards'
+import {
+  isCancellationTxInfo,
+  isModuleExecutionInfo,
+  isMultiSendTxInfo,
+  isOutgoingTransfer,
+  isTxQueued,
+} from '@/utils/transaction-guards'
 import useAddressBook from './useAddressBook'
 import type { AddressBook } from '@/store/addressBookSlice'
 import { TWAP_ORDER_TITLE } from '@/features/swap/constants'
@@ -83,6 +89,13 @@ export const getTransactionType = (tx: TransactionSummary, addressBook: AddressB
       }
     }
     case TransactionInfoType.CUSTOM: {
+      if (isMultiSendTxInfo(tx.txInfo) && !tx.safeAppInfo) {
+        return {
+          icon: '/images/common/multisend.svg',
+          text: 'Batch',
+        }
+      }
+
       if (isModuleExecutionInfo(tx.executionInfo)) {
         return {
           icon: toAddress?.logoUri || '/images/transactions/custom.svg',

@@ -87,6 +87,10 @@ export const SETTINGS_EVENTS = {
       action: 'Imported Safe apps via Import all',
       category: SETTINGS_CATEGORY,
     },
+    IMPORT_UNDEPLOYED_SAFES: {
+      action: 'Imported counterfactual safes via Import all',
+      category: SETTINGS_CATEGORY,
+    },
   },
   ENV_VARIABLES: {
     SAVE: {

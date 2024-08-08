@@ -1,11 +1,11 @@
 import { type ReactElement, useContext, useEffect } from 'react'
+import { Typography } from '@mui/material'
 import type { TransactionSummary } from '@safe-global/safe-gateway-typescript-sdk'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import { useChainId } from '@/hooks/useChainId'
 import useWallet from '@/hooks/wallets/useWallet'
 import SignOrExecuteForm from '@/components/tx/SignOrExecuteForm'
 import { isExecutable, isMultisigExecutionInfo, isSignableBy } from '@/utils/transaction-guards'
-import { Typography } from '@mui/material'
 import { createExistingTx } from '@/services/tx/tx-sender'
 import { SafeTxContext } from '../../SafeTxProvider'
 
@@ -39,8 +39,8 @@ const ConfirmProposedTx = ({ txSummary }: ConfirmProposedTxProps): ReactElement 
   const text = canSign ? (canExecute ? SIGN_EXECUTE_TEXT : SIGN_TEXT) : EXECUTE_TEXT
 
   return (
-    <SignOrExecuteForm txId={txId} isExecutable={canExecute} onlyExecute={!canSign} showToBlock>
-      <Typography>{text}</Typography>
+    <SignOrExecuteForm txId={txId} isExecutable={canExecute} onlyExecute={!canSign} showMethodCall>
+      <Typography mb={1}>{text}</Typography>
     </SignOrExecuteForm>
   )
 }

@@ -37,6 +37,7 @@ describe('Tx history tests 1', () => {
     main.acceptCookies()
   })
 
+  // TODO: Added to prod
   // Account creation
   it('Verify summary for account creation', () => {
     createTx.verifySummaryByName(
@@ -46,6 +47,7 @@ describe('Tx history tests 1', () => {
     )
   })
 
+  // TODO: Added to prod
   it('Verify exapanded details for account creation', () => {
     createTx.clickOnTransactionItemByName(typeCreateAccount.title)
     createTx.verifyExpandedDetails([
@@ -61,24 +63,12 @@ describe('Tx history tests 1', () => {
     ])
   })
 
-  it.skip('Verify copy bottons work as expected for account creation', () => {
-    createTx.clickOnTransactionItemByName(typeCreateAccount.title)
-    createTx.verifyNumberOfCopyIcons(4)
-    createTx.verifyCopyIconWorks(0, typeCreateAccount.creator.address)
-  })
-
   it('Verify external links exist for account creation', () => {
     createTx.clickOnTransactionItemByName(typeCreateAccount.title)
     createTx.verifyNumberOfExternalLinks(4)
   })
 
-  // Token receipt
-  it.skip('Verify copy button copies tx hash', () => {
-    createTx.clickOnTransactionItemByName(typeReceive.summaryTitle, typeReceive.summaryTxInfo)
-    createTx.verifyNumberOfCopyIcons(2)
-    createTx.verifyCopyIconWorks(1, typeReceive.transactionHashCopied)
-  })
-
+  // TODO: Added to prod
   // Token send
   it('Verify exapanded details for token send', () => {
     createTx.clickOnTransactionItemByName(typeSend.title, typeSend.summaryTxInfo)
@@ -90,6 +80,7 @@ describe('Tx history tests 1', () => {
     ])
   })
 
+  // TODO: Added to prod
   // Spending limits
   it('Verify summary for setting spend limits', () => {
     createTx.verifySummaryByName(
@@ -100,12 +91,13 @@ describe('Tx history tests 1', () => {
     )
   })
 
+  // TODO: Added to prod
   it('Verify exapanded details for initial spending limits setup', () => {
     createTx.clickOnTransactionItemByName(typeSpendingLimits.title, typeSpendingLimits.summaryTxInfo)
     createTx.verifyExpandedDetails(
       [
-        typeSpendingLimits.title,
-        typeSpendingLimits.description,
+        typeSpendingLimits.contractTitle,
+        typeSpendingLimits.call_multiSend,
         typeSpendingLimits.transactionHash,
         typeSpendingLimits.safeTxHash,
       ],
@@ -113,6 +105,7 @@ describe('Tx history tests 1', () => {
     )
   })
 
+  // TODO: Added to prod
   it('Verify that 3 actions exist in initial spending limits setup', () => {
     createTx.clickOnTransactionItemByName(typeSpendingLimits.title, typeSpendingLimits.summaryTxInfo)
     createTx.verifyActions([
@@ -157,6 +150,7 @@ describe('Tx history tests 1', () => {
     ])
   })
 
+  // TODO: Added to prod
   it('Verify advanced details displayed in exapanded details for allowance deletion', () => {
     createTx.clickOnTransactionItemByName(typeDeleteAllowance.title, typeDeleteAllowance.summaryTxInfo)
     createTx.expandAdvancedDetails([typeDeleteAllowance.baseGas])

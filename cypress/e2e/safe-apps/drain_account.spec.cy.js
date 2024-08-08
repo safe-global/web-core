@@ -4,13 +4,21 @@ import * as main from '../pages/main.page'
 import * as safeapps from '../pages/safeapps.pages'
 import * as navigation from '../pages/navigation.page'
 import { getSafes, CATEGORIES } from '../../support/safes/safesHandler.js'
+import * as ls from '../../support/localstorage_data.js'
 
 let safeAppSafes = []
 let iframeSelector
 
-describe('Drain Account tests', { defaultCommandTimeout: 12000 }, () => {
+describe('Drain Account tests', () => {
   before(async () => {
     safeAppSafes = await getSafes(CATEGORIES.safeapps)
+    cy.clearLocalStorage().then(() => {
+      main.addToLocalStorage(constants.localStorageKeys.SAFE_v2_cookies_1_1, ls.cookies.acceptedCookies)
+      main.addToLocalStorage(
+        constants.localStorageKeys.SAFE_v2__SafeApps__infoModal,
+        ls.appPermissions(constants.safeTestAppurl).infoModalAccepted,
+      )
+    })
   })
 
   beforeEach(() => {
@@ -22,10 +30,7 @@ describe('Drain Account tests', { defaultCommandTimeout: 12000 }, () => {
       fixture: 'balances.json',
     })
 
-    cy.clearLocalStorage()
     cy.visit(visitUrl)
-    main.acceptCookies()
-    safeapps.clickOnContinueBtn()
   })
 
   it('Verify drain can be created', () => {

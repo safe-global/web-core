@@ -33,6 +33,9 @@ const oldTokenAmount = '[data-testid="old-token-amount"]'
 const oldResetTime = '[data-testid="old-reset-time"]'
 const slimitReplacementWarning = '[data-testid="limit-replacement-warning"]'
 const addressItem = '[data-testid="address-item"]'
+const allActionsSection = '[data-testid="all-actions"]'
+const actionItem = '[data-testid="action-item"]'
+const decodedTxSummary = '[data-testid="decoded-tx-summary"]'
 
 const actionSectionItem = () => {
   return cy.get('[data-testid="CodeIcon"]').parent()
@@ -47,6 +50,11 @@ export const timePeriodOptions = {
 
 const getBeneficiaryInput = () => cy.get(beneficiarySection).find('input').should('be.enabled')
 const automationOwner = ls.addressBookData.sepoliaAddress2[11155111]['0xC16Db0251654C0a72E91B190d81eAD367d2C6fED']
+
+export const actionNames = {
+  resetAllowance: 'resetAllowance',
+  setAllowance: 'setAllowance',
+}
 
 const expectedSpendOptions = ['0.02 of 0.17 ETH', '0.00001 of 0.05 ETH', '0 of 0.01 ETH']
 const expectedResetOptions = new Array(3).fill('One-time')
@@ -204,4 +212,26 @@ export function verifyCharErrorValidation() {
 
 export function verifyNumberAmountEntered(amount) {
   cy.get(tokenAmountFld).find('input').should('have.value', amount)
+}
+
+export function verifyActionCount(count) {
+  main.verifyElementsCount(actionItem, count)
+}
+
+export function verifyActionNames(names) {
+  cy.get(allActionsSection)
+    .parent()
+    .within(() => {
+      names.forEach((item) => {
+        cy.contains(item)
+      })
+    })
+}
+
+export function verifyDecodedTxSummary(names) {
+  cy.get(decodedTxSummary).within(() => {
+    names.forEach((item) => {
+      cy.contains(item)
+    })
+  })
 }

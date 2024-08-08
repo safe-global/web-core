@@ -48,6 +48,10 @@ const RedefineBlock = () => {
     }
   }, [isRiskIgnored, checkboxRef])
 
+  if (!severityProps && !isLoading && !error) {
+    return null
+  }
+
   return (
     <div className={css.wrapperBox}>
       <Paper
@@ -56,7 +60,7 @@ const RedefineBlock = () => {
         sx={needsRiskConfirmation ? { borderTop: 'none', borderLeft: 'none', borderRight: 'none' } : { border: 'none' }}
       >
         <div>
-          <Typography variant="body2" fontWeight={700}>
+          <Typography variant="body2" fontWeight={700} sx={{ position: 'relative', zIndex: 1 }}>
             Scan for risks
             <Tooltip
               title={

@@ -67,15 +67,23 @@
 
 .links {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   margin-top: var(--space-3);
   text-wrap: nowrap;
+  width: 100%;
 }
 
 @media (max-width: 899.99px) {
   .header {
     padding: 0;
+  }
+  .links {
+    flex-direction: column;
+  }
+
+  .links a {
+    width: 100%;
   }
 
   .widgetWrapper {

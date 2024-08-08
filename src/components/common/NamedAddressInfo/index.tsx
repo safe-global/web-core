@@ -11,14 +11,10 @@ const NamedAddressInfo = ({ address, name, customAvatar, ...props }: EthHashInfo
     [address, chainId, name, customAvatar],
   )
 
-  return (
-    <EthHashInfo
-      address={address}
-      name={name || contract?.displayName || contract?.name}
-      customAvatar={customAvatar || contract?.logoUri}
-      {...props}
-    />
-  )
+  const finalName = name || contract?.displayName || contract?.name
+  const finalAvatar = customAvatar || contract?.logoUri
+
+  return <EthHashInfo address={address} name={finalName} customAvatar={finalAvatar} {...props} />
 }
 
 export default NamedAddressInfo

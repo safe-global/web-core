@@ -1,3 +1,4 @@
+import { undeployedSafesSlice } from '@/features/counterfactual/store/undeployedSafesSlice'
 import { DialogContent, Alert, AlertTitle, DialogActions, Button, Box, SvgIcon } from '@mui/material'
 import type { ReactElement, Dispatch, SetStateAction } from 'react'
 
@@ -30,7 +31,7 @@ export const ImportDialog = ({
   setJsonData: Dispatch<SetStateAction<string | undefined>>
 }): ReactElement => {
   const dispatch = useAppDispatch()
-  const { addedSafes, addedSafesCount, addressBook, addressBookEntriesCount, settings, safeApps, error } =
+  const { addedSafes, addressBook, addressBookEntriesCount, settings, safeApps, undeployedSafes, error } =
     useGlobalImportJsonParser(jsonData)
 
   const isDisabled = (!addedSafes && !addressBook && !settings && !safeApps) || !!error
@@ -65,6 +66,11 @@ export const ImportDialog = ({
     if (safeApps) {
       dispatch(safeAppsSlice.actions.setSafeApps(safeApps))
       trackEvent(SETTINGS_EVENTS.DATA.IMPORT_SAFE_APPS)
+    }
+
+    if (undeployedSafes) {
+      dispatch(undeployedSafesSlice.actions.addUndeployedSafes(undeployedSafes))
+      trackEvent(SETTINGS_EVENTS.DATA.IMPORT_UNDEPLOYED_SAFES)
     }
 
     dispatch(
@@ -104,6 +110,7 @@ export const ImportDialog = ({
               addressBook={addressBook}
               settings={settings}
               safeApps={safeApps}
+              undeployedSafes={undeployedSafes}
               error={error}
               showPreview
             />

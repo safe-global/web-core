@@ -24,15 +24,10 @@ describe('Info modal tests', () => {
     safeapps.verifyDisclaimerIsDisplayed()
   })
 
-  // Skip tests due to changed logic
-  // TODO: Discuss furthers
-  it.skip('Verify the permissions slide is shown if the app require permissions', () => {
-    safeapps.clickOnContinueBtn()
-    cy.wait(500) // wait for the animation to finish
-    safeapps.verifyCameraCheckBoxExists()
-  })
-
-  it.skip('Verify the permissions and consents decision are stored when accepted', () => {
-    safeapps.storeAndVerifyPermissions()
+  it('Verify info modal consent is stored when accepted', () => {
+    safeapps.clickOnApp(safeapps.transactionBuilderStr)
+    safeapps.clickOnOpenSafeAppBtn()
+    safeapps.verifyDisclaimerIsDisplayed()
+    safeapps.verifyInfoModalAcceptance()
   })
 })

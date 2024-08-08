@@ -10,6 +10,7 @@ import * as wallet from '../../support/utils/wallet.js'
 let staticSafes = []
 const walletCredentials = JSON.parse(Cypress.env('CYPRESS_WALLET_CREDENTIALS'))
 const signer = walletCredentials.OWNER_4_PRIVATE_KEY
+const signerAddress = walletCredentials.OWNER_4_WALLET_ADDRESS
 
 const tokenAmount = 0.1
 const newTokenAmount = 0.001
@@ -27,6 +28,28 @@ describe('Spending limits tests', () => {
     cy.get(spendinglimit.spendingLimitsSection).should('be.visible')
   })
 
+  it('Verify resetAllowance and setAllowance actions are shown if a part of allowance was used', () => {
+    wallet.connectSigner(signer)
+    spendinglimit.clickOnNewSpendingLimitBtn()
+    spendinglimit.enterBeneficiaryAddress(signerAddress)
+    spendinglimit.enterSpendingLimitAmount(0.1)
+    spendinglimit.clickOnNextBtn()
+    spendinglimit.verifyActionCount(2)
+    spendinglimit.verifyActionNames([spendinglimit.actionNames.resetAllowance, spendinglimit.actionNames.setAllowance])
+  })
+
+  it('Verify only setAllowance action is shown if allowance was not used', () => {
+    cy.visit(constants.setupUrl + staticSafes.SEP_STATIC_SAFE_23)
+    wallet.connectSigner(signer)
+    spendinglimit.clickOnNewSpendingLimitBtn()
+    spendinglimit.enterBeneficiaryAddress(signerAddress)
+    spendinglimit.enterSpendingLimitAmount(0.1)
+    spendinglimit.clickOnNextBtn()
+    spendinglimit.verifyActionCount(0)
+    spendinglimit.verifyDecodedTxSummary([spendinglimit.actionNames.setAllowance])
+  })
+
+  // TODO: Added to prod
   it('Verify that the Review step shows beneficiary, amount allowed, reset time', () => {
     //Assume that default reset time is set to One time
     wallet.connectSigner(signer)
@@ -41,10 +64,12 @@ describe('Spending limits tests', () => {
     )
   })
 
+  // TODO: Added to prod
   it('Verify values and trash icons are displayed in Beneficiary table', () => {
     spendinglimit.verifyBeneficiaryTable()
   })
 
+  // TODO: Added to prod
   it('Verify Spending limit option is available when selecting the corresponding token', () => {
     wallet.connectSigner(signer)
     navigation.clickOnNewTxBtn()
@@ -145,11 +170,6 @@ describe('Spending limits tests', () => {
         spendinglimit.enterBeneficiaryAddress(constants.DEFAULT_OWNER_ADDRESS.substring(30))
         spendinglimit.selectRecipient(constants.DEFAULT_OWNER_ADDRESS)
       })
-  })
-
-  it.skip('Verify that clicking on copy icon of a beneficiary works', () => {
-    tx.verifyNumberOfCopyIcons(3)
-    tx.verifyCopyIconWorks(0, constants.DEFAULT_OWNER_ADDRESS)
   })
 
   it('Verify explorer links contain Sepolia link', () => {

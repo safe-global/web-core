@@ -66,7 +66,7 @@ export const createNftTransferParams = (
 
 export const getNativeTransferData = (data: MetaTransactionData): DecodedDataResponse => {
   return {
-    method: 'Native token transfer',
+    method: '',
     parameters: [
       {
         name: 'to',

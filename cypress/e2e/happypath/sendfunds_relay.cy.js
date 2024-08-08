@@ -43,18 +43,19 @@ const owner2Signer = signers[1]
 
 function visit(url) {
   cy.visit(url)
-  main.acceptCookies()
 }
 
 // TODO: Relay only allows 5 txs per hour.
 describe('Send funds with relay happy path tests', { defaultCommandTimeout: 300000 }, () => {
   before(async () => {
+    cy.clearLocalStorage().then(() => {
+      main.addToLocalStorage(constants.localStorageKeys.SAFE_v2_cookies_1_1, ls.cookies.acceptedCookies)
+      main.addToLocalStorage(
+        constants.localStorageKeys.SAFE_v2__tokenlist_onboarding,
+        ls.cookies.acceptedTokenListOnboarding,
+      )
+    })
     safesData = await getSafes(CATEGORIES.funds)
-    main.addToLocalStorage(constants.localStorageKeys.SAFE_v2__cookies, ls.cookies.acceptedCookies)
-    main.addToLocalStorage(
-      constants.localStorageKeys.SAFE_v2__tokenlist_onboarding,
-      ls.cookies.acceptedTokenListOnboarding,
-    )
     apiKit = new SafeApiKit({
       chainId: BigInt(1),
       txServiceUrl: constants.stagingTxServiceUrl,
@@ -78,7 +79,6 @@ describe('Send funds with relay happy path tests', { defaultCommandTimeout: 3000
     const originatingSafe = safesData.SEP_FUNDS_SAFE_9.substring(4)
     function executeTransactionFlow(fromSafe, toSafe) {
       return cy.visit(constants.balanceNftsUrl + fromSafe).then(() => {
-        main.acceptCookies()
         wallet.connectSigner(signer)
         nfts.selectNFTs(1)
         nfts.sendNFT()
@@ -106,6 +106,8 @@ describe('Send funds with relay happy path tests', { defaultCommandTimeout: 3000
             })
             await tx.wait()
             main.verifyNonceChange(network_pref + originatingSafe, currentNonce + 1)
+            navigation.clickOnWalletExpandMoreIcon()
+            navigation.clickOnDisconnectBtn()
           })
         })
       })
@@ -164,6 +166,8 @@ describe('Send funds with relay happy path tests', { defaultCommandTimeout: 3000
           const safeTx = await apiKit.getTransaction(safeTxHashofExistingTx)
           await protocolKitOwner2_S3.executeTransaction(safeTx)
           main.verifyNonceChange(network_pref + targetSafe, currentNonce + 1)
+          navigation.clickOnWalletExpandMoreIcon()
+          navigation.clickOnDisconnectBtn()
         })
       })
   })
@@ -204,6 +208,8 @@ describe('Send funds with relay happy path tests', { defaultCommandTimeout: 3000
 
           await tx.wait()
           main.verifyNonceChange(network_pref + originatingSafe, currentNonce + 1)
+          navigation.clickOnWalletExpandMoreIcon()
+          navigation.clickOnDisconnectBtn()
         })
       })
   })

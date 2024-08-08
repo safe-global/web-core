@@ -2,6 +2,7 @@ import * as constants from '../../support/constants'
 import * as main from '../pages/main.page'
 import * as safeapps from '../pages/safeapps.pages'
 import { getSafes, CATEGORIES } from '../../support/safes/safesHandler.js'
+import * as ls from '../../support/localstorage_data.js'
 
 const myCustomAppTitle = 'Cypress Test App'
 const myCustomAppDescrAdded = 'Cypress Test App Description'
@@ -14,11 +15,12 @@ describe('Safe Apps list tests', () => {
   })
 
   beforeEach(() => {
-    cy.clearLocalStorage()
+    cy.clearLocalStorage().then(() => {
+      main.addToLocalStorage(constants.localStorageKeys.SAFE_v2_cookies_1_1, ls.cookies.acceptedCookies)
+    })
     cy.visit(`${constants.appsUrl}?safe=${staticSafes.SEP_STATIC_SAFE_1}`, {
       failOnStatusCode: false,
     })
-    main.acceptCookies()
   })
 
   it('Verify app list can be filtered by app name', () => {

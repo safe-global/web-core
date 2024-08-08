@@ -3,7 +3,7 @@ import useIsExpiredSwap from '@/features/swap/hooks/useIsExpiredSwap'
 import useIntervalCounter from '@/hooks/useIntervalCounter'
 import React, { type ReactElement } from 'react'
 import type { TransactionDetails, TransactionSummary } from '@safe-global/safe-gateway-typescript-sdk'
-import { getTransactionDetails, Operation } from '@safe-global/safe-gateway-typescript-sdk'
+import { getTransactionDetails } from '@safe-global/safe-gateway-typescript-sdk'
 import { Box, CircularProgress, Typography } from '@mui/material'
 
 import TxSigners from '@/components/transactions/TxSigners'
@@ -20,10 +20,9 @@ import {
   isMultisigExecutionInfo,
   isOpenSwapOrder,
   isTxQueued,
-  isSwapTransferOrderTxInfo,
 } from '@/utils/transaction-guards'
 import { InfoDetails } from '@/components/transactions/InfoDetails'
-import EthHashInfo from '@/components/common/EthHashInfo'
+import NamedAddressInfo from '@/components/common/NamedAddressInfo'
 import css from './styles.module.css'
 import ErrorMessage from '@/components/tx/ErrorMessage'
 import TxShareLink from '../TxShareLink'
@@ -31,7 +30,7 @@ import { ErrorBoundary } from '@sentry/react'
 import ExecuteTxButton from '@/components/transactions/ExecuteTxButton'
 import SignTxButton from '@/components/transactions/SignTxButton'
 import RejectTxButton from '@/components/transactions/RejectTxButton'
-import { DelegateCallWarning, UnsignedWarning } from '@/components/transactions/Warning'
+import { UnsignedWarning } from '@/components/transactions/Warning'
 import Multisend from '@/components/transactions/TxDetails/TxData/DecodedData/Multisend'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import useIsPending from '@/hooks/useIsPending'
@@ -71,6 +70,10 @@ const TxDetailsBlock = ({ txSummary, txDetails }: TxDetailsProps): ReactElement 
 
   const expiredSwap = useIsExpiredSwap(txSummary.txInfo)
 
+  // Module address, name and logoUri
+  const moduleAddress = isModuleExecutionInfo(txSummary.executionInfo) ? txSummary.executionInfo.address : undefined
+  const moduleAddressInfo = moduleAddress ? txDetails.txData?.addressInfoIndex?.[moduleAddress.value] : undefined
+
   return (
     <>
       {/* /Details */}
@@ -90,22 +93,17 @@ const TxDetailsBlock = ({ txSummary, txDetails }: TxDetailsProps): ReactElement 
         <div className={css.txData}>
           <ErrorBoundary fallback={<div>Error parsing data</div>}>
             <TxData txDetails={txDetails} trusted={isTrustedTransfer} imitation={isImitationTransaction} />
-            {isSwapTransferOrderTxInfo(txDetails.txInfo) && (
-              <div className={css.swapOrderTransfer}>
-                <ErrorBoundary fallback={<div>Error parsing data</div>}>
-                  <SwapOrder txData={txDetails.txData} txInfo={txDetails.txInfo} />
-                </ErrorBoundary>
-              </div>
-            )}
           </ErrorBoundary>
         </div>
 
         {/* Module information*/}
-        {isModuleExecutionInfo(txSummary.executionInfo) && (
+        {moduleAddress && (
           <div className={css.txModule}>
-            <InfoDetails title="Module:">
-              <EthHashInfo
-                address={txSummary.executionInfo.address.value}
+            <InfoDetails title="Executed via module:">
+              <NamedAddressInfo
+                address={moduleAddress.value}
+                name={moduleAddressInfo?.name || moduleAddress.name}
+                customAvatar={moduleAddressInfo?.logoUri || moduleAddress.logoUri}
                 shortAddress={false}
                 showCopyButton
                 hasExplorer
@@ -116,12 +114,6 @@ const TxDetailsBlock = ({ txSummary, txDetails }: TxDetailsProps): ReactElement 
 
         <div className={css.txSummary}>
           {isUntrusted && !isPending && <UnsignedWarning />}
-
-          {txDetails.txData?.operation === Operation.DELEGATE && (
-            <div className={css.delegateCall}>
-              <DelegateCallWarning showWarning={!txDetails.txData.trustedDelegateCallTarget} />
-            </div>
-          )}
           <Summary txDetails={txDetails} />
         </div>
 

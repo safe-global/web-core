@@ -1,6 +1,6 @@
 import * as constants from '../../support/constants'
 import * as main from '../pages/main.page'
-import * as safeapps from '../pages/safeapps.pages'
+import * as ls from '../../support/localstorage_data.js'
 
 const testAppName = 'Cypress Test App'
 const testAppDescr = 'Cypress Test App Description'
@@ -8,8 +8,17 @@ const unknownApp = 'unknown'
 const confirmTx = 'Confirm transaction'
 
 describe('Transaction modal tests', () => {
+  before(async () => {
+    cy.clearLocalStorage().then(() => {
+      main.addToLocalStorage(constants.localStorageKeys.SAFE_v2_cookies_1_1, ls.cookies.acceptedCookies)
+      main.addToLocalStorage(
+        constants.localStorageKeys.SAFE_v2__SafeApps__infoModal,
+        ls.appPermissions(constants.safeTestAppurl).infoModalAccepted,
+      )
+    })
+  })
+
   beforeEach(() => {
-    cy.clearLocalStorage()
     cy.fixture('safe-app').then((html) => {
       cy.intercept('GET', `${constants.testAppUrl}/*`, html)
       cy.intercept('GET', `*/manifest.json`, {
@@ -25,10 +34,6 @@ describe('Transaction modal tests', () => {
     { defaultCommandTimeout: 12000 },
     () => {
       cy.visitSafeApp(`${constants.testAppUrl}/dummy`)
-      main.acceptCookies()
-      safeapps.clickOnContinueBtn()
-      safeapps.verifyWarningDefaultAppMsgIsDisplayed()
-      safeapps.clickOnContinueBtn()
       cy.findByRole('dialog').within(() => {
         cy.findByText(confirmTx)
         cy.findByText(unknownApp)

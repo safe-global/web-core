@@ -28,11 +28,13 @@ import { trackEvent } from '@/services/analytics'
 import useChainId from '@/hooks/useChainId'
 import ExecuteThroughRoleForm from './ExecuteThroughRoleForm'
 import { findAllowingRole, findMostLikelyRole, useRoles } from './ExecuteThroughRoleForm/hooks'
-import { isConfirmationViewOrder } from '@/utils/transaction-guards'
+import { isConfirmationViewOrder, isCustomTxInfo } from '@/utils/transaction-guards'
 import SwapOrderConfirmationView from '@/features/swap/components/SwapOrderConfirmationView'
 import { isSettingTwapFallbackHandler } from '@/features/swap/helpers/utils'
 import { TwapFallbackHandlerWarning } from '@/features/swap/components/TwapFallbackHandlerWarning'
 import useIsSafeOwner from '@/hooks/useIsSafeOwner'
+import useTxDetails from '@/hooks/useTxDetails'
+import TxData from '@/components/transactions/TxDetails/TxData'
 
 export type SubmitCallback = (txId: string, isExecuted?: boolean) => void
 
@@ -48,7 +50,7 @@ export type SignOrExecuteProps = {
   disableSubmit?: boolean
   origin?: string
   isCreation?: boolean
-  showToBlock?: boolean
+  showMethodCall?: boolean
 }
 
 const trackTxEvents = async (chainId: string, txId: string, isCreation: boolean, isExecuted: boolean) => {
@@ -78,9 +80,11 @@ export const SignOrExecuteForm = ({
   const isCreation = !props.txId
   const isNewExecutableTx = useImmediatelyExecutable() && isCreation
   const isCorrectNonce = useValidateNonce(safeTx)
-  const [decodedData, decodedDataError, decodedDataLoading] = useDecodeTx(safeTx)
+  const [decodedData] = useDecodeTx(safeTx)
   const isBatchable = props.isBatchable !== false && safeTx && !isDelegateCall(safeTx)
   const isSwapOrder = isConfirmationViewOrder(decodedData)
+  const [txDetails] = useTxDetails(props.txId)
+  const showTxDetails = props.txId && txDetails && !isCustomTxInfo(txDetails.txInfo)
 
   const { safe } = useSafeInfo()
   const isSafeOwner = useIsSafeOwner()
@@ -128,14 +132,14 @@ export const SignOrExecuteForm = ({
         <ErrorBoundary fallback={<div>Error parsing data</div>}>
           <ApprovalEditor safeTransaction={safeTx} />
 
+          {showTxDetails && <TxData txDetails={txDetails} imitation={false} trusted />}
+
           <DecodedTx
             tx={safeTx}
             txId={props.txId}
             decodedData={decodedData}
-            decodedDataError={decodedDataError}
-            decodedDataLoading={decodedDataLoading}
             showMultisend={!props.isBatch}
-            showToBlock={props.showToBlock}
+            showMethodCall={props.showMethodCall && !showTxDetails && !isSwapOrder}
           />
         </ErrorBoundary>
 

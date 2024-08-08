@@ -43,17 +43,18 @@ const owner1Signer = signers[0]
 
 function visit(url) {
   cy.visit(url)
-  main.acceptCookies()
 }
 
 describe('Send funds with connected signer happy path tests', { defaultCommandTimeout: 60000 }, () => {
   before(async () => {
+    cy.clearLocalStorage().then(() => {
+      main.addToLocalStorage(constants.localStorageKeys.SAFE_v2_cookies_1_1, ls.cookies.acceptedCookies)
+      main.addToLocalStorage(
+        constants.localStorageKeys.SAFE_v2__tokenlist_onboarding,
+        ls.cookies.acceptedTokenListOnboarding,
+      )
+    })
     safesData = await getSafes(CATEGORIES.funds)
-    main.addToLocalStorage(constants.localStorageKeys.SAFE_v2__cookies, ls.cookies.acceptedCookies)
-    main.addToLocalStorage(
-      constants.localStorageKeys.SAFE_v2__tokenlist_onboarding,
-      ls.cookies.acceptedTokenListOnboarding,
-    )
     apiKit = new SafeApiKit({
       chainId: BigInt(1),
       txServiceUrl: constants.stagingTxServiceUrl,
@@ -101,6 +102,8 @@ describe('Send funds with connected signer happy path tests', { defaultCommandTi
           })
           await tx.wait()
           main.verifyNonceChange(network_pref + originatingSafe, currentNonce + 1)
+          navigation.clickOnWalletExpandMoreIcon()
+          navigation.clickOnDisconnectBtn()
         })
       })
   })
@@ -154,6 +157,8 @@ describe('Send funds with connected signer happy path tests', { defaultCommandTi
         const safeTx = await apiKit.getTransaction(safeTxHashofExistingTx)
         await protocolKitOwner2_S3.executeTransaction(safeTx)
         main.verifyNonceChange(network_pref + targetSafe, currentNonce + 1)
+        navigation.clickOnWalletExpandMoreIcon()
+        navigation.clickOnDisconnectBtn()
       })
   })
 
@@ -187,6 +192,8 @@ describe('Send funds with connected signer happy path tests', { defaultCommandTi
 
         await tx.wait()
         main.verifyNonceChange(network_pref + originatingSafe, currentNonce + 1)
+        navigation.clickOnWalletExpandMoreIcon()
+        navigation.clickOnDisconnectBtn()
       })
   })
 })

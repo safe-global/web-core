@@ -62,11 +62,11 @@
       "safeTxHash": "0x1303...0fe2"
     },
     "batchNativeTransfer": {
-      "title": "Safe: MultiSendCallOnly 1.3.0",
+      "title": "Batch",
       "summaryTxInfo": "2 actions",
       "summaryTime": "11:24 AM",
-      "description": "MultiSend contract",
-      "altImage": "Safe: MultiSendCallOnly 1.3.0",
+      "description": "Batch transaction with 2 actions",
+      "altImage": "Batch",
       "contractTitle": "Safe: MultiSendCallOnly 1.3.0",
       "contractAddress": "sep:0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
       "transactionHash": "0xa5dd...b064",
@@ -145,28 +145,29 @@
       "baseGas": "baseGas"
     },
     "spendingLimits": {
-      "title": "Safe: MultiSendCallOnly 1.3.0",
+      "title": "Batch",
       "summaryTxInfo": "3 actions",
       "summaryTime": "11:06 AM",
-      "description": "MultiSend contract",
-      "altImage": "Safe: MultiSendCallOnly 1.3.0",
+      "description": "Batch transaction with 3 actions",
+      "altImage": "Batch",
       "contractTitle": "Safe: MultiSendCallOnly 1.3.0",
       "contractAddress": "sep:0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
       "transactionHash": "0x69c3...bc37",
       "safeTxHash": "0xf81c...243e",
+      "call_multiSend": "CallmultiSend",
       "enableModule": {
         "title": "enableModule",
         "description": "Interact with",
         "interactionAddress": "sep:0x5912f6616c84024cD1aff0D5b55bb36F5180fFdb",
         "moduleAddress": "sep:0xCFbF...3134",
-        "moduleAddressTitle": "module(address)"
+        "moduleAddressTitle": "module address"
       },
       "addDelegate": {
         "title": "addDelegate",
         "description": "Interact with",
         "interactionAddress": "sep:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
         "delegateAddress": "sep:0xC16D...6fED",
-        "delegateAddressTitle": "delegate(address)"
+        "delegateAddressTitle": "delegate address"
       },
       "setAllowance": {
         "title": "setAllowance",
@@ -175,7 +176,7 @@
         "allowanceAmount": "100000000000",
         "resetTimeMin": "0",
         "resetBaseMin": "0",
-        "delegateAddressTitle": "delegate(address)"
+        "delegateAddressTitle": "delegate address"
       }
     },
     "untrustedReceivedToken": {

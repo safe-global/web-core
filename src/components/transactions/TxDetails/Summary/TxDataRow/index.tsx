@@ -2,9 +2,8 @@ import type { ReactElement } from 'react'
 import type { AddressEx } from '@safe-global/safe-gateway-typescript-sdk'
 import CopyButton from '@/components/common/CopyButton'
 import { HexEncodedData } from '@/components/transactions/HexEncodedData'
-import { Typography } from '@mui/material'
+import { Typography, Box } from '@mui/material'
 import { dataLength } from 'ethers'
-import css from './styles.module.css'
 import EthHashInfo from '@/components/common/EthHashInfo'
 import { DataRow } from '@/components/common/Table/DataRow'
 
@@ -35,10 +34,10 @@ export const generateDataRowValue = (
       )
     case 'rawData':
       return (
-        <div data-testid="tx-data-row" className={css.rawData}>
+        <Box data-testid="tx-data-row" display="flex" alignItems="center">
           <div>{value ? dataLength(value) : 0} bytes</div>
           <CopyButton text={value} />
-        </div>
+        </Box>
       )
     case 'bytes':
       return <HexEncodedData limit={60} hexData={value} />

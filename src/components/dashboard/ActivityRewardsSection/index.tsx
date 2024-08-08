@@ -14,6 +14,8 @@ import NextLink from 'next/link'
 import { OVERVIEW_EVENTS, trackEvent } from '@/services/analytics'
 import { useHasFeature } from '@/hooks/useChains'
 import { FEATURES } from '@/utils/chains'
+import useLocalStorage from '@/services/local-storage/useLocalStorage'
+import ExternalLink from '@/components/common/ExternalLink'
 
 const Step = ({ active, title }: { active: boolean; title: ReactNode }) => {
   return (
@@ -34,20 +36,33 @@ const Step = ({ active, title }: { active: boolean; title: ReactNode }) => {
   )
 }
 
+const LOCAL_STORAGE_KEY_HIDE_WIDGET = 'hideActivityRewardsBanner'
+
 const ActivityRewardsSection = () => {
   const [matchingApps] = useRemoteSafeApps(SafeAppsTag.SAFE_GOVERNANCE_APP)
   const isDarkMode = useDarkMode()
   const router = useRouter()
 
+  const [widgetHidden = false, setWidgetHidden] = useLocalStorage<boolean>(LOCAL_STORAGE_KEY_HIDE_WIDGET)
+
   const isSAPBannerEnabled = useHasFeature(FEATURES.SAP_BANNER)
   const governanceApp = matchingApps?.[0]
 
-  if (!governanceApp || !governanceApp?.url || !isSAPBannerEnabled) return null
+  if (!governanceApp || !governanceApp?.url || !isSAPBannerEnabled || widgetHidden) return null
 
   const appUrl = getSafeAppUrl(router, governanceApp?.url)
 
   const onClick = () => {
     trackEvent(OVERVIEW_EVENTS.OPEN_ACTIVITY_APP)
+  }
+
+  const onHide = () => {
+    setWidgetHidden(true)
+    trackEvent(OVERVIEW_EVENTS.HIDE_ACTIVITY_APP_WIDGET)
+  }
+
+  const onLearnMore = () => {
+    trackEvent(OVERVIEW_EVENTS.OPEN_LEARN_MORE_ACTIVITY_APP)
   }
 
   return (
@@ -82,14 +97,6 @@ const ActivityRewardsSection = () => {
             >
               Interact with Safe and get rewards
             </Typography>
-            <Box className={css.links} gap={2}>
-              <NextLink href={appUrl} passHref rel="noreferrer" onClick={onClick}>
-                <Button variant="contained">{'Open Safe{Pass}'}</Button>
-              </NextLink>
-              <NextLink href="https://safe.global/pass" target="_blank" passHref rel="noreferrer" onClick={onClick}>
-                <Button variant="text">Learn more</Button>
-              </NextLink>
-            </Box>
           </Grid>
           <Grid item xs={12} lg={6} p={0} zIndex={2}>
             <Typography variant="overline" color="primary.light">
@@ -100,6 +107,20 @@ const ActivityRewardsSection = () => {
               <Step title="Get activity points" active />
               <Step title="Receive rewards" active={false} />
             </div>
+            <ExternalLink href="https://safe.global/pass">Learn more</ExternalLink>
+          </Grid>
+          <Grid item xs={12}>
+            <Box className={css.links} gap={2}>
+              <NextLink href={appUrl} passHref rel="noreferrer" onClick={onClick}>
+                <Button fullWidth variant="contained">
+                  {'Open Safe{Pass}'}
+                </Button>
+              </NextLink>
+
+              <Button variant="text" onClick={onHide}>
+                Don&apos;t show again
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Card>

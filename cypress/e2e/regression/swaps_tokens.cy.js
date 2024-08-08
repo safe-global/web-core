@@ -22,6 +22,7 @@ describe('[SMOKE] Swaps token tests', () => {
     main.acceptCookies()
   })
 
+  // TODO: Added to prod
   it(
     'Verify that clicking the swap from assets tab, autofills that token automatically in the form',
     { defaultCommandTimeout: 30000 },
@@ -38,6 +39,7 @@ describe('[SMOKE] Swaps token tests', () => {
     },
   )
 
+  // TODO: Added to prod
   it('Verify swap button are displayed in assets table and dashboard', () => {
     assets.selectTokenList(assets.tokenListOptions.allTokens)
     main.verifyElementsCount(swaps.assetsSwapBtn, 4)

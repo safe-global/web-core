@@ -680,11 +680,11 @@ export const cookies = {
 export const undeployedSafe = {
   safe1: {
     11155111: {
-      '0x589d862CE2d519d5A862066bB923da0564c3D2EA': {
+      '0x926186108f74dB20BFeb2b6c888E523C78cb7E00': {
         props: {
           safeAccountConfig: {
             threshold: 1,
-            owners: ['0xC16Db0251654C0a72E91B190d81eAD367d2C6fED'],
+            owners: ['0x9445deb174C1eCbbfce8d31D33F438B8e7a0F1BA'],
             fallbackHandler: '0x017062a1dE2FE6b99BE3d9d37841FeD19F573804',
           },
           safeDeploymentConfig: {

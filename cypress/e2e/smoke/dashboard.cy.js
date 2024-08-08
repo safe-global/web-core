@@ -9,8 +9,8 @@ let staticSafes = []
 
 const txData = ['14', 'Send', '-0.00002 ETH', '1 out of 1']
 const txaddOwner = ['5', 'addOwnerWithThreshold', '1 out of 2']
-const txMultiSendCall3 = ['4', 'Safe: MultiSendCallOnly 1.3.0', '3 actions', '1 out of 2']
-const txMultiSendCall2 = ['6', 'Safe: MultiSendCallOnly 1.3.0', '2 actions', '1 out of 2']
+const txMultiSendCall3 = ['4', 'Batch', '3 actions', '1 out of 2']
+const txMultiSendCall2 = ['6', 'Batch', '2 actions', '1 out of 2']
 
 describe('[SMOKE] Dashboard tests', { defaultCommandTimeout: 20000 }, () => {
   before(async () => {
@@ -38,10 +38,6 @@ describe('[SMOKE] Dashboard tests', { defaultCommandTimeout: 20000 }, () => {
 
   it('[SMOKE] Verify the Safe Apps Section is displayed', () => {
     dashboard.verifySafeAppsSection()
-  })
-
-  it.skip('[SMOKE] Verify clicking on the share icon copies the app URL to the clipboard', () => {
-    dashboard.verifyShareBtnWorks(0, dashboard.copiedAppUrl)
   })
 
   it('[SMOKE] Verify clicking on Explore Safe apps button opens list of all apps', () => {

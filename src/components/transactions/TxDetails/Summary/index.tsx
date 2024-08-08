@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import React, { useState } from 'react'
-import { Link } from '@mui/material'
+import { Link, Box } from '@mui/material'
 import { generateDataRowValue, TxDataRow } from '@/components/transactions/TxDetails/Summary/TxDataRow'
 import { isMultisigDetailedExecutionInfo } from '@/utils/transaction-guards'
 import type { TransactionDetails } from '@safe-global/safe-gateway-typescript-sdk'
@@ -32,15 +32,18 @@ const Summary = ({ txDetails, defaultExpanded = false }: Props): ReactElement =>
 
   return (
     <>
-      <TxDataRow datatestid="tx-hash" title="Transaction hash:">
-        {generateDataRowValue(txHash, 'hash', true)}{' '}
-      </TxDataRow>
+      {txHash && (
+        <TxDataRow datatestid="tx-hash" title="Transaction hash:">
+          {generateDataRowValue(txHash, 'hash', true)}{' '}
+        </TxDataRow>
+      )}
       <TxDataRow datatestid="tx-safe-hash" title="safeTxHash:">
         {generateDataRowValue(safeTxHash, 'hash')}
       </TxDataRow>
       <TxDataRow datatestid="tx-created-at" title="Created:">
         {submittedAt ? dateString(submittedAt) : null}
       </TxDataRow>
+
       {executedAt && (
         <TxDataRow datatestid="tx-executed-at" title="Executed:">
           {dateString(executedAt)}
@@ -63,7 +66,7 @@ const Summary = ({ txDetails, defaultExpanded = false }: Props): ReactElement =>
           )}
 
           {expanded && (
-            <div>
+            <Box mt={1}>
               <TxDataRow datatestid="tx-operation" title="Operation:">
                 {`${txData.operation} (${Operation[txData.operation].toLowerCase()})`}
               </TxDataRow>
@@ -90,7 +93,7 @@ const Summary = ({ txDetails, defaultExpanded = false }: Props): ReactElement =>
               <TxDataRow datatestid="tx-raw-data" title="Raw data:">
                 {generateDataRowValue(txData.hexData, 'rawData')}
               </TxDataRow>
-            </div>
+            </Box>
           )}
         </>
       )}

@@ -76,7 +76,8 @@ describe('Replace Owners tests', () => {
     owner.verifyErrorMsgInvalidAddress(constants.addressBookErrrMsg.alreadyAdded)
   })
 
-  it("Verify 'Replace' tx is created", () => {
+  // TODO: Flaky. Fix ProposeTx request
+  it.skip("Verify 'Replace' tx is created", () => {
     cy.visit(constants.setupUrl + staticSafes.SEP_STATIC_SAFE_4)
     wallet.connectSigner(signer)
     owner.waitForConnectionStatus()

@@ -141,8 +141,15 @@ export const OVERVIEW_EVENTS = {
     category: OVERVIEW_CATEGORY,
   },
   OPEN_ACTIVITY_APP: {
-    event: EventType.CLICK,
     action: 'Open activity app from widget',
+    category: OVERVIEW_CATEGORY,
+  },
+  HIDE_ACTIVITY_APP_WIDGET: {
+    action: 'Hide activity app widget',
+    category: OVERVIEW_CATEGORY,
+  },
+  OPEN_LEARN_MORE_ACTIVITY_APP: {
+    action: 'Activity app learn more',
     category: OVERVIEW_CATEGORY,
   },
 }

@@ -57,7 +57,12 @@ const emptyWatchListStr = 'Watch any Safe Account to keep an eye on its activity
 const emptySafeListStr = "You don't have any Safe Accounts yet"
 const myAccountsStr = 'My accounts'
 const confirmTxStr = (number) => `${number} to confirm`
+const pedningTxStr = (n) => `${n} pending transaction`
 export const confirmGenStr = 'to confirm'
+
+export function verifyNumberOfPendingTxTag(tx) {
+  cy.contains(pedningTxStr(tx))
+}
 
 export function getImportBtn() {
   return cy.get(importBtn).scrollIntoView().should('be.visible')

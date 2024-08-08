@@ -5,6 +5,7 @@ import * as safeapps from '../pages/safeapps.pages'
 import * as createtx from '../../e2e/pages/create_tx.pages'
 import * as navigation from '../pages/navigation.page'
 import { getSafes, CATEGORIES } from '../../support/safes/safesHandler.js'
+import * as ls from '../../support/localstorage_data.js'
 
 let safeAppSafes = []
 let iframeSelector
@@ -12,17 +13,20 @@ let iframeSelector
 describe('Transaction Builder tests', { defaultCommandTimeout: 20000 }, () => {
   before(async () => {
     safeAppSafes = await getSafes(CATEGORIES.safeapps)
+    cy.clearLocalStorage().then(() => {
+      main.addToLocalStorage(constants.localStorageKeys.SAFE_v2_cookies_1_1, ls.cookies.acceptedCookies)
+      main.addToLocalStorage(
+        constants.localStorageKeys.SAFE_v2__SafeApps__infoModal,
+        ls.appPermissions(constants.safeTestAppurl).infoModalAccepted,
+      )
+    })
   })
 
   beforeEach(() => {
     const appUrl = constants.TX_Builder_url
     iframeSelector = `iframe[id="iframe-${appUrl}"]`
     const visitUrl = `/apps/open?safe=${safeAppSafes.SEP_SAFEAPP_SAFE_1}&appUrl=${encodeURIComponent(appUrl)}`
-
-    cy.clearLocalStorage()
     cy.visit(visitUrl)
-    main.acceptCookies()
-    safeapps.clickOnContinueBtn()
   })
 
   it('Verify a simple batch can be created', () => {
@@ -69,7 +73,7 @@ describe('Transaction Builder tests', { defaultCommandTimeout: 20000 }, () => {
       getBody().findByText(safeapps.sendBatchStr).click()
     })
     cy.get('h4').contains(safeapps.transactionBuilderStr).should('be.visible')
-    cy.findAllByText(safeapps.testBooleanValue).should('have.length', 3)
+    cy.findAllByText(safeapps.testBooleanValue).should('have.length', 6)
     navigation.clickOnModalCloseBtn()
     cy.enter(iframeSelector).then((getBody) => {
       getBody().findAllByText(constants.SEPOLIA_CONTRACT_SHORT).should('have.length', 3)
@@ -188,7 +192,7 @@ describe('Transaction Builder tests', { defaultCommandTimeout: 20000 }, () => {
       getBody().findByText(safeapps.sendBatchStr).click()
     })
     cy.get('h4').contains(safeapps.transactionBuilderStr).should('be.visible')
-    cy.findAllByText(safeapps.testAddressValueStr).should('have.length', 2)
+    cy.findAllByText(safeapps.testAddressValueStr).should('have.length', 4)
     navigation.clickOnModalCloseBtn()
     cy.enter(iframeSelector).then((getBody) => {
       getBody().findAllByText(constants.SEPOLIA_CONTRACT_SHORT).should('have.length', 2)
@@ -206,7 +210,7 @@ describe('Transaction Builder tests', { defaultCommandTimeout: 20000 }, () => {
     })
   })
 
-  it.skip('Verify a batch cannot be created without asset amount', () => {
+  it('Verify a batch cannot be created without asset amount', () => {
     cy.enter(iframeSelector).then((getBody) => {
       getBody().findByLabelText(safeapps.enterAddressStr).type(safeAppSafes.SEP_SAFEAPP_SAFE_2)
       getBody().findByText(safeapps.keepProxiABIStr).click()
@@ -276,7 +280,7 @@ describe('Transaction Builder tests', { defaultCommandTimeout: 20000 }, () => {
     })
   })
 
-  it.skip('Verify a valid batch as successful can be simulated', () => {
+  it('Verify a valid batch as successful can be simulated', () => {
     cy.enter(iframeSelector).then((getBody) => {
       getBody().findByLabelText(safeapps.enterAddressStr).type(safeAppSafes.SEP_SAFEAPP_SAFE_2)
       getBody().findByText(safeapps.keepProxiABIStr).click()
@@ -289,7 +293,7 @@ describe('Transaction Builder tests', { defaultCommandTimeout: 20000 }, () => {
     })
   })
 
-  it.skip('Verify an invalid batch as failed can be simulated', () => {
+  it('Verify an invalid batch as failed can be simulated', () => {
     cy.enter(iframeSelector).then((getBody) => {
       getBody().findByLabelText(safeapps.enterAddressStr).type(safeAppSafes.SEP_SAFEAPP_SAFE_2)
       getBody().findByText(safeapps.keepProxiABIStr).click()

@@ -8,6 +8,7 @@ import { addressBookSlice, selectAllAddressBooks } from '@/store/addressBookSlic
 import { addedSafesSlice, selectAllAddedSafes } from '@/store/addedSafesSlice'
 import { safeAppsSlice, selectSafeApps } from '@/store/safeAppsSlice'
 import { selectSettings, settingsSlice } from '@/store/settingsSlice'
+import { selectUndeployedSafes, undeployedSafesSlice } from '@/features/counterfactual/store/undeployedSafesSlice'
 import { ImportFileUpload } from '@/components/settings/DataManagement/ImportFileUpload'
 import { ImportDialog } from '@/components/settings/DataManagement/ImportDialog'
 import { SAFE_EXPORT_VERSION } from '@/components/settings/DataManagement/useGlobalImportFileParser'
@@ -29,6 +30,7 @@ export const exportAppData = () => {
     [addedSafesSlice.name]: addedSafes,
     [settingsSlice.name]: setting,
     [safeAppsSlice.name]: safeApps,
+    [undeployedSafesSlice.name]: undeployedSafes,
   } = getPersistedState()
 
   // Ensure they are under the same name as the slice
@@ -37,6 +39,7 @@ export const exportAppData = () => {
     [addedSafesSlice.name]: addedSafes,
     [settingsSlice.name]: setting,
     [safeAppsSlice.name]: safeApps,
+    [undeployedSafesSlice.name]: undeployedSafes,
   }
 
   const data = JSON.stringify({ version: SAFE_EXPORT_VERSION.V2, data: exportData })
@@ -59,6 +62,7 @@ const DataManagement = () => {
   const addressBook = useAppSelector(selectAllAddressBooks)
   const settings = useAppSelector(selectSettings)
   const safeApps = useAppSelector(selectSafeApps)
+  const undeployedSafes = useAppSelector(selectUndeployedSafes)
 
   useEffect(() => {
     // Prevent hydration errors
@@ -96,6 +100,7 @@ const DataManagement = () => {
               addressBook={addressBook}
               settings={settings}
               safeApps={safeApps}
+              undeployedSafes={undeployedSafes}
             />
           </Grid>
         </Grid>

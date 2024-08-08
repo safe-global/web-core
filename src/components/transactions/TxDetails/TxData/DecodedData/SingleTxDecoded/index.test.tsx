@@ -11,7 +11,6 @@ describe('SingleTxDecoded', () => {
     const result = render(
       <SingleTxDecoded
         actionTitle="0"
-        showDelegateCallWarning
         tx={{
           data: '0x',
           operation: Operation.CALL,
@@ -37,7 +36,6 @@ describe('SingleTxDecoded', () => {
     const result = render(
       <SingleTxDecoded
         actionTitle="0"
-        showDelegateCallWarning
         tx={{
           data: ERC20__factory.createInterface().encodeFunctionData('approve', [spender, '100000']),
           operation: Operation.CALL,
@@ -61,7 +59,6 @@ describe('SingleTxDecoded', () => {
     const result = render(
       <SingleTxDecoded
         actionTitle="0"
-        showDelegateCallWarning
         tx={{
           data: ERC20__factory.createInterface().encodeFunctionData('approve', [spender, '100000']),
           operation: Operation.CALL,
