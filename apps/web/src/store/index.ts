@@ -27,6 +27,7 @@ import * as hydrate from './useHydrateStore'
 import { ofacApi } from '@/store/api/ofac'
 import { safePassApi } from './api/safePass'
 import { version as termsVersion } from '@/markdown/terms/version'
+import { safenetApi } from './safenet'
 
 const rootReducer = combineReducers({
   [slices.chainsSlice.name]: slices.chainsSlice.reducer,
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
   [ofacApi.reducerPath]: ofacApi.reducer,
   [safePassApi.reducerPath]: safePassApi.reducer,
   [slices.gatewayApi.reducerPath]: slices.gatewayApi.reducer,
+  [safenetApi.reducerPath]: safenetApi.reducer,
 })
 
 const persistedSlices: (keyof Partial<RootState>)[] = [
@@ -87,6 +89,7 @@ const middleware: Middleware<{}, RootState>[] = [
   ofacApi.middleware,
   safePassApi.middleware,
   slices.gatewayApi.middleware,
+  safenetApi.middleware,
 ]
 const listeners = [safeMessagesListener, txHistoryListener, txQueueListener, swapOrderListener, swapOrderStatusListener]
 

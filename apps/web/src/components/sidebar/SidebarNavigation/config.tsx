@@ -98,6 +98,10 @@ export const balancesNavItems = [
 
 export const settingsNavItems = [
   {
+    label: 'SafeNet',
+    href: AppRoutes.settings.safenet,
+  },
+  {
     label: 'Setup',
     href: AppRoutes.settings.setup,
   },

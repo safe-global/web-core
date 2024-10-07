@@ -43,6 +43,7 @@ export const AppRoutes = {
     safeApps: {
       index: '/settings/safe-apps',
     },
+    safenet: '/settings/safenet',
   },
   share: {
     safeApp: '/share/safe-app',

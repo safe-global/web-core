@@ -106,6 +106,11 @@ export const createRemoveGuardTx = async (): Promise<SafeTransaction> => {
   return safeSDK.createDisableGuardTx()
 }
 
+export const createEnableGuardTx = async (guardAddress: string): Promise<SafeTransaction> => {
+  const safeSDK = getAndValidateSafeSDK()
+  return safeSDK.createEnableGuardTx(guardAddress)
+}
+
 /**
  * Create a rejection tx
  */
