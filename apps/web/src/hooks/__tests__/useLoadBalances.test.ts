@@ -1,4 +1,5 @@
 import * as store from '@/store'
+import * as safeNetStore from '@/store/safenet'
 import { defaultSafeInfo } from '@/store/safeInfoSlice'
 import { act, renderHook, waitFor } from '@/tests/test-utils'
 import { toBeHex } from 'ethers'
@@ -97,6 +98,35 @@ describe('useLoadBalances', () => {
     jest.clearAllMocks()
     localStorage.clear()
     jest.spyOn(useChainId, 'useChainId').mockReturnValue('5')
+    jest.spyOn(safeNetStore, 'useGetSafeNetConfigQuery').mockReturnValue({
+      data: {
+        chains: {
+          sources: [11155111],
+          destinations: [84532, 11155420],
+        },
+        guards: {
+          '84532': '0x865544E0599589BA604b0449858695937d571382',
+          '11155111': '0x865544E0599589BA604b0449858695937d571382',
+          '11155420': '0x865544E0599589BA604b0449858695937d571382',
+        },
+        tokens: {
+          USDC: {
+            '84532': '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+            '11155111': '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+            '11155420': '0x5fd84259d66Cd46123540766Be93DFE6D43130D7',
+          },
+          DAI: {
+            '84532': '0xE6F6e27c0BF1a4841E3F09d03D7D31Da8eAd0a27',
+            '11155111': '0xB4F1737Af37711e9A5890D9510c9bB60e170CB0D',
+            '11155420': '0x0091f4e75a03C11cB9be8E3717219005eb780D89',
+          },
+        },
+      },
+      isLoading: false,
+      error: undefined,
+      isSuccess: true,
+      refetch: jest.fn(),
+    })
   })
 
   test('without selected Safe', async () => {

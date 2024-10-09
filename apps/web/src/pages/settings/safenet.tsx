@@ -10,26 +10,23 @@ import { sameAddress } from '@/utils/addresses'
 import { useContext, useEffect, useMemo } from 'react'
 import { TxModalContext } from '@/components/tx-flow'
 import { EnableSafenetFlow } from '@/components/tx-flow/flows/EnableSafenet'
-import type { SafenetConfigEntity } from '@/store/safenet'
+import type { SafeNetConfigEntity } from '@/store/safenet'
 import {
-  useGetSafenetConfigQuery,
   useLazyGetSafeNetOffchainStatusQuery,
   useRegisterSafeNetMutation,
+  useGetSafeNetConfigQuery,
 } from '@/store/safenet'
 import type { ExtendedSafeInfo } from '@/store/safeInfoSlice'
 import { SAFE_FEATURES } from '@safe-global/protocol-kit/dist/src/utils'
 import { hasSafeFeature } from '@/utils/safe-versions'
+import { SafenetChainType, isSupportedChain } from '@/utils/safenet'
 
-const isSupportedChain = (chainId: number, safenetConfig: SafenetConfigEntity) => {
-  return safenetConfig.chains.sources.includes(chainId)
-}
-
-const getSafenetTokensByChain = (chainId: number, safenetConfig: SafenetConfigEntity): string[] => {
-  const tokenSymbols = Object.keys(safenetConfig.tokens)
+const getSafeNetTokensByChain = (chainId: number, safeNetConfig: SafeNetConfigEntity): string[] => {
+  const tokenSymbols = Object.keys(safeNetConfig.tokens)
 
   const tokens: string[] = []
   for (const symbol of tokenSymbols) {
-    const tokenAddress = safenetConfig.tokens[symbol][chainId]
+    const tokenAddress = safeNetConfig.tokens[symbol][chainId]
     if (tokenAddress) {
       tokens.push(tokenAddress)
     }
@@ -38,11 +35,11 @@ const getSafenetTokensByChain = (chainId: number, safenetConfig: SafenetConfigEn
   return tokens
 }
 
-const SafeNetContent = ({ safenetConfig, safe }: { safenetConfig: SafenetConfigEntity; safe: ExtendedSafeInfo }) => {
+const SafeNetContent = ({ safeNetConfig, safe }: { safeNetConfig: SafeNetConfigEntity; safe: ExtendedSafeInfo }) => {
   const isVersionWithGuards = hasSafeFeature(SAFE_FEATURES.SAFE_TX_GUARDS, safe.version)
-  const safenetGuardAddress = safenetConfig.guards[safe.chainId]
-  const isSafeNetGuardEnabled = isVersionWithGuards && sameAddress(safe.guard?.value, safenetGuardAddress)
-  const chainSupported = isSupportedChain(Number(safe.chainId), safenetConfig)
+  const safeNetGuardAddress = safeNetConfig.guards[safe.chainId]
+  const isSafeNetGuardEnabled = isVersionWithGuards && sameAddress(safe.guard?.value, safeNetGuardAddress)
+  const chainSupported = isSupportedChain(Number(safe.chainId), safeNetConfig, SafenetChainType.SOURCE)
   const { setTxFlow } = useContext(TxModalContext)
 
   // Lazy query because running it on unsupported chain throws an error
@@ -59,16 +56,16 @@ const SafeNetContent = ({ safenetConfig, safe }: { safenetConfig: SafenetConfigE
   // @ts-expect-error bad types. We don't want 404 to be an error - it just means that the safe is not registered
   const offchainLookupError = safeNetOffchainStatusError?.status === 404 ? null : safeNetOffchainStatusError
   const registeredOffchainStatus =
-    !offchainLookupError && sameAddress(safeNetOffchainStatus?.guard, safenetGuardAddress)
+    !offchainLookupError && sameAddress(safeNetOffchainStatus?.guard, safeNetGuardAddress)
 
-  const safenetStatusQueryWorked =
+  const safeNetStatusQueryWorked =
     safeNetOffchainStatusStatus === QueryStatus.fulfilled || safeNetOffchainStatusStatus === QueryStatus.rejected
-  const needsRegistration = safenetStatusQueryWorked && isSafeNetGuardEnabled && !registeredOffchainStatus
+  const needsRegistration = safeNetStatusQueryWorked && isSafeNetGuardEnabled && !registeredOffchainStatus
   const [registerSafeNet, { error: registerSafeNetError }] = useRegisterSafeNetMutation()
   const error = offchainLookupError || registerSafeNetError
-  const safenetAssets = useMemo(
-    () => getSafenetTokensByChain(Number(safe.chainId), safenetConfig),
-    [safe.chainId, safenetConfig],
+  const safeNetAssets = useMemo(
+    () => getSafeNetTokensByChain(Number(safe.chainId), safeNetConfig),
+    [safe.chainId, safeNetConfig],
   )
 
   if (error) {
@@ -92,7 +89,7 @@ const SafeNetContent = ({ safenetConfig, safe }: { safenetConfig: SafenetConfigE
       return (
         <Typography>
           SafeNet is not supported on this chain. List of supported chains ids:{' '}
-          {safenetConfig.chains.sources.join(', ')}
+          {safeNetConfig.chains.sources.join(', ')}
         </Typography>
       )
     case !isVersionWithGuards:
@@ -107,7 +104,7 @@ const SafeNetContent = ({ safenetConfig, safe }: { safenetConfig: SafenetConfigE
             variant="contained"
             onClick={() =>
               setTxFlow(
-                <EnableSafenetFlow guardAddress={safenetGuardAddress} tokensForPresetAllowances={safenetAssets} />,
+                <EnableSafenetFlow guardAddress={safeNetGuardAddress} tokensForPresetAllowances={safeNetAssets} />,
               )
             }
             sx={{ mt: 2 }}
@@ -125,22 +122,22 @@ const SafeNetContent = ({ safenetConfig, safe }: { safenetConfig: SafenetConfigE
 
 const SafeNetPage: NextPage = () => {
   const { safe, safeLoaded } = useSafeInfo()
-  const { data: safenetConfig, isLoading: safenetConfigLoading, error: safenetConfigError } = useGetSafenetConfigQuery()
+  const { data: safeNetConfig, isLoading: safeNetConfigLoading, error: safeNetConfigError } = useGetSafeNetConfigQuery()
 
-  if (!safeLoaded || safenetConfigLoading) {
+  if (!safeLoaded || safeNetConfigLoading) {
     return <CircularProgress />
   }
 
-  if (safenetConfigError) {
+  if (safeNetConfigError) {
     return <Typography>Error loading SafeNet config</Typography>
   }
 
-  if (!safenetConfig) {
+  if (!safeNetConfig) {
     // Should never happen, making TS happy
     return <Typography>No SafeNet config found</Typography>
   }
 
-  const safenetContent = <SafeNetContent safenetConfig={safenetConfig} safe={safe} />
+  const safeNetContent = <SafeNetContent safeNetConfig={safeNetConfig} safe={safe} />
 
   return (
     <>
@@ -174,7 +171,7 @@ const SafeNetPage: NextPage = () => {
             </Grid>
 
             <Grid item xs>
-              {safenetContent}
+              {safeNetContent}
             </Grid>
           </Grid>
         </Paper>

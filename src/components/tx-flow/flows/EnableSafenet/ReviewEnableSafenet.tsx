@@ -19,7 +19,7 @@ export const ReviewEnableSafenet = ({ params }: { params: EnableSafenetFlowProps
   useEffect(() => {
     async function getTxs(): Promise<SafeTransaction> {
       if (params.tokensForPresetAllowances.length === 0) {
-        return await createEnableGuardTx(params.guardAddress)
+        return createEnableGuardTx(params.guardAddress)
       }
 
       const txs: MetaTransactionData[] = [(await createEnableGuardTx(params.guardAddress)).data]
