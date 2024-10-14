@@ -32,7 +32,7 @@ const convertSafeNetBalanceToSafeClientGatewayBalance = (
       tokenInfo: {
         type: TokenType.ERC20,
         address: tokenAddress,
-        decimals: 18,
+        decimals: tokenName === 'USDC' ? 6 : 18,
         symbol: tokenName,
         name: `${tokenName} (SafeNet)`,
         logoUri: '',

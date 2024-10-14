@@ -20,6 +20,7 @@ import type { ExtendedSafeInfo } from '@/store/safeInfoSlice'
 import { SAFE_FEATURES } from '@safe-global/protocol-kit/dist/src/utils'
 import { hasSafeFeature } from '@/utils/safe-versions'
 import { SafenetChainType, isSupportedChain } from '@/utils/safenet'
+import { getRTKErrorMessage } from '@/utils/redux-toolkit-query'
 
 const getSafeNetTokensByChain = (chainId: number, safeNetConfig: SafeNetConfigEntity): string[] => {
   const tokenSymbols = Object.keys(safeNetConfig.tokens)
@@ -38,6 +39,7 @@ const getSafeNetTokensByChain = (chainId: number, safeNetConfig: SafeNetConfigEn
 const SafeNetContent = ({ safeNetConfig, safe }: { safeNetConfig: SafeNetConfigEntity; safe: ExtendedSafeInfo }) => {
   const isVersionWithGuards = hasSafeFeature(SAFE_FEATURES.SAFE_TX_GUARDS, safe.version)
   const safeNetGuardAddress = safeNetConfig.guards[safe.chainId]
+  const safeNetProcessorAddress = safeNetConfig.processors[safe.chainId]
   const isSafeNetGuardEnabled = isVersionWithGuards && sameAddress(safe.guard?.value, safeNetGuardAddress)
   const chainSupported = isSupportedChain(Number(safe.chainId), safeNetConfig, SafenetChainType.SOURCE)
   const { setTxFlow } = useContext(TxModalContext)
@@ -69,7 +71,7 @@ const SafeNetContent = ({ safeNetConfig, safe }: { safeNetConfig: SafeNetConfigE
   )
 
   if (error) {
-    throw error
+    throw getRTKErrorMessage(error)
   }
 
   useEffect(() => {
@@ -104,7 +106,11 @@ const SafeNetContent = ({ safeNetConfig, safe }: { safeNetConfig: SafeNetConfigE
             variant="contained"
             onClick={() =>
               setTxFlow(
-                <EnableSafenetFlow guardAddress={safeNetGuardAddress} tokensForPresetAllowances={safeNetAssets} />,
+                <EnableSafenetFlow
+                  guardAddress={safeNetGuardAddress}
+                  tokensForPresetAllowances={safeNetAssets}
+                  allowanceSpender={safeNetProcessorAddress}
+                />,
               )
             }
             sx={{ mt: 2 }}

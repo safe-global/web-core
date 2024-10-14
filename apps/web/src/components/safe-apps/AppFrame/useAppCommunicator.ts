@@ -34,6 +34,10 @@ import { useAppSelector } from '@/store'
 import { selectRpc } from '@/store/settingsSlice'
 import { createSafeAppsWeb3Provider } from '@/hooks/wallets/web3'
 import { useDarkMode } from '@/hooks/useDarkMode'
+import { useGetSafeNetConfigQuery } from '@/store/safenet'
+import { QueryStatus } from '@reduxjs/toolkit/query'
+import { SafenetChainType, isSupportedChain } from '@/utils/safenet'
+import { SAFENET_API_URL } from '@/config/constants'
 
 export enum CommunicatorMessages {
   REJECT_TRANSACTION_MESSAGE = 'Transaction was rejected',
@@ -75,14 +79,24 @@ const useAppCommunicator = (
   const [communicator, setCommunicator] = useState<AppCommunicator | undefined>(undefined)
   const customRpc = useAppSelector(selectRpc)
   const isDarkMode = useDarkMode()
+  const { data: safeNetConfig, status: safeNetConfigStatus } = useGetSafeNetConfigQuery()
+  const shouldUseSafeNetRpc =
+    safeNetConfigStatus === QueryStatus.fulfilled &&
+    chain &&
+    safeNetConfig &&
+    isSupportedChain(Number(chain.chainId), safeNetConfig, SafenetChainType.DESTINATION)
 
   const safeAppWeb3Provider = useMemo(() => {
     if (!chain) {
       return
     }
 
+    if (shouldUseSafeNetRpc) {
+      return createSafeAppsWeb3Provider(chain, SAFENET_API_URL + `/jsonrpc/${chain.chainId}/`)
+    }
+
     return createSafeAppsWeb3Provider(chain, customRpc?.[chain.chainId])
-  }, [chain, customRpc])
+  }, [chain, customRpc, shouldUseSafeNetRpc])
 
   useEffect(() => {
     let communicatorInstance: AppCommunicator
@@ -228,7 +242,7 @@ const useAppCommunicator = (
         msg.data.id,
       )
     })
-  }, [safeAppWeb3Provider, handlers, chain, communicator, isDarkMode])
+  }, [safeAppWeb3Provider, handlers, chain, communicator, shouldUseSafeNetRpc, isDarkMode])
 
   return communicator
 }

@@ -15,6 +15,7 @@ export type SafeNetConfigEntity = {
   }
   guards: Record<string, string>
   tokens: Record<string, Record<string, string>>
+  processors: Record<string, string>
 }
 
 export type SafeNetBalanceEntity = {

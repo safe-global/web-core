@@ -26,7 +26,7 @@ export const ReviewEnableSafenet = ({ params }: { params: EnableSafenetFlowProps
       params.tokensForPresetAllowances.forEach((tokenAddress) => {
         txs.push({
           to: tokenAddress,
-          data: ERC20_INTERFACE.encodeFunctionData('approve', [params.guardAddress, UNLIMITED_APPROVAL_AMOUNT]),
+          data: ERC20_INTERFACE.encodeFunctionData('approve', [params.allowanceSpender, UNLIMITED_APPROVAL_AMOUNT]),
           value: '0',
           operation: OperationType.Call,
         })
@@ -36,7 +36,7 @@ export const ReviewEnableSafenet = ({ params }: { params: EnableSafenetFlowProps
     }
 
     getTxs().then(setSafeTx).catch(setSafeTxError)
-  }, [setSafeTx, setSafeTxError, params.guardAddress, params.tokensForPresetAllowances])
+  }, [setSafeTx, setSafeTxError, params.allowanceSpender, params.tokensForPresetAllowances, params.guardAddress])
 
   useEffect(() => {
     if (safeTxError) {
