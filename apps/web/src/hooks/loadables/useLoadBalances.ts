@@ -27,10 +27,18 @@ export const useTokenListSetting = (): boolean | undefined => {
   return isTrustedTokenList
 }
 
-const mergeBalances = (balance1: SafeBalanceResponse, balance2: SafeBalanceResponse): SafeBalanceResponse => {
+const mergeBalances = (cgw: SafeBalanceResponse, sn: SafeBalanceResponse): SafeBalanceResponse => {
+  // Create a Map using token addresses as keys
+  const uniqueBalances = new Map(
+    // Process SafeNet items last so they take precedence by overwriting the CGW items
+    [...cgw.items, ...sn.items].map((item) => [item.tokenInfo.address, item]),
+  )
+
   return {
-    fiatTotal: balance1.fiatTotal + balance2.fiatTotal,
-    items: [...balance1.items, ...balance2.items],
+    // We do not sum the fiatTotal as SafeNet doesn't return it
+    // And if it did, we would have to do something fancy with calculations so balances aren't double counted
+    fiatTotal: cgw.fiatTotal,
+    items: Array.from(uniqueBalances.values()),
   }
 }
 
