@@ -11,6 +11,7 @@ import SignForm from './SignForm'
 import { SafeTxContext } from '@/components/tx-flow/SafeTxProvider'
 import ErrorMessage from '../ErrorMessage'
 import TxChecks from './TxChecks'
+import SafeNetTxChecks from './SafeNetTxChecks'
 import TxCard from '@/components/tx-flow/common/TxCard'
 import ConfirmationTitle, { ConfirmationTitleTypes } from '@/components/tx/SignOrExecuteForm/ConfirmationTitle'
 import { useAppSelector } from '@/store'
@@ -197,6 +198,7 @@ export const SignOrExecuteForm = ({
       <TxNoteForm isCreation={isCreation ?? false} onSubmit={onNoteSubmit} txDetails={props.txDetails} />
 
       <SignerForm willExecute={willExecute} />
+      <SafeNetTxChecks />
 
       <TxCard>
         <ConfirmationTitle

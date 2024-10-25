@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-1) var(--space-2);
+  border-width: 1px;
+}
+
+.errorSummary {
+  padding: calc(var(--space-1) * 2) calc(var(--space-2) * 2) var(--space-1) calc(var(--space-2) * 2);
+}
