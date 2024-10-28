@@ -2,13 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { SAFENET_API_URL } from '@/config/constants'
 
-export type SafeNetSafeEntity = {
+export type SafenetSafeEntity = {
   safe: string
   chainId: number
   guard: string
 }
 
-export type SafeNetConfigEntity = {
+export type SafenetConfigEntity = {
   chains: {
     sources: number[]
     destinations: number[]
@@ -18,11 +18,11 @@ export type SafeNetConfigEntity = {
   processors: Record<string, string>
 }
 
-export type SafeNetBalanceEntity = {
+export type SafenetBalanceEntity = {
   [tokenSymbol: string]: string
 }
 
-export type SafeNetSimulateTx = {
+export type SafenetSimulateTx = {
   safe: string
   safeTxHash: string
   to: string
@@ -38,26 +38,26 @@ export type SafeNetSimulateTx = {
   dataDecoded: unknown
 }
 
-export type SafeNetSimulationResultSuccess = {
+export type SafenetSimulationResultSuccess = {
   success: true
 }
 
-export type SafeNetSimulationResultFailure = {
+export type SafenetSimulationResultFailure = {
   success: false
   message: string
 }
 
-export type SafeNetSimulationResult = {
+export type SafenetSimulationResult = {
   guarantee: string
   success: boolean
-} & (SafeNetSimulationResultSuccess | SafeNetSimulationResultFailure)
+} & (SafenetSimulationResultSuccess | SafenetSimulationResultFailure)
 
-export type SafeNetSimulationResponse = {
+export type SafenetSimulationResponse = {
   hasError: boolean
-  results: SafeNetSimulationResult[]
+  results: SafenetSimulationResult[]
 }
 
-export const getSafeNetBalances = async (chainId: string, safeAddress: string): Promise<SafeNetBalanceEntity> => {
+export const getSafenetBalances = async (chainId: string, safeAddress: string): Promise<SafenetBalanceEntity> => {
   const response = await fetch(`${SAFENET_API_URL}/safenet/balances/${chainId}/${safeAddress}`)
   const data = await response.json()
   return data
@@ -66,17 +66,17 @@ export const getSafeNetBalances = async (chainId: string, safeAddress: string): 
 export const safenetApi = createApi({
   reducerPath: 'safenetApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${SAFENET_API_URL}/safenet` }),
-  tagTypes: ['SafeNetConfig', 'SafeNetOffchainStatus', 'SafeNetBalance', 'SafeNetSimulation'],
+  tagTypes: ['SafenetConfig', 'SafenetOffchainStatus', 'SafenetBalance', 'SafenetSimulation'],
   endpoints: (builder) => ({
-    getSafeNetConfig: builder.query<SafeNetConfigEntity, void>({
+    getSafenetConfig: builder.query<SafenetConfigEntity, void>({
       query: () => `/config/`,
-      providesTags: ['SafeNetConfig'],
+      providesTags: ['SafenetConfig'],
     }),
-    getSafeNetOffchainStatus: builder.query<SafeNetSafeEntity, { chainId: string; safeAddress: string }>({
+    getSafenetOffchainStatus: builder.query<SafenetSafeEntity, { chainId: string; safeAddress: string }>({
       query: ({ chainId, safeAddress }) => `/safes/${chainId}/${safeAddress}`,
-      providesTags: (_, __, arg) => [{ type: 'SafeNetOffchainStatus', id: arg.safeAddress }],
+      providesTags: (_, __, arg) => [{ type: 'SafenetOffchainStatus', id: arg.safeAddress }],
     }),
-    registerSafeNet: builder.mutation<boolean, { chainId: string; safeAddress: string }>({
+    registerSafenet: builder.mutation<boolean, { chainId: string; safeAddress: string }>({
       query: ({ chainId, safeAddress }) => ({
         url: `/register`,
         method: 'POST',
@@ -85,17 +85,17 @@ export const safenetApi = createApi({
           safe: safeAddress,
         },
       }),
-      invalidatesTags: (_, __, arg) => [{ type: 'SafeNetOffchainStatus', id: arg.safeAddress }],
+      invalidatesTags: (_, __, arg) => [{ type: 'SafenetOffchainStatus', id: arg.safeAddress }],
     }),
-    getSafeNetBalance: builder.query<SafeNetBalanceEntity, { chainId: string; safeAddress: string }>({
+    getSafenetBalance: builder.query<SafenetBalanceEntity, { chainId: string; safeAddress: string }>({
       query: ({ chainId, safeAddress }) => `/balances/${chainId}/${safeAddress}`,
-      providesTags: (_, __, arg) => [{ type: 'SafeNetBalance', id: arg.safeAddress }],
+      providesTags: (_, __, arg) => [{ type: 'SafenetBalance', id: arg.safeAddress }],
     }),
-    simulateSafeNetTx: builder.query<
-      SafeNetSimulationResponse,
+    simulateSafenetTx: builder.query<
+      SafenetSimulationResponse,
       {
         chainId: string
-        tx: SafeNetSimulateTx
+        tx: SafenetSimulateTx
       }
     >({
       query: ({ chainId, tx }) => ({
@@ -103,15 +103,15 @@ export const safenetApi = createApi({
         method: 'POST',
         body: tx,
       }),
-      providesTags: (_, __, arg) => [{ type: 'SafeNetSimulation', id: arg.tx.safeTxHash }],
+      providesTags: (_, __, arg) => [{ type: 'SafenetSimulation', id: arg.tx.safeTxHash }],
     }),
   }),
 })
 
 export const {
-  useLazyGetSafeNetOffchainStatusQuery,
-  useRegisterSafeNetMutation,
-  useGetSafeNetConfigQuery,
-  useLazyGetSafeNetBalanceQuery,
-  useLazySimulateSafeNetTxQuery,
+  useLazyGetSafenetOffchainStatusQuery,
+  useRegisterSafenetMutation,
+  useGetSafenetConfigQuery,
+  useLazyGetSafenetBalanceQuery,
+  useLazySimulateSafenetTxQuery,
 } = safenetApi

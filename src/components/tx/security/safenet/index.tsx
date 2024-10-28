@@ -3,13 +3,13 @@ import type { SafeTransaction } from '@safe-global/safe-core-sdk-types'
 import useDecodeTx from '@/hooks/useDecodeTx'
 import CheckIcon from '@/public/images/common/check.svg'
 import CloseIcon from '@/public/images/common/close.svg'
-import type { SafeNetSimulationResponse } from '@/store/safenet'
-import { useLazySimulateSafeNetTxQuery } from '@/store/safenet'
+import type { SafenetSimulationResponse } from '@/store/safenet'
+import { useLazySimulateSafenetTxQuery } from '@/store/safenet'
 import { useEffect, type ReactElement } from 'react'
 import css from './styles.module.css'
 import { hashTypedData } from '@/utils/web3'
 
-export type SafeNetTxSimulationProps = {
+export type SafenetTxSimulationProps = {
   safe: string
   chainId: string
   safeTx?: SafeTransaction
@@ -29,7 +29,7 @@ function _getGuaranteeDisplayName(guarantee: string): string {
 
 function _groupResultGuarantees({
   results,
-}: Pick<SafeNetSimulationResponse, 'results'>): { display: string; success: boolean }[] {
+}: Pick<SafenetSimulationResponse, 'results'>): { display: string; success: boolean }[] {
   const groups = results.reduce((groups, { guarantee, success }) => {
     const display = _getGuaranteeDisplayName(guarantee)
     return {
@@ -42,7 +42,7 @@ function _groupResultGuarantees({
     .sort((a, b) => a.display.localeCompare(b.display))
 }
 
-function _getSafeTxHash({ safe, chainId, safeTx }: Required<SafeNetTxSimulationProps>): string {
+function _getSafeTxHash({ safe, chainId, safeTx }: Required<SafenetTxSimulationProps>): string {
   return hashTypedData({
     domain: {
       chainId,
@@ -66,9 +66,9 @@ function _getSafeTxHash({ safe, chainId, safeTx }: Required<SafeNetTxSimulationP
   })
 }
 
-const SafeNetTxTxSimulationSummary = ({ simulation }: { simulation: SafeNetSimulationResponse }): ReactElement => {
+const SafenetTxTxSimulationSummary = ({ simulation }: { simulation: SafenetSimulationResponse }): ReactElement => {
   if (simulation.results.length === 0) {
-    return <Typography>No SafeNet checks enabled...</Typography>
+    return <Typography>No Safenet checks enabled...</Typography>
   }
 
   const guarantees = _groupResultGuarantees(simulation)
@@ -77,7 +77,7 @@ const SafeNetTxTxSimulationSummary = ({ simulation }: { simulation: SafeNetSimul
     <Paper variant="outlined" className={css.wrapper}>
       {simulation.hasError && (
         <Typography color="error" className={css.errorSummary}>
-          One or more SafeNet checks failed!
+          One or more Safenet checks failed!
         </Typography>
       )}
 
@@ -99,9 +99,9 @@ const SafeNetTxTxSimulationSummary = ({ simulation }: { simulation: SafeNetSimul
   )
 }
 
-export const SafeNetTxSimulation = ({ safe, chainId, safeTx }: SafeNetTxSimulationProps): ReactElement | null => {
+export const SafenetTxSimulation = ({ safe, chainId, safeTx }: SafenetTxSimulationProps): ReactElement | null => {
   const [dataDecoded] = useDecodeTx(safeTx)
-  const [simulate, { data: simulation, status }] = useLazySimulateSafeNetTxQuery()
+  const [simulate, { data: simulation, status }] = useLazySimulateSafenetTxQuery()
 
   useEffect(() => {
     if (!safeTx || !dataDecoded) {
@@ -134,12 +134,12 @@ export const SafeNetTxSimulation = ({ safe, chainId, safeTx }: SafeNetTxSimulati
 
   switch (status) {
     case 'fulfilled':
-      return <SafeNetTxTxSimulationSummary simulation={simulation!} />
+      return <SafenetTxTxSimulationSummary simulation={simulation!} />
     case 'rejected':
       return (
         <Typography color="error">
           <SvgIcon component={CloseIcon} inheritViewBox fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />
-          Unexpected error simulating with SafeNet!
+          Unexpected error simulating with Safenet!
         </Typography>
       )
     default:

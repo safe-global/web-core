@@ -1,5 +1,5 @@
 import * as store from '@/store'
-import * as safeNetStore from '@/store/safenet'
+import * as safenetStore from '@/store/safenet'
 import { defaultSafeInfo } from '@/store/safeInfoSlice'
 import { act, renderHook, waitFor } from '@/tests/test-utils'
 import { toBeHex } from 'ethers'
@@ -98,7 +98,7 @@ describe('useLoadBalances', () => {
     jest.clearAllMocks()
     localStorage.clear()
     jest.spyOn(useChainId, 'useChainId').mockReturnValue('5')
-    jest.spyOn(safeNetStore, 'useGetSafeNetConfigQuery').mockReturnValue({
+    jest.spyOn(safenetStore, 'useGetSafenetConfigQuery').mockReturnValue({
       data: {
         chains: {
           sources: [11155111],

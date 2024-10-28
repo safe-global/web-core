@@ -51,7 +51,7 @@ export const ReviewEnableSafenet = ({ params }: { params: EnableSafenetFlowProps
       <EthHashInfo address={params.guardAddress} showCopyButton hasExplorer shortAddress={false} />
 
       <Typography my={2}>
-        Once the transaction guard has been enabled, SafeNet will be enabled for your Safe.
+        Once the transaction guard has been enabled, Safenet will be enabled for your Safe.
       </Typography>
     </SignOrExecuteForm>
   )

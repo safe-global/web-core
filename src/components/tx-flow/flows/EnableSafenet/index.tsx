@@ -9,7 +9,7 @@ export type EnableSafenetFlowProps = {
 
 const EnableSafenetFlow = ({ guardAddress, tokensForPresetAllowances, allowanceSpender }: EnableSafenetFlowProps) => {
   return (
-    <TxLayout title="Confirm transaction" subtitle="Enable SafeNet">
+    <TxLayout title="Confirm transaction" subtitle="Enable Safenet">
       <ReviewEnableSafenet params={{ guardAddress, tokensForPresetAllowances, allowanceSpender }} />
     </TxLayout>
   )

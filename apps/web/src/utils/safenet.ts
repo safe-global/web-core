@@ -1,4 +1,4 @@
-import type { SafeNetBalanceEntity, SafeNetConfigEntity } from '@/store/safenet'
+import type { SafenetBalanceEntity, SafenetConfigEntity } from '@/store/safenet'
 import { TokenType, type SafeBalanceResponse } from '@safe-global/safe-gateway-typescript-sdk'
 
 const enum SafenetChainType {
@@ -6,24 +6,24 @@ const enum SafenetChainType {
   DESTINATION = 'destination',
 }
 
-const isSupportedChain = (chainId: number, safeNetConfig: SafeNetConfigEntity, chainType: SafenetChainType) => {
+const isSupportedChain = (chainId: number, safenetConfig: SafenetConfigEntity, chainType: SafenetChainType) => {
   return chainType === SafenetChainType.SOURCE
-    ? safeNetConfig.chains.sources.includes(chainId)
-    : safeNetConfig.chains.destinations.includes(chainId)
+    ? safenetConfig.chains.sources.includes(chainId)
+    : safenetConfig.chains.destinations.includes(chainId)
 }
 
-const convertSafeNetBalanceToSafeClientGatewayBalance = (
-  safeNetBalance: SafeNetBalanceEntity,
-  safeNetConfig: SafeNetConfigEntity,
+const convertSafenetBalanceToSafeClientGatewayBalance = (
+  safenetBalance: SafenetBalanceEntity,
+  safenetConfig: SafenetConfigEntity,
   chainId: number,
 ): SafeBalanceResponse => {
   const balances: SafeBalanceResponse = {
-    fiatTotal: safeNetBalance.fiatTotal,
+    fiatTotal: safenetBalance.fiatTotal,
     items: [],
   }
 
-  for (const [tokenName, balance] of Object.entries(safeNetBalance)) {
-    const tokenAddress = safeNetConfig.tokens[tokenName][chainId]
+  for (const [tokenName, balance] of Object.entries(safenetBalance)) {
+    const tokenAddress = safenetConfig.tokens[tokenName][chainId]
     if (!tokenAddress) {
       continue
     }
@@ -34,7 +34,7 @@ const convertSafeNetBalanceToSafeClientGatewayBalance = (
         address: tokenAddress,
         decimals: tokenName === 'USDC' ? 6 : 18,
         symbol: tokenName,
-        name: `${tokenName} (SafeNet)`,
+        name: `${tokenName} (Safenet)`,
         logoUri: '',
       },
       balance,
@@ -46,4 +46,4 @@ const convertSafeNetBalanceToSafeClientGatewayBalance = (
   return balances
 }
 
-export { isSupportedChain, SafenetChainType, convertSafeNetBalanceToSafeClientGatewayBalance }
+export { isSupportedChain, SafenetChainType, convertSafenetBalanceToSafeClientGatewayBalance }

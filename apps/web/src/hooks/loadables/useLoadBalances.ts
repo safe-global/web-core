@@ -11,9 +11,9 @@ import { FEATURES, hasFeature } from '@/utils/chains'
 import { POLLING_INTERVAL } from '@/config/constants'
 import useIntervalCounter from '../useIntervalCounter'
 import useSafeInfo from '../useSafeInfo'
-import { useGetSafeNetConfigQuery } from '@/store/safenet'
-import { SafenetChainType, convertSafeNetBalanceToSafeClientGatewayBalance, isSupportedChain } from '@/utils/safenet'
-import { getSafeNetBalances } from '@/store/safenet'
+import { useGetSafenetConfigQuery } from '@/store/safenet'
+import { SafenetChainType, convertSafenetBalanceToSafeClientGatewayBalance, isSupportedChain } from '@/utils/safenet'
+import { getSafenetBalances } from '@/store/safenet'
 
 export const useTokenListSetting = (): boolean | undefined => {
   const chain = useCurrentChain()
@@ -30,12 +30,12 @@ export const useTokenListSetting = (): boolean | undefined => {
 const mergeBalances = (cgw: SafeBalanceResponse, sn: SafeBalanceResponse): SafeBalanceResponse => {
   // Create a Map using token addresses as keys
   const uniqueBalances = new Map(
-    // Process SafeNet items last so they take precedence by overwriting the CGW items
+    // Process Safenet items last so they take precedence by overwriting the CGW items
     [...cgw.items, ...sn.items].map((item) => [item.tokenInfo.address, item]),
   )
 
   return {
-    // We do not sum the fiatTotal as SafeNet doesn't return it
+    // We do not sum the fiatTotal as Safenet doesn't return it
     // And if it did, we would have to do something fancy with calculations so balances aren't double counted
     fiatTotal: cgw.fiatTotal,
     items: Array.from(uniqueBalances.values()),
@@ -45,23 +45,23 @@ const mergeBalances = (cgw: SafeBalanceResponse, sn: SafeBalanceResponse): SafeB
 export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
   const [pollCount, resetPolling] = useIntervalCounter(POLLING_INTERVAL)
   const {
-    data: safeNetConfig,
-    isSuccess: isSafeNetConfigSuccess,
-    isLoading: isSafeNetConfigLoading,
-  } = useGetSafeNetConfigQuery()
+    data: safenetConfig,
+    isSuccess: isSafenetConfigSuccess,
+    isLoading: isSafenetConfigLoading,
+  } = useGetSafenetConfigQuery()
   const currency = useAppSelector(selectCurrency)
   const isTrustedTokenList = useTokenListSetting()
   const { safe, safeAddress } = useSafeInfo()
   const web3 = useWeb3()
   const chain = useCurrentChain()
   const chainId = safe.chainId
-  const chainSupportedBySafeNet =
-    isSafeNetConfigSuccess && isSupportedChain(Number(chainId), safeNetConfig, SafenetChainType.DESTINATION)
+  const chainSupportedBySafenet =
+    isSafenetConfigSuccess && isSupportedChain(Number(chainId), safenetConfig, SafenetChainType.DESTINATION)
 
   // Re-fetch assets when the entire SafeInfo updates
   const [data, error, loading] = useAsync<SafeBalanceResponse | undefined>(
     () => {
-      if (!chainId || !safeAddress || isTrustedTokenList === undefined || isSafeNetConfigLoading) return
+      if (!chainId || !safeAddress || isTrustedTokenList === undefined || isSafenetConfigLoading) return
 
       if (!safe.deployed) {
         return getCounterfactualBalance(safeAddress, web3, chain)
@@ -73,11 +73,11 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
         }),
       ]
 
-      if (isSafeNetConfigSuccess && chainSupportedBySafeNet) {
+      if (isSafenetConfigSuccess && chainSupportedBySafenet) {
         balanceQueries.push(
-          getSafeNetBalances(chainId, safeAddress)
+          getSafenetBalances(chainId, safeAddress)
             .then((safenetBalances) =>
-              convertSafeNetBalanceToSafeClientGatewayBalance(safenetBalances, safeNetConfig, Number(chainId)),
+              convertSafenetBalanceToSafeClientGatewayBalance(safenetBalances, safenetConfig, Number(chainId)),
             )
             .catch(() => ({
               fiatTotal: '0',
@@ -98,10 +98,10 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       safe.deployed,
       web3,
       chain,
-      safeNetConfig,
-      isSafeNetConfigSuccess,
-      isSafeNetConfigLoading,
-      chainSupportedBySafeNet,
+      safenetConfig,
+      isSafenetConfigSuccess,
+      isSafenetConfigLoading,
+      chainSupportedBySafenet,
     ],
     false, // don't clear data between polls
   )
@@ -117,7 +117,7 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
     }
   }, [error])
 
-  return [data, error, loading || isSafeNetConfigLoading]
+  return [data, error, loading || isSafenetConfigLoading]
 }
 
 export default useLoadBalances

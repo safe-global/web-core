@@ -78,25 +78,25 @@ const useAppCommunicator = (
 ): AppCommunicator | undefined => {
   const [communicator, setCommunicator] = useState<AppCommunicator | undefined>(undefined)
   const customRpc = useAppSelector(selectRpc)
-  const isDarkMode = useDarkMode()
-  const { data: safeNetConfig, status: safeNetConfigStatus } = useGetSafeNetConfigQuery()
-  const shouldUseSafeNetRpc =
-    safeNetConfigStatus === QueryStatus.fulfilled &&
+  const { data: safenetConfig, status: safenetConfigStatus } = useGetSafenetConfigQuery()
+  const shouldUseSafenetRpc =
+    safenetConfigStatus === QueryStatus.fulfilled &&
     chain &&
-    safeNetConfig &&
-    isSupportedChain(Number(chain.chainId), safeNetConfig, SafenetChainType.DESTINATION)
+    safenetConfig &&
+    isSupportedChain(Number(chain.chainId), safenetConfig, SafenetChainType.DESTINATION)
+  const isDarkMode = useDarkMode()
 
   const safeAppWeb3Provider = useMemo(() => {
     if (!chain) {
       return
     }
 
-    if (shouldUseSafeNetRpc) {
+    if (shouldUseSafenetRpc) {
       return createSafeAppsWeb3Provider(chain, SAFENET_API_URL + `/jsonrpc/${chain.chainId}/`)
     }
 
     return createSafeAppsWeb3Provider(chain, customRpc?.[chain.chainId])
-  }, [chain, customRpc, shouldUseSafeNetRpc])
+  }, [chain, customRpc, shouldUseSafenetRpc])
 
   useEffect(() => {
     let communicatorInstance: AppCommunicator
@@ -242,7 +242,7 @@ const useAppCommunicator = (
         msg.data.id,
       )
     })
-  }, [safeAppWeb3Provider, handlers, chain, communicator, shouldUseSafeNetRpc, isDarkMode])
+  }, [safeAppWeb3Provider, handlers, chain, communicator, isDarkMode, shouldUseSafenetRpc])
 
   return communicator
 }
