@@ -12,7 +12,7 @@ import { POLLING_INTERVAL } from '@/config/constants'
 import useIntervalCounter from '../useIntervalCounter'
 import useSafeInfo from '../useSafeInfo'
 import { useGetSafenetConfigQuery } from '@/store/safenet'
-import { SafenetChainType, convertSafenetBalanceToSafeClientGatewayBalance, isSupportedChain } from '@/utils/safenet'
+import { convertSafenetBalanceToSafeClientGatewayBalance } from '@/utils/safenet'
 import { getSafenetBalances } from '@/store/safenet'
 
 export const useTokenListSetting = (): boolean | undefined => {
@@ -55,8 +55,7 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
   const web3 = useWeb3()
   const chain = useCurrentChain()
   const chainId = safe.chainId
-  const chainSupportedBySafenet =
-    isSafenetConfigSuccess && isSupportedChain(Number(chainId), safenetConfig, SafenetChainType.DESTINATION)
+  const chainSupportedBySafenet = isSafenetConfigSuccess && safenetConfig.chains.includes(Number(chainId))
 
   // Re-fetch assets when the entire SafeInfo updates
   const [data, error, loading] = useAsync<SafeBalanceResponse | undefined>(

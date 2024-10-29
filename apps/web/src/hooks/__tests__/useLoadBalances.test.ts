@@ -100,10 +100,7 @@ describe('useLoadBalances', () => {
     jest.spyOn(useChainId, 'useChainId').mockReturnValue('5')
     jest.spyOn(safenetStore, 'useGetSafenetConfigQuery').mockReturnValue({
       data: {
-        chains: {
-          sources: [11155111],
-          destinations: [84532, 11155420],
-        },
+        chains: [84532, 11155420],
         guards: {
           '84532': '0x865544E0599589BA604b0449858695937d571382',
           '11155111': '0x865544E0599589BA604b0449858695937d571382',
