@@ -1,4 +1,14 @@
-import { CircularProgress, List, ListItem, ListItemIcon, ListItemText, Paper, SvgIcon, Typography } from '@mui/material'
+import {
+  CircularProgress,
+  Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  SvgIcon,
+  Typography,
+} from '@mui/material'
 import type { SafeTransaction } from '@safe-global/safe-core-sdk-types'
 import useDecodeTx from '@/hooks/useDecodeTx'
 import CheckIcon from '@/public/images/common/check.svg'
@@ -8,6 +18,7 @@ import { useLazySimulateSafenetTxQuery } from '@/store/safenet'
 import { useEffect, type ReactElement } from 'react'
 import css from './styles.module.css'
 import { hashTypedData } from '@/utils/web3'
+import { Loop } from '@mui/icons-material'
 
 export type SafenetTxSimulationProps = {
   safe: string
@@ -29,16 +40,19 @@ function _getGuaranteeDisplayName(guarantee: string): string {
 
 function _groupResultGuarantees({
   results,
-}: Pick<SafenetSimulationResponse, 'results'>): { display: string; success: boolean }[] {
-  const groups = results.reduce((groups, { guarantee, success }) => {
+}: Pick<SafenetSimulationResponse, 'results'>): { display: string; status: string; link?: string }[] {
+  const groups = results.reduce((groups, { guarantee, status, metadata }) => {
     const display = _getGuaranteeDisplayName(guarantee)
+    if (status === 'skipped') {
+      return groups
+    }
     return {
       ...groups,
-      [display]: (groups[display] ?? true) && success,
+      [display]: { status, link: metadata?.link },
     }
-  }, {} as Record<string, boolean>)
+  }, {} as Record<string, { status: string; link?: string }>)
   return Object.entries(groups)
-    .map(([display, success]) => ({ display, success }))
+    .map(([display, { status, link }]) => ({ display, status, link }))
     .sort((a, b) => a.display.localeCompare(b.display))
 }
 
@@ -82,16 +96,27 @@ const SafenetTxTxSimulationSummary = ({ simulation }: { simulation: SafenetSimul
       )}
 
       <List>
-        {guarantees.map(({ display, success }) => (
+        {guarantees.map(({ display, status, link }) => (
           <ListItem key={display}>
             <ListItemIcon>
-              {success ? (
+              {status === 'success' && (
                 <SvgIcon component={CheckIcon} inheritViewBox fontSize="small" color="success" />
-              ) : (
-                <SvgIcon component={CloseIcon} inheritViewBox fontSize="small" color="error" />
               )}
+              {status === 'failure' && <SvgIcon component={CloseIcon} inheritViewBox fontSize="small" color="error" />}
+              {status === 'pending' && <SvgIcon component={Loop} inheritViewBox fontSize="small" />}
             </ListItemIcon>
-            <ListItemText>{display}</ListItemText>
+            <ListItemText>
+              <div>{display}</div>
+              {status === 'pending' && link && (
+                <div className={css.pending}>
+                  Share this{' '}
+                  <Link href={link} target="_blank">
+                    link
+                  </Link>{' '}
+                  to the recipient to confirm the transfer
+                </div>
+              )}
+            </ListItemText>
           </ListItem>
         ))}
       </List>

@@ -35,22 +35,17 @@ export type SafenetSimulateTx = {
   dataDecoded: unknown
 }
 
-export type SafenetSimulationResultSuccess = {
-  success: true
-}
-
-export type SafenetSimulationResultFailure = {
-  success: false
-  message: string
-}
-
 export type SafenetSimulationResult = {
   guarantee: string
-  success: boolean
-} & (SafenetSimulationResultSuccess | SafenetSimulationResultFailure)
+  status: 'success' | 'failure' | 'skipped' | 'pending'
+  metadata?: {
+    link?: string
+  }
+}
 
 export type SafenetSimulationResponse = {
   hasError: boolean
+  hasPending: boolean
   results: SafenetSimulationResult[]
 }
 

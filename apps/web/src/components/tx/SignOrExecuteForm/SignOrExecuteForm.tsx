@@ -200,7 +200,7 @@ export const SignOrExecuteForm = ({
       <TxNoteForm isCreation={isCreation ?? false} onSubmit={onNoteSubmit} txDetails={props.txDetails} />
 
       <SignerForm willExecute={willExecute} />
-      <SafenetTxChecks />
+      {isSafenetEnabled && safeTx && <SafenetTxChecks safeTx={safeTx} />}
 
       <TxCard>
         <ConfirmationTitle
