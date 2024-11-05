@@ -17,18 +17,20 @@ const convertSafenetBalanceToSafeClientGatewayBalance = (
       continue
     }
 
+    const decimals = tokenName === 'USDC' || tokenName === 'USDT' ? 6 : 18
+
     balances.items.push({
       tokenInfo: {
         type: TokenType.ERC20,
         address: tokenAddress,
-        decimals: tokenName === 'USDC' ? 6 : 18,
+        decimals,
         symbol: tokenName,
         name: `${tokenName} (Safenet)`,
-        logoUri: '',
+        logoUri: `https://assets.smold.app/api/token/${chainId}/${tokenAddress}/logo-128.png`,
       },
       balance,
-      fiatBalance: '0',
-      fiatConversion: '0',
+      fiatBalance: ((parseInt(balance) * 1) / 10 ** decimals).toString(),
+      fiatConversion: '1.00',
     })
   }
 

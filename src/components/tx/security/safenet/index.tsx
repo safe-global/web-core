@@ -29,8 +29,8 @@ export type SafenetTxSimulationProps = {
 function _getGuaranteeDisplayName(guarantee: string): string {
   switch (guarantee) {
     case 'no_delegatecall':
+    case 'no_contract_recipient': // We don't want to override the recipient verification
       return 'Fraud verification'
-    case 'no_contract_recipient':
     case 'recipient_signature':
       return 'Recipient verification'
     default:

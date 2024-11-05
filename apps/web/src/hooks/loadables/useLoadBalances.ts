@@ -37,7 +37,9 @@ const mergeBalances = (cgw: SafeBalanceResponse, sn: SafeBalanceResponse): SafeB
   return {
     // We do not sum the fiatTotal as Safenet doesn't return it
     // And if it did, we would have to do something fancy with calculations so balances aren't double counted
-    fiatTotal: cgw.fiatTotal,
+    fiatTotal: Array.from(uniqueBalances.values())
+      .reduce((acc, item) => acc + parseFloat(item.fiatBalance), 0)
+      .toString(),
     items: Array.from(uniqueBalances.values()),
   }
 }
