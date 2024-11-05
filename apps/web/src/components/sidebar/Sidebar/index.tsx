@@ -2,7 +2,7 @@ import { useCallback, useState, type ReactElement } from 'react'
 import { Box, Divider, Drawer } from '@mui/material'
 import ChevronRight from '@mui/icons-material/ChevronRight'
 
-import ChainIndicator from '@/components/common/ChainIndicator'
+import ChainIndicatorSafenet from '@/components/common/ChainIndicator/ChainIndicatorSafenet'
 import SidebarHeader from '@/components/sidebar/SidebarHeader'
 import SidebarNavigation from '@/components/sidebar/SidebarNavigation'
 import SidebarFooter from '@/components/sidebar/SidebarFooter'
@@ -28,7 +28,7 @@ const Sidebar = (): ReactElement => {
   return (
     <div data-testid="sidebar-container" className={css.container}>
       <div className={css.scroll}>
-        <ChainIndicator showLogo={false} />
+        <ChainIndicatorSafenet />
 
         {/* Open the safes list */}
         <button data-testid="open-safes-icon" className={css.drawerButton} onClick={onDrawerToggle}>

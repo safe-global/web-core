@@ -7,14 +7,27 @@ import { formatCurrency, formatCurrencyPrecise } from '@/utils/formatNumber'
 
 const style = { whiteSpace: 'nowrap' } as CSSProperties
 
+const getStyle = (safenet: boolean) => ({
+  ...style,
+  ...(safenet
+    ? {
+        borderRadius: '40px',
+        background: 'rgba(238, 213, 9, 0.15)',
+        padding: 'calc(var(--space-1) / 2) var(--space-1)',
+      }
+    : {}),
+})
+
 const FiatValue = ({
   value,
   maxLength,
   precise,
+  safenet = false,
 }: {
   value: string | number
   maxLength?: number
   precise?: boolean
+  safenet?: boolean
 }): ReactElement => {
   const currency = useAppSelector(selectCurrency)
 
@@ -33,7 +46,7 @@ const FiatValue = ({
 
   return (
     <Tooltip title={precise ? undefined : preciseFiat}>
-      <span suppressHydrationWarning style={style}>
+      <span suppressHydrationWarning style={getStyle(safenet)}>
         {precise ? (
           <>
             {whole}
