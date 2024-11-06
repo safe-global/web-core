@@ -75,3 +75,11 @@
   border-radius: 4px;
   padding: 2px 8px;
 }
+
+.safenetGradientCard {
+  margin-bottom: var(--space-2);
+}
+
+.safenetGradientCard > div:last-child > div {
+  margin-bottom: 0;
+}

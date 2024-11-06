@@ -9,3 +9,18 @@
 .errorSummary {
   padding: calc(var(--space-1) * 2) calc(var(--space-2) * 2) var(--space-1) calc(var(--space-2) * 2);
 }
+
+.labelSuccess {
+  color: var(--color-success-main);
+  font-size: 0.9rem;
+}
+
+.labelFailure {
+  color: var(--color-error-main);
+  font-size: 0.9rem;
+}
+
+.safenetCheckIcon {
+  vertical-align: middle;
+  margin: 0 4px 2px 0;
+}
