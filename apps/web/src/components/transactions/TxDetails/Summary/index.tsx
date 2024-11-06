@@ -77,7 +77,7 @@ const Summary = ({ txDetails, defaultExpanded = false, hideDecodedData = false }
       )}
 
       <Box mt={1}>
-        <TxDataRow title="Safenet Simulation:">
+        <TxDataRow title="Safenet checks:">
           <GradientBoxSafenet className={css.safenetGradientRow}>
             <SafenetTxSimulation
               safe={safe.address.value}

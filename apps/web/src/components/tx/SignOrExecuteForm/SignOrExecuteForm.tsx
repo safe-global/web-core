@@ -192,7 +192,7 @@ export const SignOrExecuteForm = ({
           )}
         </ConfirmationView>
 
-        {!isCounterfactualSafe && !props.isRejection && <BlockaidBalanceChanges />}
+        {!isSafenetEnabled && !isCounterfactualSafe && !props.isRejection && <BlockaidBalanceChanges />}
       </TxCard>
 
       {!isCounterfactualSafe && !props.isRejection && <TxChecks />}
@@ -228,7 +228,7 @@ export const SignOrExecuteForm = ({
 
         <UnknownContractError txData={props.txDetails?.txData} />
 
-        <Blockaid />
+        {!isSafenetEnabled && <Blockaid />}
 
         {getForm()}
       </TxCard>
