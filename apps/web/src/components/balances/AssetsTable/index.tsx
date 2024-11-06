@@ -130,7 +130,11 @@ const AssetsTable = ({
               collapsed: item.tokenInfo.address === hidingAsset,
               content: (
                 <div className={css.token}>
-                  <TokenIcon logoUri={item.tokenInfo.logoUri} tokenSymbol={item.tokenInfo.symbol} />
+                  <TokenIcon
+                    logoUri={item.tokenInfo.logoUri}
+                    tokenSymbol={item.tokenInfo.symbol}
+                    safenet={item.safenetAssetFlag}
+                  />
 
                   <Typography>{item.tokenInfo.name}</Typography>
 
