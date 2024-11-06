@@ -142,20 +142,12 @@
   }
 }
 
-.safenet {
-  border: 1px solid var(--safenet, #32f970);
-  border-bottom-left-radius: var(--space-1);
-  border-bottom-right-radius: var(--space-1);
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-top-width: 0;
+.safenetListItem {
+  margin-bottom: 12px;
 }
 
-.safenetHeader {
-  background: linear-gradient(90deg, #32f970 0%, #eed509 100%);
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-  padding: calc(var(--space-1) / 2) var(--space-1);
-  border-top-right-radius: var(--space-1);
-  border-top-left-radius: var(--space-1);
+.safenetListItem .listItem {
+  border: none;
+  border-radius-left-top: 0;
+  border-radius-right-top: 0;
 }

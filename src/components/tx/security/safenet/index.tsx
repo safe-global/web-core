@@ -1,9 +1,10 @@
 import { Button, CircularProgress, List, ListItem, ListItemText, Paper, SvgIcon, Typography } from '@mui/material'
 import type { SafeTransaction } from '@safe-global/safe-core-sdk-types'
+import CopyTooltip from '@/components/common/CopyTooltip'
 import useDecodeTx from '@/hooks/useDecodeTx'
 import CheckIcon from '@/public/images/common/check.svg'
 import CloseIcon from '@/public/images/common/close.svg'
-import LinkIcon from '@/public/images/common/link.svg'
+import CopyIcon from '@/public/images/common/copy.svg'
 import type { SafenetSimulationResponse } from '@/store/safenet'
 import { useLazySimulateSafenetTxQuery } from '@/store/safenet'
 import { hashTypedData } from '@/utils/web3'
@@ -86,16 +87,16 @@ const StatusAction = ({ status, link }: { status: string; link?: string }): Reac
     )
   } else if (status === 'pending' && link) {
     return (
-      <Button
-        variant="outlined"
-        size="small"
-        href={link}
-        target="_blank"
-        sx={{ width: '100%', py: 0.5 }}
-        startIcon={<SvgIcon component={LinkIcon} inheritViewBox fontSize="small" />}
-      >
-        Verify recipient
-      </Button>
+      <CopyTooltip text={link}>
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{ width: '100%', py: 0.5 }}
+          startIcon={<SvgIcon component={CopyIcon} inheritViewBox fontSize="small" />}
+        >
+          Share verification link
+        </Button>
+      </CopyTooltip>
     )
   } else {
     return (

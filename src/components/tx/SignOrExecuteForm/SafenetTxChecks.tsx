@@ -19,7 +19,7 @@ const SafenetTxChecks = ({ safeTx }: { safeTx: SafeTransaction }): ReactElement 
   }
 
   return (
-    <GradientBoxSafenet heading="Powered by Safenet" className={css.safenetGradientCard}>
+    <GradientBoxSafenet className={css.safenetGradientCard}>
       <TxCard>
         <Typography variant="h5">Safenet checks</Typography>
         <SafenetTxSimulation safe={safe} chainId={chainId} safeTx={safeTx} />

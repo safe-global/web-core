@@ -58,7 +58,7 @@
   cursor: pointer;
   border-right: 1px solid transparent;
   background-color: var(--color-background-main);
-  transform: translateX(-1px);
+  transform: translateX(-1px) translateY(90%);
 }
 
 .drawerButton:hover {

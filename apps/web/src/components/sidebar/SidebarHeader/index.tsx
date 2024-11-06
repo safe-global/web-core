@@ -31,6 +31,7 @@ import ExplorerButton from '@/components/common/ExplorerButton'
 import CopyTooltip from '@/components/common/CopyTooltip'
 import FiatValue from '@/components/common/FiatValue'
 import { useAddressResolver } from '@/hooks/useAddressResolver'
+import GradientBoxSafenet from '@/components/common/GradientBoxSafenet'
 
 const SafeHeader = (): ReactElement => {
   const { balances } = useVisibleBalances()
@@ -46,76 +47,78 @@ const SafeHeader = (): ReactElement => {
   const blockExplorerLink = chain ? getBlockExplorerLink(chain, safeAddress) : undefined
 
   return (
-    <div className={css.container}>
-      <div className={css.info}>
-        <div data-testid="safe-header-info" className={css.safe}>
-          <div data-testid="safe-icon">
-            {safeAddress ? (
-              <SafeIcon address={safeAddress} threshold={threshold} owners={owners?.length} />
-            ) : (
-              <Skeleton variant="circular" width={40} height={40} />
-            )}
-          </div>
-
-          <div className={css.address}>
-            {safeAddress ? (
-              <EthHashInfo address={safeAddress} shortAddress showAvatar={false} name={ens} />
-            ) : (
-              <Typography variant="body2">
-                <Skeleton variant="text" width={86} />
-                <Skeleton variant="text" width={120} />
-              </Typography>
-            )}
-
-            <Typography data-testid="currency-section" variant="body2" fontWeight={700}>
-              {safe.deployed ? (
-                balances.fiatTotal ? (
-                  <FiatValue value={balances.fiatTotal} />
-                ) : (
-                  <Skeleton variant="text" width={60} />
-                )
+    <GradientBoxSafenet variant="bottom">
+      <div className={css.container}>
+        <div className={css.info}>
+          <div data-testid="safe-header-info" className={css.safe}>
+            <div data-testid="safe-icon">
+              {safeAddress ? (
+                <SafeIcon address={safeAddress} threshold={threshold} owners={owners?.length} />
               ) : (
-                <TokenAmount
-                  value={balances.items[0]?.balance}
-                  decimals={balances.items[0]?.tokenInfo.decimals}
-                  tokenSymbol={balances.items[0]?.tokenInfo.symbol}
-                />
+                <Skeleton variant="circular" width={40} height={40} />
               )}
-            </Typography>
+            </div>
+
+            <div className={css.address}>
+              {safeAddress ? (
+                <EthHashInfo address={safeAddress} shortAddress showAvatar={false} name={ens} />
+              ) : (
+                <Typography variant="body2">
+                  <Skeleton variant="text" width={86} />
+                  <Skeleton variant="text" width={120} />
+                </Typography>
+              )}
+
+              <Typography data-testid="currency-section" variant="body2" fontWeight={700}>
+                {safe.deployed ? (
+                  balances.fiatTotal ? (
+                    <FiatValue value={balances.fiatTotal} />
+                  ) : (
+                    <Skeleton variant="text" width={60} />
+                  )
+                ) : (
+                  <TokenAmount
+                    value={balances.items[0]?.balance}
+                    decimals={balances.items[0]?.tokenInfo.decimals}
+                    tokenSymbol={balances.items[0]?.tokenInfo.symbol}
+                  />
+                )}
+              </Typography>
+            </div>
+          </div>
+
+          <div className={css.iconButtons}>
+            <Track {...OVERVIEW_EVENTS.SHOW_QR} label="sidebar">
+              <QrCodeButton>
+                <Tooltip title="Open QR code" placement="top">
+                  <IconButton className={css.iconButton}>
+                    <SvgIcon component={QrIconBold} inheritViewBox color="primary" fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </QrCodeButton>
+            </Track>
+
+            <Track {...OVERVIEW_EVENTS.COPY_ADDRESS}>
+              <CopyTooltip text={addressCopyText}>
+                <IconButton data-testid="copy-address-btn" className={css.iconButton}>
+                  <SvgIcon component={CopyIconBold} inheritViewBox color="primary" fontSize="small" />
+                </IconButton>
+              </CopyTooltip>
+            </Track>
+
+            <Track {...OVERVIEW_EVENTS.OPEN_EXPLORER}>
+              <ExplorerButton {...blockExplorerLink} className={css.iconButton} icon={LinkIconBold} />
+            </Track>
+
+            <CounterfactualStatusButton />
+
+            <EnvHintButton />
           </div>
         </div>
 
-        <div className={css.iconButtons}>
-          <Track {...OVERVIEW_EVENTS.SHOW_QR} label="sidebar">
-            <QrCodeButton>
-              <Tooltip title="Open QR code" placement="top">
-                <IconButton className={css.iconButton}>
-                  <SvgIcon component={QrIconBold} inheritViewBox color="primary" fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </QrCodeButton>
-          </Track>
-
-          <Track {...OVERVIEW_EVENTS.COPY_ADDRESS}>
-            <CopyTooltip text={addressCopyText}>
-              <IconButton data-testid="copy-address-btn" className={css.iconButton}>
-                <SvgIcon component={CopyIconBold} inheritViewBox color="primary" fontSize="small" />
-              </IconButton>
-            </CopyTooltip>
-          </Track>
-
-          <Track {...OVERVIEW_EVENTS.OPEN_EXPLORER}>
-            <ExplorerButton {...blockExplorerLink} className={css.iconButton} icon={LinkIconBold} />
-          </Track>
-
-          <CounterfactualStatusButton />
-
-          <EnvHintButton />
-        </div>
+        <NewTxButton />
       </div>
-
-      <NewTxButton />
-    </div>
+    </GradientBoxSafenet>
   )
 }
 

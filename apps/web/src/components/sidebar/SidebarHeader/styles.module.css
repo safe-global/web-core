@@ -3,7 +3,6 @@
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-top-width: 0;
-  border: 1px solid var(--safenet, #32f970);
 }
 
 .info {
