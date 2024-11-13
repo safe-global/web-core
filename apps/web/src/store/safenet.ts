@@ -49,28 +49,33 @@ export type SafenetSimulationResponse = {
   results: SafenetSimulationResult[]
 }
 
-export const getSafenetBalances = async (chainId: string, safeAddress: string): Promise<SafenetBalanceEntity> => {
-  const response = await fetch(`${SAFENET_API_URL}/safenet/balances/${chainId}/${safeAddress}`)
+export const getSafenetBalances = async (safeAddress: string): Promise<SafenetBalanceEntity> => {
+  const response = await fetch(`${SAFENET_API_URL}/api/v1/balances/${safeAddress}`)
   const data = await response.json()
   return data
 }
 
 export const safenetApi = createApi({
   reducerPath: 'safenetApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${SAFENET_API_URL}/safenet` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${SAFENET_API_URL}/api/v1` }),
   tagTypes: ['SafenetConfig', 'SafenetOffchainStatus', 'SafenetBalance', 'SafenetSimulation'],
   endpoints: (builder) => ({
     getSafenetConfig: builder.query<SafenetConfigEntity, void>({
-      query: () => `/config/`,
+      query: () => ({
+        url: '/about',
+        responseHandler: async (response) => {
+          return (await response.json()).config
+        },
+      }),
       providesTags: ['SafenetConfig'],
     }),
     getSafenetOffchainStatus: builder.query<SafenetSafeEntity, { chainId: string; safeAddress: string }>({
-      query: ({ chainId, safeAddress }) => `/safes/${chainId}/${safeAddress}`,
+      query: ({ chainId, safeAddress }) => `/account/${chainId}/${safeAddress}`,
       providesTags: (_, __, arg) => [{ type: 'SafenetOffchainStatus', id: arg.safeAddress }],
     }),
     registerSafenet: builder.mutation<boolean, { chainId: string; safeAddress: string }>({
       query: ({ chainId, safeAddress }) => ({
-        url: `/register`,
+        url: `/account`,
         method: 'POST',
         body: {
           chainId: Number(chainId),
@@ -79,8 +84,8 @@ export const safenetApi = createApi({
       }),
       invalidatesTags: (_, __, arg) => [{ type: 'SafenetOffchainStatus', id: arg.safeAddress }],
     }),
-    getSafenetBalance: builder.query<SafenetBalanceEntity, { chainId: string; safeAddress: string }>({
-      query: ({ chainId, safeAddress }) => `/balances/${chainId}/${safeAddress}`,
+    getSafenetBalance: builder.query<SafenetBalanceEntity, { safeAddress: string }>({
+      query: ({ safeAddress }) => `/balances/${safeAddress}`,
       providesTags: (_, __, arg) => [{ type: 'SafenetBalance', id: arg.safeAddress }],
     }),
     simulateSafenetTx: builder.query<

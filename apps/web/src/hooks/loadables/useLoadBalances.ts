@@ -76,7 +76,7 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
 
       if (isSafenetConfigSuccess && chainSupportedBySafenet) {
         balanceQueries.push(
-          getSafenetBalances(chainId, safeAddress)
+          getSafenetBalances(safeAddress)
             .then((safenetBalances) =>
               convertSafenetBalanceToSafeClientGatewayBalance(safenetBalances, safenetConfig, Number(chainId)),
             )
