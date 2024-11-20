@@ -105,10 +105,4 @@ export const safenetApi = createApi({
   }),
 })
 
-export const {
-  useLazyGetSafenetOffchainStatusQuery,
-  useRegisterSafenetMutation,
-  useGetSafenetConfigQuery,
-  useLazyGetSafenetBalanceQuery,
-  useLazySimulateSafenetTxQuery,
-} = safenetApi
+export const { useGetSafenetConfigQuery, useLazyGetSafenetBalanceQuery, useLazySimulateSafenetTxQuery } = safenetApi
