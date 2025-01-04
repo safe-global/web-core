@@ -190,7 +190,7 @@ Our Services do not consist of:
 
 4. The recovery feature is provided free of charge and liability is limited pursuant to Section 18 below.
 
-# 9\. Are we responsible for notifying you about events occuring in your Safe Account? {#9.-are-we-responsible-for-notifying-you-about-events-occuring-in-your-safe-account?}
+# 9\. Are we responsible for notifying you about events occurring in your Safe Account? {#9.-are-we-responsible-for-notifying-you-about-events-occuring-in-your-safe-account?}
 
 1. We shall not be responsible for notifying you of any interactions or events occurring in your Safe Account, be it on the Blockchain, third-party interfaces, within any other infrastructure, or our Services.
 
