@@ -18,7 +18,7 @@ Last updated: September, 2024
 
 [8\. Are we responsible for recovering your Safe Account?](#8.-are-we-responsible-for-recovering-your-safe-account?)
 
-[9\. Are we responsible for notifying you about events occuring in your Safe Account?](#9.-are-we-responsible-for-notifying-you-about-events-occuring-in-your-safe-account?)
+[9\. Are we responsible for notifying you about events occurring in your Safe Account?](#9.-are-we-responsible-for-notifying-you-about-events-occuring-in-your-safe-account?)
 
 [10\. Are we responsible for flagging malicious transactions?](#10.-are-we-responsible-for-flagging-malicious-transactions?)
 
