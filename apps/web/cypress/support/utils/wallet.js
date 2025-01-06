@@ -1,3 +1,5 @@
+import * as main from '../../e2e/pages/main.page'
+
 const onboardv2 = 'onboard-v2'
 const pkInput = '[data-testid="private-key-input"]'
 const pkConnectBtn = '[data-testid="pk-connect-btn"]'
@@ -42,7 +44,7 @@ export function connectSigner(signer) {
 
   function enterPrivateKey() {
     cy.wait(3000)
-    cy.get('body').then(($body) => {
+    return cy.get('body').then(($body) => {
       if ($body.find(pkInput).length > 0) {
         cy.get(pkInput)
           .find('input')
@@ -65,5 +67,7 @@ export function connectSigner(signer) {
     })
   }
 
-  enterPrivateKey()
+  enterPrivateKey().then(() => {
+    main.closeOutreachPopup()
+  })
 }

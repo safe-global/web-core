@@ -207,7 +207,7 @@ export function acceptCookies2() {
 }
 
 export function closeOutreachPopup() {
-  cy.wait(2000)
+  cy.wait(1000)
   cy.get('body').then(($body) => {
     if ($body.find(closeOutreachPopupBtn).length > 0) {
       cy.get(closeOutreachPopupBtn).click()
