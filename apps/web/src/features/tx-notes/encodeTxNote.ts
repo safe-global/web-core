@@ -1,14 +1,11 @@
 export function encodeTxNote(note: string, origin?: string): string {
-  let originalOrigin = { url: '' }
+  let originalOrigin = {}
   if (origin) {
     try {
       originalOrigin = JSON.parse(origin)
     } catch {
-      // Ignore, no note
+      // Ignore, invalid JSON
     }
-  }
-  if (!originalOrigin.url) {
-    originalOrigin.url = location.origin
   }
   return JSON.stringify(
     {
