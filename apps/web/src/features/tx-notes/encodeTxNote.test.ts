@@ -21,4 +21,11 @@ describe('encodeTxNote', () => {
     const result = encodeTxNote(note, 'sdfgdsfg')
     expect(result).toEqual(JSON.stringify({ note }, null, 0))
   })
+
+  it('should trim the note if origin exceeds the max length', () => {
+    const note = 'a'.repeat(200)
+    const url = 'http://example.com'
+    const result = encodeTxNote(note, JSON.stringify({ url }))
+    expect(result).toEqual(JSON.stringify({ url, note: 'a'.repeat(172) }, null, 0))
+  })
 })
