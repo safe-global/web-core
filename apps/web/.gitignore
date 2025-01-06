@@ -1,0 +1,5 @@
+# Types
+src/types/contracts
+
+# Auto-generated service workers
+public/*.js

@@ -1,4 +1,5 @@
 import React from 'react'
+import { RenderItemParams } from 'react-native-draggable-flatlist'
 import { AccountItem } from '../AccountItem'
 import { SafesSliceItem } from '@/src/store/safesSlice'
 import { Address } from '@/src/types/address'
@@ -6,15 +7,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectActiveSafe, setActiveSafe } from '@/src/store/activeSafeSlice'
 import { getChainsByIds } from '@/src/store/chains'
 import { RootState } from '@/src/store'
-import { switchActiveChain } from '@/src/store/activeChainSlice'
 import { useMyAccountsService } from './hooks/useMyAccountsService'
 
 interface MyAccountsContainerProps {
   item: SafesSliceItem
   onClose: () => void
+  isDragging?: boolean
+  drag?: RenderItemParams<SafesSliceItem>['drag']
 }
 
-export function MyAccountsContainer({ item, onClose }: MyAccountsContainerProps) {
+export function MyAccountsContainer({ item, isDragging, drag, onClose }: MyAccountsContainerProps) {
   useMyAccountsService(item)
 
   const dispatch = useDispatch()
@@ -30,14 +32,15 @@ export function MyAccountsContainer({ item, onClose }: MyAccountsContainerProps)
         chainId,
       }),
     )
-    dispatch(switchActiveChain({ id: chainId }))
 
     onClose()
   }
 
   return (
     <AccountItem
+      drag={drag}
       account={item.SafeInfo}
+      isDragging={isDragging}
       chains={filteredChains}
       onSelect={handleAccountSelected}
       activeAccount={activeSafe.address}

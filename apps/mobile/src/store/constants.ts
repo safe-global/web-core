@@ -27,6 +27,24 @@ export const mockedAccounts = [
     queued: 1,
     threshold: 1,
   },
+  {
+    address: { value: '0xF7a47Bf5705572B7EB9cb0F7007C66B770Ea120f', name: null, logoUri: null },
+    awaitingConfirmation: null,
+    chainId: '100',
+    fiatTotal: '0',
+    owners: [{ value: '0xF7a47Bf5705572B7EB9cb0F7007C66B770Ea120f', name: null, logoUri: null }],
+    queued: 1,
+    threshold: 1,
+  },
+  {
+    address: { value: '0x7bF7cF1D8375ad2B25B9050FeF93181ec3E15f08', name: null, logoUri: null },
+    awaitingConfirmation: null,
+    chainId: '1',
+    fiatTotal: '0',
+    owners: [{ value: '0x7bF7cF1D8375ad2B25B9050FeF93181ec3E15f08', name: null, logoUri: null }],
+    queued: 1,
+    threshold: 1,
+  },
 ]
 
 export const mockedChains = [

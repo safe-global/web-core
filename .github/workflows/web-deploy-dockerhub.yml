@@ -31,6 +31,7 @@ jobs:
       if: github.ref == 'refs/heads/main'
       uses: docker/build-push-action@v6
       with:
+        context: ./apps/web
         push: true
         tags: safeglobal/safe-wallet-web:staging
         platforms: |
@@ -42,6 +43,7 @@ jobs:
       if: github.ref == 'refs/heads/dev'
       uses: docker/build-push-action@v6
       with:
+        context: ./apps/web
         push: true
         tags: safeglobal/safe-wallet-web:dev
         platforms: |
@@ -53,6 +55,7 @@ jobs:
       if: (github.event_name == 'release' && github.event.action == 'released')
       uses: docker/build-push-action@v6
       with:
+        context: ./apps/web
         push: true
         tags: |
           safeglobal/safe-wallet-web:${{ github.event.release.tag_name }}

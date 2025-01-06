@@ -288,6 +288,8 @@ exports[`ConfirmationView should display a confirmation screen for a SETTINGS_CH
                             alt="ETH"
                             class="image"
                             height="26"
+                            loading="lazy"
+                            referrerpolicy="no-referrer"
                             src="/images/common/token-placeholder.svg"
                           />
                           <p
@@ -793,6 +795,8 @@ exports[`ConfirmationView should display a confirmation with method call when th
                             alt="ETH"
                             class="image"
                             height="26"
+                            loading="lazy"
+                            referrerpolicy="no-referrer"
                             src="/images/common/token-placeholder.svg"
                           />
                           <p

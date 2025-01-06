@@ -13,17 +13,15 @@ import {
 
 import { Fallback } from '../Fallback'
 import { NFTItem } from './NFTItem'
-import { selectActiveChain } from '@/src/store/activeChainSlice'
 import { useInfiniteScroll } from '@/src/hooks/useInfiniteScroll'
 
 export function NFTsContainer() {
-  const activeChain = useSelector(selectActiveChain)
   const activeSafe = useSelector(selectActiveSafe)
   const [pageUrl, setPageUrl] = useState<string>()
 
   const { data, isFetching, error, refetch } = useCollectiblesGetCollectiblesV2Query(
     {
-      chainId: activeChain.chainId,
+      chainId: activeSafe.chainId,
       safeAddress: activeSafe.address,
       cursor: pageUrl && safelyDecodeURIComponent(pageUrl?.split('cursor=')[1]),
     },

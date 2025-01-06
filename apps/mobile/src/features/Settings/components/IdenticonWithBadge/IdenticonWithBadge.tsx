@@ -11,9 +11,16 @@ type IdenticonWithBadgeProps = {
   badgeContent?: string
   size?: number
   testID?: string
+  fontSize?: number
 }
 
-export const IdenticonWithBadge = ({ address, testID, badgeContent, size = 56 }: IdenticonWithBadgeProps) => {
+export const IdenticonWithBadge = ({
+  address,
+  testID,
+  badgeContent,
+  fontSize = 12,
+  size = 56,
+}: IdenticonWithBadgeProps) => {
   return (
     <View style={styles.container} testID={testID}>
       <Identicon address={address} rounded size={size} />
@@ -23,8 +30,8 @@ export const IdenticonWithBadge = ({ address, testID, badgeContent, size = 56 }:
             <Badge
               content={badgeContent}
               textContentProps={{
-                fontSize: 12,
-                fontWeight: 700,
+                fontSize,
+                fontWeight: 500,
               }}
               themeName={'badge_success'}
               circleProps={{ bordered: true }}

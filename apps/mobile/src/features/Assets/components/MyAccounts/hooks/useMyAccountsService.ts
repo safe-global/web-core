@@ -1,16 +1,16 @@
 import { useSafesGetSafeOverviewV1Query } from '@safe-global/store/gateway/AUTO_GENERATED/safes'
 import { SafeOverviewResult } from '@safe-global/store/gateway/types'
 import { useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { selectAllChainsIds } from '@/src/store/chains'
 import { SafesSliceItem, updateSafeInfo } from '@/src/store/safesSlice'
 import { Address } from '@/src/types/address'
 import { makeSafeId } from '@/src/utils/formatters'
+import { useAppDispatch, useAppSelector } from '@/src/store/hooks'
 
 export const useMyAccountsService = (item: SafesSliceItem) => {
-  const dispatch = useDispatch()
-  const chainIds = useSelector(selectAllChainsIds)
+  const dispatch = useAppDispatch()
+  const chainIds = useAppSelector(selectAllChainsIds)
   const safes = useMemo(
     () => chainIds.map((chainId: string) => makeSafeId(chainId, item.SafeInfo.address.value)).join(','),
     [chainIds, item.SafeInfo.address.value],

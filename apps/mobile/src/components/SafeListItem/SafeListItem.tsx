@@ -16,6 +16,7 @@ interface SafeListItemProps {
   leftNode?: React.ReactNode
   bordered?: boolean
   transparent?: boolean
+  spaced?: boolean
   inQueue?: boolean
   executionInfo?: Transaction['executionInfo']
   themeName?: ThemeName
@@ -26,6 +27,7 @@ export function SafeListItem({
   leftNode,
   icon,
   bordered,
+  spaced,
   label,
   transparent,
   rightNode,
@@ -36,6 +38,7 @@ export function SafeListItem({
 }: SafeListItemProps) {
   return (
     <Container
+      spaced={spaced}
       bordered={bordered}
       gap={12}
       transparent={transparent}

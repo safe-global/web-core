@@ -3,6 +3,8 @@ import React from 'react'
 import '@testing-library/react-native/extend-expect'
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock'
 
+import { server } from './server'
+
 jest.useFakeTimers()
 
 /**
@@ -127,3 +129,7 @@ jest.mock('@gorhom/bottom-sheet', () => {
     }),
   }
 })
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())

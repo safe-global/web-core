@@ -18,10 +18,16 @@ const activeSafeSlice = createSlice({
     clearActiveSafe: () => {
       return initialState
     },
+    switchActiveChain: (state, action: PayloadAction<{ chainId: string }>) => {
+      return {
+        ...state,
+        chainId: action.payload.chainId,
+      }
+    },
   },
 })
 
-export const { setActiveSafe, clearActiveSafe } = activeSafeSlice.actions
+export const { setActiveSafe, switchActiveChain, clearActiveSafe } = activeSafeSlice.actions
 
 export const selectActiveSafe = (state: RootState) => state.activeSafe
 

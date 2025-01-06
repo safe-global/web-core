@@ -9,26 +9,30 @@ import { Chain } from '@safe-global/store/gateway/AUTO_GENERATED/chains'
 
 import { ChainItems } from './ChainItems'
 import { ChainsDisplay } from '@/src/components/ChainsDisplay'
+import { selectChainById } from '@/src/store/chains'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/src/store'
 
 interface BalanceProps {
-  activeChain: Chain
+  activeChainId: string
   data: SafeOverview[]
   isLoading: boolean
   chains: Chain[]
   onChainChange: (chainId: string) => void
 }
 
-export function Balance({ activeChain, data, chains, isLoading, onChainChange }: BalanceProps) {
-  const balance = data?.find((chain) => chain.chainId === activeChain.chainId)
+export function Balance({ activeChainId, data, chains, isLoading, onChainChange }: BalanceProps) {
+  const balance = data?.find((chain) => chain.chainId === activeChainId)
+  const activeChain = useSelector((state: RootState) => selectChainById(state, activeChainId))
 
   return (
     <View>
       <View marginBottom="$8">
-        {activeChain && (
+        {activeChainId && (
           <Dropdown<SafeOverview>
             label={activeChain?.chainName}
             dropdownTitle="Select network:"
-            leftNode={<ChainsDisplay activeChainId={activeChain.chainId} chains={chains} max={1} />}
+            leftNode={<ChainsDisplay activeChainId={activeChainId} chains={chains} max={1} />}
             items={data}
             keyExtractor={({ item }) => item.chainId}
             renderItem={({ item, onClose }) => (

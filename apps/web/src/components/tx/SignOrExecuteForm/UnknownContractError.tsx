@@ -18,7 +18,7 @@ const UnknownContractError = ({ txData }: { txData: TransactionData | undefined 
   // Unsupported base contract
   const isUnknown = !isValidMasterCopy(safe.implementationVersionState)
 
-  if (!isUnknown || !newMasterCopy) return null
+  if (!isUnknown || !!newMasterCopy) return null
 
   return (
     <ErrorMessage>

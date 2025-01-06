@@ -33,6 +33,7 @@ export default {
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
         backgroundColor: '#000000',
+        monochromeImage: './assets/images/monochrome-icon.png',
       },
       package: IS_DEV ? 'global.safe.mobileapp.dev' : 'global.safe.mobileapp',
     },

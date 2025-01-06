@@ -14,12 +14,25 @@ interface AccountCardProps {
   owners: number
   threshold: number
   rightNode?: string | React.ReactNode
-  chains: Chain[]
+  leftNode?: React.ReactNode
+  chains?: Chain[]
+  spaced?: boolean
 }
 
-export function AccountCard({ name, chains, owners, balance, address, threshold, rightNode }: AccountCardProps) {
+export function AccountCard({
+  name,
+  chains,
+  spaced,
+  owners,
+  leftNode,
+  balance,
+  address,
+  threshold,
+  rightNode,
+}: AccountCardProps) {
   return (
     <SafeListItem
+      spaced={spaced}
       label={
         <View>
           <Text fontSize="$4" fontWeight={600}>
@@ -31,10 +44,12 @@ export function AccountCard({ name, chains, owners, balance, address, threshold,
         </View>
       }
       leftNode={
-        <View marginRight="$2">
+        <View marginRight="$2" flexDirection="row" gap="$2" justifyContent="center" alignItems="center">
+          {leftNode}
           <IdenticonWithBadge
             testID="threshold-info-badge"
             size={40}
+            fontSize={owners > 9 ? 8 : 12}
             address={address}
             badgeContent={`${threshold}/${owners}`}
           />
@@ -42,7 +57,7 @@ export function AccountCard({ name, chains, owners, balance, address, threshold,
       }
       rightNode={
         <View columnGap="$2" flexDirection="row">
-          <ChainsDisplay chains={chains} max={3} />
+          {chains && <ChainsDisplay chains={chains} max={3} />}
           {rightNode}
         </View>
       }

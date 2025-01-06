@@ -20,7 +20,7 @@ import useWallet from '@/hooks/wallets/useWallet'
 const OutreachPopup = (): ReactElement | null => {
   const dispatch = useAppDispatch()
   const outreachPopup = useAppSelector(selectOutreachBanner)
-  const [isClosed, setIsClosed] = useLocalStorage<boolean>(OUTREACH_LS_KEY)
+  const [isClosed, setIsClosed] = useLocalStorage<boolean>(`${OUTREACH_LS_KEY}_v${ACTIVE_OUTREACH.id}`)
   const currentChainId = useChainId()
   const safeAddress = useSafeAddress()
   const wallet = useWallet()
@@ -38,7 +38,9 @@ const OutreachPopup = (): ReactElement | null => {
 
   const outreachUrl = `${ACTIVE_OUTREACH.url}#safe_address=${safeAddress}&signer_address=${wallet?.address}&chain_id=${currentChainId}`
 
-  const [askAgainLaterTimestamp, setAskAgainLaterTimestamp] = useSessionStorage<number>(OUTREACH_SS_KEY)
+  const [askAgainLaterTimestamp, setAskAgainLaterTimestamp] = useSessionStorage<number>(
+    `${OUTREACH_SS_KEY}_v${ACTIVE_OUTREACH.id}`,
+  )
 
   const shouldOpen = useShowOutreachPopup(isClosed, askAgainLaterTimestamp, submission)
 

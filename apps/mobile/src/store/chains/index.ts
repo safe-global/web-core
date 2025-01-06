@@ -2,6 +2,7 @@ import { apiSliceWithChainsConfig, chainsAdapter, initialState } from '@safe-glo
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '..'
 import { Chain } from '@safe-global/store/gateway/AUTO_GENERATED/chains'
+import { selectActiveSafe } from '../activeSafeSlice'
 
 const selectChainsResult = apiSliceWithChainsConfig.endpoints.getChainsConfig.select()
 
@@ -14,6 +15,13 @@ const { selectAll: selectAllChains, selectById } = chainsAdapter.getSelectors(se
 export const selectChainById = (state: RootState, chainId: string) => selectById(state, chainId)
 export const selectAllChainsIds = createSelector([selectAllChains], (chains: Chain[]) =>
   chains.map((chain) => chain.chainId),
+)
+export const selectActiveChainCurrency = createSelector(
+  [selectActiveSafe, (state: RootState) => state],
+  (activeSafe, state) => {
+    const chain = selectChainById(state, activeSafe.chainId)
+    return chain?.nativeCurrency
+  },
 )
 
 export const getChainsByIds = createSelector(
