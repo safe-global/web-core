@@ -51,7 +51,7 @@
     "@safe-global/store": "workspace:^",
     "@storybook/addon-react-native-web": "^0.0.26",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
-    "@tamagui/animations-moti": "^1.117.1",
+    "@tamagui/animations-moti": "^1.121.6",
     "@tamagui/babel-plugin": "^1.120.2",
     "@tamagui/config": "^1.117.1",
     "@tamagui/font-dm-sans": "^1.121.3",
