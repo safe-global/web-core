@@ -5925,9 +5925,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-date-pickers@npm:^7.22.1":
-  version: 7.23.2
-  resolution: "@mui/x-date-pickers@npm:7.23.2"
+"@mui/x-date-pickers@npm:^7.23.3":
+  version: 7.23.3
+  resolution: "@mui/x-date-pickers@npm:7.23.3"
   dependencies:
     "@babel/runtime": "npm:^7.25.7"
     "@mui/utils": "npm:^5.16.6 || ^6.0.0"
@@ -5969,7 +5969,7 @@ __metadata:
       optional: true
     moment-jalaali:
       optional: true
-  checksum: 10/80e5200c485fc7d4cbf8a21b39d5c2c1fd556b6373d062066901ddd7031511417442b3ac81f569f52dd0edd1c319dcf60e4847e3ff12e1f8a4e6f73ac6fa8cf4
+  checksum: 10/8abd73645f614741f7e97f72f3516413a792c1b5f2ddbba4180f17bcb2282a55e4e22d6e429c72791e3a7b4d458c4580fd5a9fba806babddbf9846b3089b16ef
   languageName: node
   linkType: hard
 
@@ -7649,7 +7649,7 @@ __metadata:
     "@mdx-js/react": "npm:^3.0.1"
     "@mui/icons-material": "npm:^6.1.6"
     "@mui/material": "npm:^6.3.0"
-    "@mui/x-date-pickers": "npm:^7.22.1"
+    "@mui/x-date-pickers": "npm:^7.23.3"
     "@next/bundle-analyzer": "npm:^15.0.4"
     "@next/mdx": "npm:^15.0.4"
     "@openzeppelin/contracts": "npm:^4.9.6"
