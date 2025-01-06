@@ -4,12 +4,14 @@
   top: 0;
   width: 100%;
   z-index: 1201;
+  background: var(--color-background-paper);
+  padding-top: env(safe-area-inset-top);
 }
 
 .main {
   background-color: var(--color-background-main);
   padding-left: 230px;
-  padding-top: var(--header-height);
+  padding-top: calc(var(--header-height) + env(safe-area-inset-top));
   min-height: 100vh;
   display: flex;
   flex-direction: column;
