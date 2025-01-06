@@ -6945,19 +6945,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/material-top-tabs@npm:^7.0.1":
-  version: 7.0.18
-  resolution: "@react-navigation/material-top-tabs@npm:7.0.18"
+"@react-navigation/elements@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "@react-navigation/elements@npm:2.2.5"
   dependencies:
-    "@react-navigation/elements": "npm:^2.2.4"
+    color: "npm:^4.2.3"
+  peerDependencies:
+    "@react-native-masked-view/masked-view": ">= 0.2.0"
+    "@react-navigation/native": ^7.0.14
+    react: ">= 18.2.0"
+    react-native: "*"
+    react-native-safe-area-context: ">= 4.0.0"
+  peerDependenciesMeta:
+    "@react-native-masked-view/masked-view":
+      optional: true
+  checksum: 10/f50a37ab35c80b9061ec2f540a656c90a4926e78585511dde5664d1ba5c2887918c33489f4518ff910a47bdba63390ae8ae8edceaf7f78335befe6f881067236
+  languageName: node
+  linkType: hard
+
+"@react-navigation/material-top-tabs@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@react-navigation/material-top-tabs@npm:7.1.0"
+  dependencies:
+    "@react-navigation/elements": "npm:^2.2.5"
     color: "npm:^4.2.3"
     react-native-tab-view: "npm:^4.0.5"
   peerDependencies:
-    "@react-navigation/native": ^7.0.13
+    "@react-navigation/native": ^7.0.14
     react: ">= 18.2.0"
     react-native: "*"
     react-native-pager-view: ">= 6.0.0"
-  checksum: 10/fd5f07a28dded4fe0e75df0039f59c6369121c65ebb26cc2c9e95807a9caff1613c7fa26e11d1d78afbd67095987a12151ac0e3e24688f6128daf3c31d342943
+  checksum: 10/ae243d8e888ac522ac456248bdb41ae98115ca6709c0b4aa8f77a53faec79813e951028a0ead0751e7b1b639bfd7468e632ee34e3f981359ee5c92bd6f58c9b7
   languageName: node
   linkType: hard
 
@@ -7407,7 +7425,7 @@ __metadata:
     "@react-native-community/slider": "npm:4.5.5"
     "@react-native-menu/menu": "npm:^1.1.6"
     "@react-native/babel-preset": "npm:^0.76.2"
-    "@react-navigation/material-top-tabs": "npm:^7.0.1"
+    "@react-navigation/material-top-tabs": "npm:^7.1.0"
     "@react-navigation/native": "npm:^7.0.14"
     "@reduxjs/toolkit": "npm:^2.4.0"
     "@rtk-query/codegen-openapi": "npm:^2.0.0"
