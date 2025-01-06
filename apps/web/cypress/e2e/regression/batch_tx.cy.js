@@ -26,7 +26,6 @@ describe('Batch transaction tests', { defaultCommandTimeout: 30000 }, () => {
     cy.visit(constants.BALANCE_URL + staticSafes.SEP_STATIC_SAFE_2)
     wallet.connectSigner(signer)
     owner.waitForConnectionStatus()
-    main.closeOutreachPopup()
   })
 
   it('Verify the Add batch button is present in a transaction form', () => {
