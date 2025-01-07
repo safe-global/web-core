@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { InputAdornment, Stack, TextField, Typography } from '@mui/material'
 import InfoIcon from '@/public/images/notifications/info.svg'
+import { MODALS_EVENTS, trackEvent } from '@/services/analytics'
 
 const MAX_NOTE_LENGTH = 120
 
@@ -14,6 +15,7 @@ export const TxNoteInput = ({ onSubmit }: { onSubmit: (note: string) => void }) 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onSubmit(e.target.value.slice(0, MAX_NOTE_LENGTH))
+      trackEvent(MODALS_EVENTS.ADD_TX_NOTE)
     },
     [onSubmit],
   )
