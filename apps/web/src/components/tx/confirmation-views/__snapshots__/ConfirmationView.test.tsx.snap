@@ -126,15 +126,15 @@ exports[`ConfirmationView should display a confirmation screen for a SETTINGS_CH
         <h3
           class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
         >
-          <div
+          <button
             aria-expanded="false"
-            class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-6csn7x-MuiButtonBase-root-MuiAccordionSummary-root"
+            class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-10sjung-MuiButtonBase-root-MuiAccordionSummary-root"
             data-testid="decoded-tx-summary"
-            role="button"
             tabindex="0"
+            type="button"
           >
-            <div
-              class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1pnrdlh-MuiAccordionSummary-content"
+            <span
+              class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1r0e0ir-MuiAccordionSummary-content"
             >
               Advanced details
               <span
@@ -151,8 +151,8 @@ exports[`ConfirmationView should display a confirmation screen for a SETTINGS_CH
                 class="MuiBox-root css-i9gxme"
               />
               addOwnerWithThreshold
-            </div>
-            <div
+            </span>
+            <span
               class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
             >
               <svg
@@ -166,8 +166,8 @@ exports[`ConfirmationView should display a confirmation screen for a SETTINGS_CH
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
-            </div>
-          </div>
+            </span>
+          </button>
         </h3>
         <div
           class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
@@ -631,15 +631,15 @@ exports[`ConfirmationView should display a confirmation with method call when th
         <h3
           class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
         >
-          <div
+          <button
             aria-expanded="false"
-            class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-6csn7x-MuiButtonBase-root-MuiAccordionSummary-root"
+            class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-10sjung-MuiButtonBase-root-MuiAccordionSummary-root"
             data-testid="decoded-tx-summary"
-            role="button"
             tabindex="0"
+            type="button"
           >
-            <div
-              class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1pnrdlh-MuiAccordionSummary-content"
+            <span
+              class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1r0e0ir-MuiAccordionSummary-content"
             >
               Advanced details
               <span
@@ -656,8 +656,8 @@ exports[`ConfirmationView should display a confirmation with method call when th
                 class="MuiBox-root css-i9gxme"
               />
               addOwnerWithThreshold
-            </div>
-            <div
+            </span>
+            <span
               class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
             >
               <svg
@@ -671,8 +671,8 @@ exports[`ConfirmationView should display a confirmation with method call when th
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
-            </div>
-          </div>
+            </span>
+          </button>
         </h3>
         <div
           class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"

@@ -20,14 +20,14 @@ exports[`BatchTransactions should render a list of batch transactions 1`] = `
         <h3
           class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
         >
-          <div
+          <button
             aria-expanded="false"
-            class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-6csn7x-MuiButtonBase-root-MuiAccordionSummary-root"
-            role="button"
+            class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-10sjung-MuiButtonBase-root-MuiAccordionSummary-root"
             tabindex="0"
+            type="button"
           >
-            <div
-              class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1pnrdlh-MuiAccordionSummary-content"
+            <span
+              class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1r0e0ir-MuiAccordionSummary-content"
             >
               <div
                 class="MuiBox-root css-mvjamn"
@@ -63,8 +63,8 @@ exports[`BatchTransactions should render a list of batch transactions 1`] = `
                   </span>
                 </div>
               </div>
-            </div>
-            <div
+            </span>
+            <span
               class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
             >
               <svg
@@ -78,8 +78,8 @@ exports[`BatchTransactions should render a list of batch transactions 1`] = `
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
-            </div>
-          </div>
+            </span>
+          </button>
         </h3>
         <div
           class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
@@ -235,7 +235,7 @@ exports[`BatchTransactions should render a list of batch transactions 1`] = `
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-1vd824g-MuiGrid-root"
                         data-testid="tx-data-row"
                       >
-                        9/20/2024, 10:20:15 AM
+                        20.9.2024, 10:20:15
                       </div>
                     </div>
                   </div>
