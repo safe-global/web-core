@@ -194,7 +194,7 @@ export const SignOrExecuteForm = ({
 
       {!isCounterfactualSafe && !props.isRejection && <TxChecks />}
 
-      <TxNoteForm isCreation onSubmit={onNoteSubmit} txDetails={props.txDetails} />
+      <TxNoteForm isCreation={isCreation ?? false} onSubmit={onNoteSubmit} txDetails={props.txDetails} />
 
       <SignerForm willExecute={willExecute} />
 
