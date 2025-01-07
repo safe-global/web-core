@@ -19,7 +19,7 @@ const TokenIcon = ({
 }): ReactElement => {
   const src = useMemo(() => {
     return logoUri?.replace(COINGECKO_THUMB, COINGECKO_SMALL)
-  }, [])
+  }, [logoUri])
 
   return (
     <ImageFallback
