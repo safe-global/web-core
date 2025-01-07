@@ -34,7 +34,7 @@ type TxActions = {
     origin?: string,
     isRelayed?: boolean,
   ) => Promise<string>
-  signProposerTx: (safeTx?: SafeTransaction) => Promise<string>
+  signProposerTx: (safeTx?: SafeTransaction, origin?: string) => Promise<string>
   proposeTx: (safeTx: SafeTransaction, txId?: string, origin?: string) => Promise<TransactionDetails>
 }
 
@@ -135,14 +135,14 @@ export const useTxActions = (): TxActions => {
       return tx.txId
     }
 
-    const signProposerTx: TxActions['signProposerTx'] = async (safeTx) => {
+    const signProposerTx: TxActions['signProposerTx'] = async (safeTx, origin) => {
       assertTx(safeTx)
       assertProvider(wallet?.provider)
       assertOnboard(onboard)
 
       const signedTx = await dispatchProposerTxSigning(safeTx, wallet)
 
-      const tx = await _propose(wallet.address, signedTx)
+      const tx = await _propose(wallet.address, signedTx, undefined, origin)
       return tx.txId
     }
 

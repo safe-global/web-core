@@ -17,6 +17,7 @@ import Stack from '@mui/system/Stack'
 
 export const ProposerForm = ({
   safeTx,
+  origin,
   disableSubmit = false,
   txActions,
   txSecurity,
@@ -51,7 +52,7 @@ export const ProposerForm = ({
     setIsRejectedByUser(false)
 
     try {
-      const txId = await signProposerTx(safeTx)
+      const txId = await signProposerTx(safeTx, origin)
       onSubmit?.(txId)
     } catch (_err) {
       const err = asError(_err)
