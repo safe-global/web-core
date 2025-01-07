@@ -8,7 +8,7 @@ import useIsWrongChain from '@/hooks/useIsWrongChain'
 import { useIsNotificationsRenewalEnabled, useNotificationsTokenVersion } from './useNotificationsTokenVersion'
 import { useNotificationsRenewal } from './useNotificationsRenewal'
 import { NotificationsTokenVersion } from '@/services/push-notifications/preferences'
-import { RENEWAL_NOTIFICATION_KEY } from '../constants'
+import { RENEWAL_MESSAGE, RENEWAL_NOTIFICATION_KEY } from '../constants'
 
 /**
  * Hook to show a notification to renew the notifications token if needed.
@@ -43,8 +43,7 @@ export const useShowNotificationsRenewalMessage = () => {
     ) {
       dispatch(
         showNotification({
-          message:
-            'We’ve upgraded your notification experience. Sign this message to keep receiving important updates seamlessly.',
+          message: RENEWAL_MESSAGE,
           variant: 'warning',
           groupKey: RENEWAL_NOTIFICATION_KEY,
           link: {

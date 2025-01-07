@@ -4,11 +4,12 @@ import useSafeInfo from '@/hooks/useSafeInfo'
 import CheckWallet from '@/components/common/CheckWallet'
 import { useNotificationsRenewal } from '@/components/settings/PushNotifications/hooks/useNotificationsRenewal'
 import { useIsNotificationsRenewalEnabled } from '@/components/settings/PushNotifications/hooks/useNotificationsTokenVersion'
+import { RENEWAL_MESSAGE } from '@/components/settings/PushNotifications/constants'
 
 const NotificationRenewal = (): ReactElement => {
-  const { safe, safeLoaded } = useSafeInfo()
+  const { safe } = useSafeInfo()
   const [isRegistering, setIsRegistering] = useState(false)
-  const { renewNotifications, needsRenewal, numberChainsForRenewal } = useNotificationsRenewal()
+  const { renewNotifications, needsRenewal } = useNotificationsRenewal()
   const isNotificationsRenewalEnabled = useIsNotificationsRenewalEnabled()
 
   if (!needsRenewal || !isNotificationsRenewalEnabled) {
@@ -22,15 +23,13 @@ const NotificationRenewal = (): ReactElement => {
     setIsRegistering(false)
   }
 
-  const message = `We’ve upgraded your notification experience. Sign ${safeLoaded || numberChainsForRenewal < 2 ? 'the message' : `${numberChainsForRenewal} messages`} now to keep receiving important updates seamlessly.`
-
   return (
     <>
       <Alert severity="warning">
         <Typography variant="body2" fontWeight={700} mb={1}>
           Signature needed
         </Typography>
-        <Typography variant="body2">{message}</Typography>
+        <Typography variant="body2">{RENEWAL_MESSAGE}</Typography>
       </Alert>
       <Box>
         <CheckWallet allowNonOwner checkNetwork={!isRegistering && safe.deployed}>

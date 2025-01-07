@@ -10,7 +10,7 @@ import * as notificationsSlice from '@/store/notificationsSlice'
 import * as useIsWrongChain from '@/hooks/useIsWrongChain'
 import { NotificationsTokenVersion } from '@/services/push-notifications/preferences'
 import { renderHook, waitFor } from '@testing-library/react'
-import { RENEWAL_NOTIFICATION_KEY } from '../../constants'
+import { RENEWAL_MESSAGE, RENEWAL_NOTIFICATION_KEY } from '../../constants'
 
 const { V1, V2 } = NotificationsTokenVersion
 
@@ -42,7 +42,7 @@ describe('useShowNotificationsRenewalMessage', () => {
   const getPreferencesMock = jest.fn().mockReturnValue(safePreferencesMock)
 
   const notificationMock = {
-    message: 'Sign this message to renew your notificaitons',
+    message: 'Sign this message to renew your notifications',
     groupKey: RENEWAL_NOTIFICATION_KEY,
   }
   const notificationsMock = [{ message: 'Hello world', groupKey: 'helloWorld' }]
@@ -101,8 +101,7 @@ describe('useShowNotificationsRenewalMessage', () => {
     await waitFor(async () => {
       expect(showNotificationSpy).toHaveBeenCalledTimes(1)
       expect(showNotificationSpy).toHaveBeenCalledWith({
-        message:
-          'We’ve upgraded your notification experience. Sign this message to keep receiving important updates seamlessly.',
+        message: RENEWAL_MESSAGE,
         variant: 'warning',
         groupKey: RENEWAL_NOTIFICATION_KEY,
         link: {
