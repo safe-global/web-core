@@ -86,7 +86,7 @@ export const SignForm = ({
       onSubmit?.(resultTxId)
     }
 
-    if (signer?.isSafe) {
+    if (!isAddingToBatch && signer?.isSafe) {
       setTxFlow(<NestedTxSuccessScreenFlow txId={resultTxId} />, undefined, false)
     } else {
       setTxFlow(undefined)
