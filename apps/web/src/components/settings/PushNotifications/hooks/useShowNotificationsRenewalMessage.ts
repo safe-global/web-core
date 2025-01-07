@@ -25,10 +25,15 @@ export const useShowNotificationsRenewalMessage = () => {
   const notifications = useAppSelector(selectNotifications)
   const { renewNotifications } = useNotificationsRenewal()
 
+  const notificationGroupKey = useMemo(
+    () => `${RENEWAL_NOTIFICATION_KEY}-${safe.chainId}-${safe.address.value}`,
+    [safe.chainId, safe.address.value],
+  )
+
   // Check if a renewal notification is already present
   const hasNotificationMessage = useMemo(
-    () => notifications.some((notification) => notification.groupKey === RENEWAL_NOTIFICATION_KEY),
-    [notifications],
+    () => notifications.some((notification) => notification.groupKey === notificationGroupKey),
+    [notifications, notificationGroupKey],
   )
 
   useEffect(() => {
@@ -45,7 +50,7 @@ export const useShowNotificationsRenewalMessage = () => {
         showNotification({
           message: RENEWAL_MESSAGE,
           variant: 'warning',
-          groupKey: RENEWAL_NOTIFICATION_KEY,
+          groupKey: notificationGroupKey,
           link: {
             onClick: renewNotifications,
             title: 'Sign',
@@ -61,7 +66,7 @@ export const useShowNotificationsRenewalMessage = () => {
     renewNotifications,
     preferences,
     safeLoaded,
-    safe,
+    notificationGroupKey,
     safeTokenVersion,
     isWrongChain,
     hasNotificationMessage,

@@ -43,7 +43,7 @@ describe('useShowNotificationsRenewalMessage', () => {
 
   const notificationMock = {
     message: 'Sign this message to renew your notifications',
-    groupKey: RENEWAL_NOTIFICATION_KEY,
+    groupKey: `${RENEWAL_NOTIFICATION_KEY}-${chainId}-${safeAddress1}`,
   }
   const notificationsMock = [{ message: 'Hello world', groupKey: 'helloWorld' }]
   const notificationsTokenVersionMock = {
@@ -103,7 +103,7 @@ describe('useShowNotificationsRenewalMessage', () => {
       expect(showNotificationSpy).toHaveBeenCalledWith({
         message: RENEWAL_MESSAGE,
         variant: 'warning',
-        groupKey: RENEWAL_NOTIFICATION_KEY,
+        groupKey: `${RENEWAL_NOTIFICATION_KEY}-${chainId}-${safeAddress1}`,
         link: {
           onClick: expect.any(Function),
           title: 'Sign',
