@@ -59,10 +59,6 @@ export const WALLETCONNECT_EVENTS = {
     category: WALLETCONNECT_CATEGORY,
     event: EventType.META,
   },
-  SWITCH_FROM_UNSUPPORTED_CHAIN: {
-    action: 'WC switch from unsupported chain',
-    category: WALLETCONNECT_CATEGORY,
-  },
   REQUEST: {
     action: 'WC request',
     category: WALLETCONNECT_CATEGORY,
