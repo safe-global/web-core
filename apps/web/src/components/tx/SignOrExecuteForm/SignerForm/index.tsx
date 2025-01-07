@@ -100,7 +100,7 @@ export const SignerForm = ({ willExecute }: { willExecute?: boolean }) => {
           >
             {options?.map((owner) => (
               <MenuItem key={owner} value={owner} disabled={!isOptionEnabled(owner)}>
-                <EthHashInfo address={owner} avatarSize={32} onlyName />
+                <EthHashInfo address={owner} avatarSize={32} onlyName copyAddress={false} />
                 {!isOptionEnabled(owner) && (
                   <Typography variant="caption" component="span" className={css.disabledPill}>
                     Already signed

@@ -124,7 +124,7 @@ const OutreachPopup = (): ReactElement | null => {
                 </Typography>
               </Stack>
               <Track {...OUTREACH_EVENTS.CLOSE_POPUP}>
-                <IconButton className={css.close} aria-label="close" onClick={handleClose}>
+                <IconButton className={css.close} aria-label="close outreach popup" onClick={handleClose}>
                   <Close />
                 </IconButton>
               </Track>
