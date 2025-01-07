@@ -22,15 +22,15 @@ exports[`SignOrExecute should display a confirmation screen 1`] = `
             <h3
               class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
             >
-              <button
+              <div
                 aria-expanded="false"
-                class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-10sjung-MuiButtonBase-root-MuiAccordionSummary-root"
+                class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-6csn7x-MuiButtonBase-root-MuiAccordionSummary-root"
                 data-testid="decoded-tx-summary"
+                role="button"
                 tabindex="0"
-                type="button"
               >
-                <span
-                  class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1r0e0ir-MuiAccordionSummary-content"
+                <div
+                  class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1pnrdlh-MuiAccordionSummary-content"
                 >
                   Advanced details
                   <span
@@ -46,8 +46,8 @@ exports[`SignOrExecute should display a confirmation screen 1`] = `
                   <div
                     class="MuiBox-root css-i9gxme"
                   />
-                </span>
-                <span
+                </div>
+                <div
                   class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
                 >
                   <svg
@@ -61,8 +61,8 @@ exports[`SignOrExecute should display a confirmation screen 1`] = `
                       d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                     />
                   </svg>
-                </span>
-              </button>
+                </div>
+              </div>
             </h3>
             <div
               class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
@@ -282,15 +282,15 @@ exports[`SignOrExecute should display an error screen 1`] = `
             <h3
               class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
             >
-              <button
+              <div
                 aria-expanded="false"
-                class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-10sjung-MuiButtonBase-root-MuiAccordionSummary-root"
+                class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters accordion css-6csn7x-MuiButtonBase-root-MuiAccordionSummary-root"
                 data-testid="decoded-tx-summary"
+                role="button"
                 tabindex="0"
-                type="button"
               >
-                <span
-                  class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1r0e0ir-MuiAccordionSummary-content"
+                <div
+                  class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-1pnrdlh-MuiAccordionSummary-content"
                 >
                   Advanced details
                   <span
@@ -306,8 +306,8 @@ exports[`SignOrExecute should display an error screen 1`] = `
                   <div
                     class="MuiBox-root css-i9gxme"
                   />
-                </span>
-                <span
+                </div>
+                <div
                   class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
                 >
                   <svg
@@ -321,8 +321,8 @@ exports[`SignOrExecute should display an error screen 1`] = `
                       d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                     />
                   </svg>
-                </span>
-              </button>
+                </div>
+              </div>
             </h3>
             <div
               class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
