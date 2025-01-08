@@ -121,15 +121,16 @@ export const predictAddressBasedOnReplayData = async (safeCreationData: Replayed
   return getCreate2Address(safeCreationData.factoryAddress, salt, keccak256(initCode))
 }
 
+const canMultichain = (chain: ChainInfo) => {
+  const MIN_SAFE_VERSION = '1.4.1'
+  return hasFeature(chain, FEATURES.COUNTERFACTUAL) && semverSatisfies(LATEST_SAFE_VERSION, `>=${MIN_SAFE_VERSION}`)
+}
+
 export const hasMultiChainCreationFeatures = (chain: ChainInfo): boolean => {
-  return hasFeature(chain, FEATURES.MULTI_CHAIN_SAFE_CREATION) && hasFeature(chain, FEATURES.COUNTERFACTUAL)
+  return hasFeature(chain, FEATURES.MULTI_CHAIN_SAFE_CREATION) && canMultichain(chain)
 }
 
 export const hasMultiChainAddNetworkFeature = (chain: ChainInfo | undefined): boolean => {
   if (!chain) return false
-  return (
-    hasFeature(chain, FEATURES.MULTI_CHAIN_SAFE_ADD_NETWORK) &&
-    hasFeature(chain, FEATURES.COUNTERFACTUAL) &&
-    semverSatisfies(chain.recommendedMasterCopyVersion || LATEST_SAFE_VERSION, '>=1.4.1')
-  )
+  return hasFeature(chain, FEATURES.MULTI_CHAIN_SAFE_ADD_NETWORK) && canMultichain(chain)
 }

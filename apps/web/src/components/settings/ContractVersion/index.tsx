@@ -29,7 +29,7 @@ export const ContractVersion = () => {
   const showUpdateDialog = safeMasterCopy?.deployer === MasterCopyDeployer.GNOSIS && needsUpdate
   const isLatestVersion = safe.version && !showUpdateDialog
 
-  const latestSafeVersion = getLatestSafeVersion(currentChain)
+  const latestSafeVersion = getLatestSafeVersion(currentChain, true)
 
   return (
     <>

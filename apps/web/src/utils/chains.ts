@@ -71,8 +71,11 @@ export const isRouteEnabled = (route: string, chain?: ChainInfo) => {
   return !featureRoute || hasFeature(chain, featureRoute)
 }
 
-export const getLatestSafeVersion = (chain: ChainInfo | undefined): SafeVersion => {
-  const latestSafeVersion = chain?.recommendedMasterCopyVersion || LATEST_SAFE_VERSION
+export const getLatestSafeVersion = (chain: ChainInfo | undefined, isUpgrade = false): SafeVersion => {
+  const latestSafeVersion = isUpgrade
+    ? chain?.recommendedMasterCopyVersion || LATEST_SAFE_VERSION // for upgrades, use the recommended version
+    : LATEST_SAFE_VERSION // for Safe creation, always use the latest version
+
   // Without version filter it will always return the LATEST_SAFE_VERSION constant to avoid automatically updating to the newest version if the deployments change
   const latestDeploymentVersion = (getSafeSingletonDeployment({ network: chain?.chainId, released: true })?.version ??
     FALLBACK_SAFE_VERSION) as SafeVersion
