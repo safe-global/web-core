@@ -9,7 +9,7 @@ const FIREBASE_VALID_KEY_PRODUCTION = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY
 const FIREBASE_VALID_KEY_STAGING = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY_STAGING
 export const FIREBASE_VAPID_KEY = FIREBASE_IS_PRODUCTION ? FIREBASE_VALID_KEY_PRODUCTION : FIREBASE_VALID_KEY_STAGING
 
-export const FIREBASE_OPTIONS: FirebaseOptions = (() => {
+export const FIREBASE_OPTIONS = (() => {
   const FIREBASE_OPTIONS_PRODUCTION = process.env.NEXT_PUBLIC_FIREBASE_OPTIONS_PRODUCTION || ''
   const FIREBASE_OPTIONS_STAGING = process.env.NEXT_PUBLIC_FIREBASE_OPTIONS_STAGING || ''
   try {
@@ -19,10 +19,13 @@ export const FIREBASE_OPTIONS: FirebaseOptions = (() => {
   }
 })()
 
-export const initializeFirebaseApp = () => {
-  const hasFirebaseOptions = Object.values(FIREBASE_OPTIONS).every(Boolean)
+const isFirebaseOptions = (options: object): options is FirebaseOptions => {
+  // At least projectId is required
+  return 'projectId' in options && Object.values(options).every(Boolean)
+}
 
-  if (!hasFirebaseOptions) {
+export const initializeFirebaseApp = () => {
+  if (!isFirebaseOptions(FIREBASE_OPTIONS)) {
     return
   }
 
