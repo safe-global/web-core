@@ -1,4 +1,4 @@
-# Safe Mobile App 📱
+# Safe{Wallet} mobile app 📱
 
 This project is now part of the **@safe-global/safe-wallet** monorepo! The monorepo setup allows centralized management of multiple
 applications and shared libraries. This workspace (`apps/mobile`) contains the Safe Mobile App.
@@ -20,7 +20,7 @@ You can follow the [expo documentation](https://docs.expo.dev/get-started/set-up
 
 Follow the [Maestro](https://maestro.mobile.dev/) documentation to install the tool for E2E testing.
 
-## Setup the Project
+## Setup the project
 
 1. Install all dependencies from the **root of the monorepo**:
 
@@ -28,7 +28,7 @@ Follow the [Maestro](https://maestro.mobile.dev/) documentation to install the t
 yarn install
 ```
 
-## Running the App
+## Running the app
 
 ### Running on iOS
 
@@ -56,7 +56,7 @@ From the root of the monorepo:
 yarn workspace @safe-global/mobile start:android
 ```
 
-### How to Open the Custom DevTools Menu
+### How to open the custom devtools menu
 
 The app supports **Redux**, **RTK Query**, and **React DevTools**. To access these tools:
 
@@ -66,7 +66,7 @@ The app supports **Redux**, **RTK Query**, and **React DevTools**. To access the
 
 ## Running the Storybook
 
-### Running in the browse
+### Running in the browser
 
 Run the storybook command from the root:
 
@@ -84,12 +84,12 @@ yarn workspace @safe-global/mobile storybook:[ios|android]
 
 To View stories press `i` on iOS or `a` on Android.
 
-## How to Run the E2E Tests
+## How to run the E2E Tests
 
 We use [Maestro](https://maestro.mobile.dev/) for E2E testing. Before running tests, install Maestro following the
 documentation for your OS.
 
-### Run a Dev Build and E2E Tests
+### Run a dev build and E2E tests
 
 To build the app for tests:
 
@@ -107,7 +107,7 @@ yarn workspace @safe-global/mobile e2e:metro-android
 
 These commands include `.e2e.ts|.e2e.tsx` files for mocking services or adding test-specific code.
 
-### Run the Tests
+### Run the tests
 
 In a second terminal run:
 
@@ -115,7 +115,7 @@ In a second terminal run:
 yarn workspace @safe-global/mobile e2e:run
 ```
 
-### Use Maestro Studio to Write Tests
+### Use Maestro Studio to write tests
 
 To write tests with Maestro Studio, run:
 
@@ -125,12 +125,12 @@ maestro studio
 
 Export the generated YAML file to the `e2e` folder and include it in the test suite.
 
-### Running E2E Tests in CI
+### Running E2E tests in CI
 
 To run tests in CI, add the `eas-build-ios:build-and-maestro-test` label to a PR. This triggers the Expo CI pipeline to
 execute the tests.
 
-## Unit Tests
+## Unit tests
 
 We use **Jest** and the [React Native Testing Library](https://callstack.github.io/react-native-testing-library/) for
 unit, component, and hook tests.

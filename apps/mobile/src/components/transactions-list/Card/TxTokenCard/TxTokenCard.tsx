@@ -9,11 +9,11 @@ import {
   isTxQueued,
 } from '@/src/utils/transaction-guards'
 import { ellipsis, formatValue } from '@/src/utils/formatters'
-import { useSelector } from 'react-redux'
-import { selectNativeCurrency } from '@/src/store/activeChainSlice'
 import { TransferDirection } from '@safe-global/store/gateway/types'
 import { TransferTransactionInfo, Transaction } from '@safe-global/store/gateway/AUTO_GENERATED/transactions'
 import { Logo } from '@/src/components/Logo'
+import { selectActiveChainCurrency } from '@/src/store/chains'
+import { useAppSelector } from '@/src/store/hooks'
 
 interface TxTokenCardProps {
   bordered?: boolean
@@ -34,7 +34,7 @@ interface tokenDetails {
 const getTokenDetails = (txInfo: TransferTransactionInfo): tokenDetails => {
   const transfer = txInfo.transferInfo
   const unnamedToken = 'Unnamed token'
-  const nativeCurrency = useSelector(selectNativeCurrency)
+  const nativeCurrency = useAppSelector(selectActiveChainCurrency)
 
   if (isNativeTokenTransfer(transfer)) {
     return {

@@ -6,23 +6,32 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Address } from '@/src/types/address'
 
-type Props = {
+type IdenticonWithBadgeProps = {
   address: Address
   badgeContent?: string
+  size?: number
+  testID?: string
+  fontSize?: number
 }
 
-export const IdenticonWithBadge = ({ address, badgeContent }: Props) => {
+export const IdenticonWithBadge = ({
+  address,
+  testID,
+  badgeContent,
+  fontSize = 12,
+  size = 56,
+}: IdenticonWithBadgeProps) => {
   return (
-    <View style={styles.container}>
-      <Identicon address={address} rounded size={56} />
+    <View style={styles.container} testID={testID}>
+      <Identicon address={address} rounded size={size} />
       <View style={styles.badge}>
         <Skeleton colorMode={'dark'} radius="round" height={28} width={28}>
           {badgeContent && (
             <Badge
               content={badgeContent}
               textContentProps={{
-                fontSize: 12,
-                fontWeight: 700,
+                fontSize,
+                fontWeight: 500,
               }}
               themeName={'badge_success'}
               circleProps={{ bordered: true }}

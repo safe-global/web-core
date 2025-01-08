@@ -33,4 +33,12 @@ export const badgeTheme = {
     color: tokens.color.warning1ContrastTextDark,
     background: tokens.color.warningDarkDark,
   },
+  dark_badge_background: {
+    color: tokens.color.textPrimaryDark,
+    background: tokens.color.logoBackgroundDark,
+  },
+  light_badge_background: {
+    color: tokens.color.textPrimaryLight,
+    background: tokens.color.logoBackgroundLight,
+  },
 }

@@ -36,6 +36,7 @@ import { FEATURES } from '@/utils/chains'
 import { useGetTransactionDetailsQuery } from '@/store/api/gateway'
 import { asError } from '@/services/exceptions/utils'
 import { POLLING_INTERVAL } from '@/config/constants'
+import { TxNote } from '@/features/tx-notes'
 
 export const NOT_AVAILABLE = 'n/a'
 
@@ -82,6 +83,10 @@ const TxDetailsBlock = ({ txSummary, txDetails }: TxDetailsProps): ReactElement 
     <>
       {/* /Details */}
       <div className={`${css.details} ${isUnsigned ? css.noSigners : ''}`}>
+        <div className={css.txNote}>
+          <TxNote txDetails={txDetails} />
+        </div>
+
         <div className={css.shareLink}>
           <TxShareLink id={txSummary.id} />
         </div>

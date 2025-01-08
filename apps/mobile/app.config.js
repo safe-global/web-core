@@ -22,6 +22,9 @@ export default {
       config: {
         usesNonExemptEncryption: false,
       },
+      infoPlist: {
+        NSFaceIDUsageDescription: 'Enabling Face ID allows you to create/access secure keys.',
+      },
       supportsTablet: true,
       appleTeamId: 'MXRS32BBL4',
       bundleIdentifier: IS_DEV ? 'global.safe.mobileapp.dev' : 'global.safe.mobileapp',
@@ -30,6 +33,7 @@ export default {
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
         backgroundColor: '#000000',
+        monochromeImage: './assets/images/monochrome-icon.png',
       },
       package: IS_DEV ? 'global.safe.mobileapp.dev' : 'global.safe.mobileapp',
     },

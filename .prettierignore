@@ -2,9 +2,12 @@
 build
 coverage
 node_modules
+**/node_modules/*
 html
 ios
 android
 /assets
-
+.next
 apps/mobile/assets
+apps/web/src/markdown/privacy/privacy.md
+apps/web/src/markdown/terms/terms.md

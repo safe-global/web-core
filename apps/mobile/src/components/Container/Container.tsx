@@ -21,12 +21,18 @@ const StyledYStack = styled(YStack, {
 })
 
 export const Container = (
-  props: YStackProps & { bordered?: boolean; transparent?: boolean; themeName?: ThemeName },
+  props: YStackProps & { bordered?: boolean; spaced?: boolean; transparent?: boolean; themeName?: ThemeName },
 ) => {
-  const { children, bordered, themeName = 'container', ...rest } = props
+  const { children, bordered, themeName = 'container', spaced = true, ...rest } = props
   return (
     <Theme name={themeName}>
-      <StyledYStack bordered={!!bordered} borderRadius={'$3'} paddingHorizontal={'$4'} paddingVertical={'$4'} {...rest}>
+      <StyledYStack
+        bordered={!!bordered}
+        borderRadius={'$3'}
+        paddingHorizontal={spaced ? '$4' : 0}
+        paddingVertical={'$4'}
+        {...rest}
+      >
         {children}
       </StyledYStack>
     </Theme>

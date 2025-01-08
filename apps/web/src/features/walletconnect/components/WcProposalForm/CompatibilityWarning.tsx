@@ -1,5 +1,4 @@
-import { Alert, Typography } from '@mui/material'
-import { useCallback } from 'react'
+import { Alert, Stack, Typography } from '@mui/material'
 import type { WalletKitTypes } from '@reown/walletkit'
 
 import ChainIndicator from '@/components/common/ChainIndicator'
@@ -7,9 +6,6 @@ import { useCompatibilityWarning } from './useCompatibilityWarning'
 import useSafeInfo from '@/hooks/useSafeInfo'
 
 import css from './styles.module.css'
-import NetworkSelector from '@/components/common/NetworkSelector'
-import { trackEvent } from '@/services/analytics'
-import { WALLETCONNECT_EVENTS } from '@/services/analytics/events/walletconnect'
 
 export const CompatibilityWarning = ({
   proposal,
@@ -21,11 +17,6 @@ export const CompatibilityWarning = ({
   const { safe } = useSafeInfo()
   const isUnsupportedChain = !chainIds.includes(safe.chainId)
   const { severity, message } = useCompatibilityWarning(proposal, isUnsupportedChain)
-  const peerUrl = proposal.params.proposer.metadata.url || proposal.verifyContext.verified.origin
-
-  const onChainChange = useCallback(() => {
-    trackEvent({ ...WALLETCONNECT_EVENTS.SWITCH_FROM_UNSUPPORTED_CHAIN, label: peerUrl })
-  }, [peerUrl])
 
   return (
     <>
@@ -35,20 +26,15 @@ export const CompatibilityWarning = ({
 
       {isUnsupportedChain && (
         <>
-          <Typography mt={3} mb={1}>
+          <Typography mt={3} mb={1} variant="h5">
             Supported networks
           </Typography>
 
-          <div>
+          <Stack direction="row">
             {chainIds.map((chainId) => (
               <ChainIndicator inline chainId={chainId} key={chainId} className={css.chain} />
             ))}
-          </div>
-
-          <Typography mt={3} component="div">
-            Switch network
-            <NetworkSelector onChainSelect={onChainChange} />
-          </Typography>
+          </Stack>
         </>
       )}
     </>

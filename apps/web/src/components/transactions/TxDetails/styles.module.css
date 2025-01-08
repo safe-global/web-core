@@ -12,9 +12,20 @@
 }
 
 .shareLink {
-  position: absolute;
-  right: 16px;
-  top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  margin: var(--space-1);
+  margin-bottom: -40px;
+}
+
+.txNote {
+  margin: var(--space-1) 0;
+  padding: 0 var(--space-2) var(--space-2);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.txNote:empty {
+  display: none;
 }
 
 .loading,

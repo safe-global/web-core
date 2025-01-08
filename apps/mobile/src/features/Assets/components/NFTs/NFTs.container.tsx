@@ -1,5 +1,5 @@
 import { safelyDecodeURIComponent } from 'expo-router/build/fork/getStateFromPath-forks'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { SafeTab } from '@/src/components/SafeTab'
@@ -13,13 +13,13 @@ import {
 
 import { Fallback } from '../Fallback'
 import { NFTItem } from './NFTItem'
+import { useInfiniteScroll } from '@/src/hooks/useInfiniteScroll'
 
 export function NFTsContainer() {
   const activeSafe = useSelector(selectActiveSafe)
   const [pageUrl, setPageUrl] = useState<string>()
-  const [list, setList] = useState<CollectiblePage['results']>()
 
-  const { data, isLoading, error, refetch } = useCollectiblesGetCollectiblesV2Query(
+  const { data, isFetching, error, refetch } = useCollectiblesGetCollectiblesV2Query(
     {
       chainId: activeSafe.chainId,
       safeAddress: activeSafe.address,
@@ -29,26 +29,14 @@ export function NFTsContainer() {
       pollingInterval: POLLING_INTERVAL,
     },
   )
+  const { list, onEndReached } = useInfiniteScroll<CollectiblePage, Collectible>({
+    refetch,
+    setPageUrl,
+    data,
+  })
 
-  useEffect(() => {
-    if (!data?.results) {
-      return
-    }
-
-    setList((prev) => (prev ? [...prev, ...data.results] : data.results))
-  }, [data])
-
-  const onEndReached = () => {
-    if (!data?.next) {
-      return
-    }
-
-    setPageUrl(data.next)
-    refetch()
-  }
-
-  if (isLoading || !list?.length || error) {
-    return <Fallback loading={isLoading || !list} hasError={!!error} />
+  if (isFetching || !list?.length || error) {
+    return <Fallback loading={isFetching || !list} hasError={!!error} />
   }
 
   return (

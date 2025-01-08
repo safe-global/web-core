@@ -2,6 +2,8 @@ export const ellipsis = (str: string, length: number): string => {
   return str.length > length ? `${str.slice(0, length)}...` : str
 }
 
+export const makeSafeId = (chainId: string, address: string) => `${chainId}:${address}` as `${number}:0x${string}`
+
 export const shortenAddress = (address: string, length = 4): string => {
   if (!address) {
     return ''

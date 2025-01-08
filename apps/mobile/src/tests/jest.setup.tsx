@@ -1,4 +1,9 @@
+import React from 'react'
+
 import '@testing-library/react-native/extend-expect'
+import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock'
+
+import { server } from './server'
 
 jest.useFakeTimers()
 
@@ -21,6 +26,40 @@ jest.mock('react-native-mmkv', () => ({
     this.set = jest.fn()
   },
 }))
+
+jest.mock('react-native-device-info', () => mockRNDeviceInfo)
+jest.mock('react-native-device-crypto', () => {
+  return {
+    getOrCreateAsymmetricKey: jest.fn(),
+    encrypt: jest.fn((_asymmetricKey: string, privateKey: string) => {
+      return Promise.resolve({
+        encryptedText: 'encryptedText',
+        iv: privateKey + '000',
+      })
+    }),
+    decrypt: jest.fn((_name, _password, iv) => Promise.resolve(iv.slice(0, -3))),
+  }
+})
+
+jest.mock('react-native-keychain', () => {
+  let password: string | null = null
+  return {
+    setGenericPassword: jest.fn((_user, newPassword: string) => {
+      password = newPassword
+
+      return Promise.resolve(password)
+    }),
+    getGenericPassword: jest.fn(() =>
+      Promise.resolve({
+        password,
+      }),
+    ),
+    resetGenericPassword: jest.fn(() => {
+      password = null
+      Promise.resolve(null)
+    }),
+  }
+})
 
 jest.mock('expo-splash-screen', () => ({
   preventAutoHideAsync: jest.fn(),
@@ -78,6 +117,8 @@ jest.mock('@gorhom/bottom-sheet', () => {
   return {
     __esModule: true,
     default: View,
+    BottomSheetFooter: View,
+    BottomSheetFooterContainer: View,
     BottomSheetModal: MockBottomSheetComponent,
     BottomSheetModalProvider: View,
     BottomSheetView: View,
@@ -88,3 +129,7 @@ jest.mock('@gorhom/bottom-sheet', () => {
     }),
   }
 })
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())

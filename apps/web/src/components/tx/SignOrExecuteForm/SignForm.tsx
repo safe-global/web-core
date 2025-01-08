@@ -86,7 +86,7 @@ export const SignForm = ({
       onSubmit?.(resultTxId)
     }
 
-    if (signer?.isSafe) {
+    if (!isAddingToBatch && signer?.isSafe) {
       setTxFlow(<NestedTxSuccessScreenFlow txId={resultTxId} />, undefined, false)
     } else {
       setTxFlow(undefined)
@@ -100,8 +100,6 @@ export const SignForm = ({
   const cannotPropose = !isOwner
   const submitDisabled =
     !safeTx || !isSubmittable || disableSubmit || cannotPropose || (needsRiskConfirmation && !isRiskConfirmed)
-
-  const isSafeAppTransaction = !!origin
 
   return (
     <form onSubmit={handleSubmit}>
@@ -135,7 +133,7 @@ export const SignForm = ({
           {isCreation && !isBatch && (
             <BatchButton
               onClick={onBatchClick}
-              disabled={submitDisabled || !isBatchable || isSafeAppTransaction}
+              disabled={submitDisabled || !isBatchable}
               tooltip={!isBatchable ? `Cannot batch this type of transaction` : undefined}
             />
           )}

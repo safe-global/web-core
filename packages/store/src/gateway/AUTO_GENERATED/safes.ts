@@ -59,7 +59,7 @@ export type SafeState = {
   chainId: string
   nonce: number
   threshold: number
-  owners: string[]
+  owners: AddressInfo[]
   implementation: AddressInfo
   modules?: AddressInfo[] | null
   fallbackHandler?: AddressInfo | null
@@ -79,7 +79,7 @@ export type SafeOverview = {
   address: AddressInfo
   chainId: string
   threshold: number
-  owners: string[]
+  owners: AddressInfo[]
   fiatTotal: string
   queued: number
   awaitingConfirmation?: number | null

@@ -50,6 +50,7 @@ export const Box = memo(function Box({
   bgcolor,
   gridArea,
   lineHeight,
+  sx,
   ...props
 }: BoxProps['sx'] & BoxProps) {
   return (
@@ -99,7 +100,7 @@ export const Box = memo(function Box({
           bgcolor,
           gridArea,
           lineHeight,
-          ...props.sx,
+          ...sx,
         },
         isUndefined,
       )}
@@ -143,6 +144,7 @@ export const Typography = memo(function Typography({
   letterSpacing,
   whiteSpace,
   width,
+  sx,
   ...props
 }: TypographyProps['sx'] & TypographyProps) {
   return (
@@ -183,7 +185,7 @@ export const Typography = memo(function Typography({
           letterSpacing,
           whiteSpace,
           width,
-          ...props.sx,
+          ...sx,
         },
         isUndefined,
       )}

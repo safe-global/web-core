@@ -7,12 +7,19 @@ interface LogoProps {
   accessibilityLabel?: string
   fallbackIcon?: IconProps['name']
   imageBackground?: string
+  size?: string
 }
 
-export function Logo({ logoUri, accessibilityLabel, imageBackground = '$color', fallbackIcon = 'nft' }: LogoProps) {
+export function Logo({
+  logoUri,
+  accessibilityLabel,
+  size = '$10',
+  imageBackground = '$color',
+  fallbackIcon = 'nft',
+}: LogoProps) {
   return (
     <Theme name="logo">
-      <Avatar circular size="$10">
+      <Avatar circular size={size}>
         {logoUri && (
           <Avatar.Image
             testID="logo-image"

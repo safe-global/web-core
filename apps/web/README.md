@@ -5,7 +5,7 @@
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/safe-global/safe-wallet-web)
 [![GitPOAP Badge](https://public-api.gitpoap.io/v1/repo/safe-global/safe-wallet-web/badge)](https://www.gitpoap.io/gh/safe-global/safe-wallet-web)
 
-# Safe{Wallet} Web  💻
+# Safe{Wallet} web app
 
 This project is now part of the **@safe-global/safe-wallet** monorepo! The monorepo setup allows centralized management
 of multiple
@@ -45,9 +45,8 @@ Here's the list of all the environment variables:
 
 | Env variable                                      | Description                                                                                                                                                             |
 | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_BRAND_NAME`                          | The name of the app, defaults to "Wallet fork"                                                              |
-| `NEXT_PUBLIC_BRAND_LOGO`                          | The URL of the app logo displayed in the header                                                             |
-
+| `NEXT_PUBLIC_BRAND_NAME`                          | The name of the app, defaults to "Wallet fork"                                                                                                                          |
+| `NEXT_PUBLIC_BRAND_LOGO`                          | The URL of the app logo displayed in the header                                                                                                                         |
 | `NEXT_PUBLIC_INFURA_TOKEN`                        | [Infura](https://docs.infura.io/infura/networks/ethereum/how-to/secure-a-project/project-id) RPC API token                                                              |
 | `NEXT_PUBLIC_SAFE_APPS_INFURA_TOKEN`              | Infura token for Safe Apps, falls back to `NEXT_PUBLIC_INFURA_TOKEN`                                                                                                    |
 | `NEXT_PUBLIC_IS_PRODUCTION`                       | Set to `true` to build a minified production app                                                                                                                        |

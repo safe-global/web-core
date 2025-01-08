@@ -9,15 +9,13 @@ import { POLLING_INTERVAL } from '@/src/config/constants'
 import { selectActiveSafe } from '@/src/store/activeSafeSlice'
 import { Balance, useBalancesGetBalancesV1Query } from '@safe-global/store/gateway/AUTO_GENERATED/balances'
 import { formatValue } from '@/src/utils/formatters'
-// import { selectActiveChain } from '@/src/store/activeChainSlice'
 
 import { Fallback } from '../Fallback'
 
 export function TokensContainer() {
   const activeSafe = useSelector(selectActiveSafe)
-  // const activeChain = useSelector(selectActiveChain)
 
-  const { data, isLoading, error } = useBalancesGetBalancesV1Query(
+  const { data, isFetching, error } = useBalancesGetBalancesV1Query(
     {
       chainId: activeSafe.chainId,
       fiatCode: 'USD',
@@ -45,8 +43,8 @@ export function TokensContainer() {
     )
   }, [])
 
-  if (isLoading || !data?.items.length || error) {
-    return <Fallback loading={isLoading} hasError={!!error} />
+  if (isFetching || !data?.items.length || error) {
+    return <Fallback loading={isFetching} hasError={!!error} />
   }
 
   return (

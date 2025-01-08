@@ -1,19 +1,18 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectActiveChain } from '@/src/store/activeChainSlice'
-import { setActiveSafe } from '@/src/store/activeSafeSlice'
+import { selectActiveSafe, setActiveSafe } from '@/src/store/activeSafeSlice'
 import { Address } from '@/src/types/address'
 import { AppSettings } from './AppSettings'
 
 export const AppSettingsContainer = () => {
   const dispatch = useDispatch()
-  const activeChain = useSelector(selectActiveChain)
+  const activeSafe = useSelector(selectActiveSafe)
   const [safeAddress, setSafeAddress] = useState('')
 
   const handleSubmit = () => {
     dispatch(
       setActiveSafe({
-        chainId: activeChain.chainId,
+        chainId: activeSafe.chainId,
         address: safeAddress as Address,
       }),
     )

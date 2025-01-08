@@ -4,6 +4,10 @@ When contributing to this repository, please first discuss the change you wish t
 
 Please note we have a Code of Conduct (see below), please follow it in all your interactions with the project.
 
+## Code Style
+
+More information [here](./docs/code-style.md)
+
 ## CLA
 
 It is a requirement for all contributors to sign the [Contributor License Agreement (CLA)](https://safe.global/cla) in order to proceed with their contribution.

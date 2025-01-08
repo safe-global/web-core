@@ -43,7 +43,7 @@ jobs:
       - name: Merge JUnit reports for TestRail
         if: always()
         run: |
-          junitparser merge --suite-name "Root Suite" --glob "reports/junit-*" "reports/junit-report.xml"
+          junitparser merge --suite-name "Root Suite" --glob "apps/web/reports/junit-*" "apps/web/reports/junit-report.xml"
 
       - name: TestRail CLI upload results
         if: always()
@@ -57,4 +57,4 @@ jobs:
           parse_junit \
           --title "Happy Path Automated Tests, branch: ${GITHUB_REF_NAME}" \
           --run-description ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \
-          -f "reports/junit-report.xml"
+          -f "apps/web/reports/junit-report.xml"

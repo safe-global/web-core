@@ -134,6 +134,7 @@ export type Chain = {
   safeAppsRpcUri: RpcUri
   shortName: string
   theme: Theme
+  recommendedMasterCopyVersion?: string | null
 }
 export type ChainPage = {
   count?: number | null

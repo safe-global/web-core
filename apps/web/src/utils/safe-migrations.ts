@@ -1,9 +1,15 @@
 import { Safe_to_l2_migration__factory, Safe_migration__factory } from '@/types/contracts'
+import { getCompatibilityFallbackHandlerDeployments } from '@safe-global/safe-deployments'
 import { type ExtendedSafeInfo } from '@/store/safeInfoSlice'
-import { getSafeContractDeployment } from '@/services/contracts/deployments'
+import { getSafeContractDeployment, hasMatchingDeployment } from '@/services/contracts/deployments'
 import { sameAddress } from './addresses'
 import { getSafeToL2MigrationDeployment, getSafeMigrationDeployment } from '@safe-global/safe-deployments'
-import { type MetaTransactionData, OperationType, type SafeTransaction } from '@safe-global/safe-core-sdk-types'
+import {
+  type MetaTransactionData,
+  OperationType,
+  type SafeTransaction,
+  type SafeVersion,
+} from '@safe-global/safe-core-sdk-types'
 import type { ChainInfo } from '@safe-global/safe-gateway-typescript-sdk'
 import { isValidMasterCopy } from '@/services/contracts/safeContracts'
 import { isMultiSendCalldata } from './transaction-calldata'
@@ -95,9 +101,11 @@ export const prependSafeToL2Migration = (
   return __unsafe_createMultiSendTx(newTxs)
 }
 
-export const createUpdateMigration = (chain: ChainInfo): MetaTransactionData => {
-  const interfce = Safe_migration__factory.createInterface()
-
+export const createUpdateMigration = (
+  chain: ChainInfo,
+  safeVersion: string,
+  fallbackHandler?: string,
+): MetaTransactionData => {
   const deployment = getSafeMigrationDeployment({
     version: chain.recommendedMasterCopyVersion || LATEST_SAFE_VERSION,
     released: true,
@@ -108,11 +116,28 @@ export const createUpdateMigration = (chain: ChainInfo): MetaTransactionData => 
     throw new Error('Migration deployment not found')
   }
 
+  // Keep fallback handler if it's not a default one
+  const keepFallbackHandler =
+    !!fallbackHandler &&
+    !hasMatchingDeployment(getCompatibilityFallbackHandlerDeployments, fallbackHandler, chain.chainId, [
+      safeVersion as SafeVersion,
+    ])
+
+  const method = (
+    keepFallbackHandler
+      ? chain.l2
+        ? 'migrateL2Singleton'
+        : 'migrateSingleton'
+      : chain.l2
+        ? 'migrateL2WithFallbackHandler'
+        : 'migrateWithFallbackHandler'
+  ) as 'migrateSingleton' // apease typescript
+
+  const interfce = Safe_migration__factory.createInterface()
+
   const tx: MetaTransactionData = {
-    operation: OperationType.DelegateCall, // DELEGATE CALL REQUIRED
-    data: chain.l2
-      ? interfce.encodeFunctionData('migrateL2WithFallbackHandler')
-      : interfce.encodeFunctionData('migrateWithFallbackHandler'),
+    operation: OperationType.DelegateCall, // delegate call required
+    data: interfce.encodeFunctionData(method),
     to: deployment.defaultAddress,
     value: '0',
   }

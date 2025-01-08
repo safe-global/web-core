@@ -29,9 +29,9 @@
 }
 
 .gridContainer.conflictGroup {
-  grid-template-columns: var(--grid-type) var(--grid-info) var(--grid-date) var(--grid-confirmations) var(--grid-status) var(
-      --grid-actions
-    );
+  grid-template-columns:
+    var(--grid-type) var(--grid-info) var(--grid-date) var(--grid-confirmations) var(--grid-status)
+    var(--grid-actions);
   grid-template-areas: 'type info date confirmations status actions';
 }
 

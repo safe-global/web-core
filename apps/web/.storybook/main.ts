@@ -9,49 +9,49 @@ const config: StorybookConfig = {
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
     '@storybook/addon-themes',
-    '@storybook/addon-designs'
+    '@storybook/addon-designs',
   ],
   framework: {
     name: '@storybook/nextjs',
     options: {},
   },
   webpackFinal: async (config) => {
-    config.module = config.module || {};
-    config.module.rules = config.module.rules || [];
+    config.module = config.module || {}
+    config.module.rules = config.module.rules || []
 
     // This modifies the existing image rule to exclude .svg files
     // since you want to handle those files with @svgr/webpack
-    const imageRule = config.module.rules.find((rule) => rule?.['test']?.test('.svg'));
+    const imageRule = config.module.rules.find((rule) => rule?.['test']?.test('.svg'))
     if (imageRule) {
-      imageRule['exclude'] = /\.svg$/;
+      imageRule['exclude'] = /\.svg$/
     }
 
-      config.module.rules.push({
-        test: /\.svg$/i,
-        issuer: { and: [/\.(js|ts|md)x?$/] },
-        use: [
-          {
-            loader: '@svgr/webpack',
-            options: {
-              prettier: false,
-              svgo: false,
-              svgoConfig: {
-                plugins: [
-                  {
-                    name: 'preset-default',
-                    params: {
-                      overrides: { removeViewBox: false },
-                    },
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: { and: [/\.(js|ts|md)x?$/] },
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            prettier: false,
+            svgo: false,
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'preset-default',
+                  params: {
+                    overrides: { removeViewBox: false },
                   },
-                ],
-              },
-              titleProp: true,
+                },
+              ],
             },
+            titleProp: true,
           },
-        ],
-      })
+        },
+      ],
+    })
 
-    return config;
+    return config
   },
   docs: {
     autodocs: 'tag',
@@ -71,8 +71,7 @@ const config: StorybookConfig = {
       // Makes string and boolean types that can be undefined appear as inputs and switches
       shouldRemoveUndefinedFromOptional: true,
       // Filter out third-party props from node_modules except @mui packages
-      propFilter: (prop) =>
-        prop.parent ? !/node_modules\/(?!@mui)/.test(prop.parent.fileName) : true,
+      propFilter: (prop) => (prop.parent ? !/node_modules\/(?!@mui)/.test(prop.parent.fileName) : true),
     },
   },
 }

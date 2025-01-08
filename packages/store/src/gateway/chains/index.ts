@@ -1,5 +1,5 @@
 import { type Chain as ChainInfo } from '../AUTO_GENERATED/chains'
-import { createEntityAdapter, createSelector, EntityState } from '@reduxjs/toolkit'
+import { createEntityAdapter, EntityState } from '@reduxjs/toolkit'
 import { cgwClient, getBaseUrl } from '../cgwClient'
 import { QueryReturnValue, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query'
 

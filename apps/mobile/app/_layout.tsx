@@ -13,6 +13,9 @@ import { PortalProvider } from '@tamagui/portal'
 import { SafeToastProvider } from '@/src/theme/provider/toastProvider'
 import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
 import { OnboardingHeader } from '@/src/features/Onboarding/components/OnboardingHeader'
+import { install } from 'react-native-quick-crypto'
+
+install()
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -23,10 +26,10 @@ function RootLayout() {
   store.dispatch(apiSliceWithChainsConfig.endpoints.getChainsConfig.initiate())
 
   return (
-    <PortalProvider shouldAddRootHost>
-      <GestureHandlerRootView>
-        <BottomSheetModalProvider>
-          <Provider store={store}>
+    <GestureHandlerRootView>
+      <Provider store={store}>
+        <PortalProvider shouldAddRootHost>
+          <BottomSheetModalProvider>
             <PersistGate loading={null} persistor={persistor}>
               <SafeThemeProvider>
                 <SafeToastProvider>
@@ -60,10 +63,10 @@ function RootLayout() {
                 </SafeToastProvider>
               </SafeThemeProvider>
             </PersistGate>
-          </Provider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </PortalProvider>
+          </BottomSheetModalProvider>
+        </PortalProvider>
+      </Provider>
+    </GestureHandlerRootView>
   )
 }
 

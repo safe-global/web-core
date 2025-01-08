@@ -16,6 +16,11 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
     }
   }
 
+  if (moduleName === 'crypto') {
+    // when importing crypto, resolve to react-native-quick-crypto
+    return context.resolveRequest(context, 'react-native-quick-crypto', platform)
+  }
+
   return defaultResolveResult
 }
 

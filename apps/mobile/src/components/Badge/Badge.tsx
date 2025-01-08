@@ -15,6 +15,7 @@ interface BadgeProps {
   circleProps?: Partial<CircleProps>
   textContentProps?: Partial<TextProps>
   circular?: boolean
+  testID?: string
 }
 
 export const Badge = ({
@@ -25,6 +26,7 @@ export const Badge = ({
   circular = true,
   circleProps,
   textContentProps,
+  testID,
 }: BadgeProps) => {
   let contentToRender = content
   if (typeof content === 'string') {
@@ -38,7 +40,7 @@ export const Badge = ({
   if (circular) {
     return (
       <Theme name={themeName}>
-        <Circle size={circleSize} backgroundColor={'$background'} {...circleProps}>
+        <Circle testID={testID} size={circleSize} backgroundColor={'$background'} {...circleProps}>
           {contentToRender}
         </Circle>
       </Theme>
@@ -47,6 +49,7 @@ export const Badge = ({
   return (
     <Theme name={themeName}>
       <View
+        testID={testID}
         alignSelf={'flex-start'}
         paddingVertical="$1"
         paddingHorizontal="$3"

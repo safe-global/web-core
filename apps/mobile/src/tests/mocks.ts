@@ -20,6 +20,52 @@ import {
   Transaction,
 } from '@safe-global/store/gateway/AUTO_GENERATED/transactions'
 
+export const mockBalanceData = {
+  items: [
+    {
+      tokenInfo: {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        decimals: 18,
+        logoUri: 'https://safe-transaction-assets.safe.global/chains/1/chain_logo.png',
+      },
+      balance: '1000000000000000000',
+      fiatBalance: '2000',
+    },
+  ],
+}
+
+export const mockNFTData = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: '1',
+      address: '0x123',
+      tokenName: 'Cool NFT',
+      tokenSymbol: 'CNFT',
+      logoUri: 'https://example.com/nft1.png',
+      name: 'NFT #1',
+      description: 'A cool NFT',
+      tokenId: '1',
+      uri: 'https://example.com/nft1.json',
+      imageUri: 'https://example.com/nft1.png',
+    },
+    {
+      id: '2',
+      address: '0x456',
+      tokenName: 'Another NFT',
+      tokenSymbol: 'ANFT',
+      logoUri: 'https://example.com/nft2.png',
+      name: 'NFT #2',
+      description: 'Another cool NFT',
+      tokenId: '2',
+      uri: 'https://example.com/nft2.json',
+      imageUri: 'https://example.com/nft2.png',
+    },
+  ],
+}
 export const fakeToken = {
   address: '0x1111111111',
   decimals: 18,

@@ -32,7 +32,7 @@ export function ChainItems({ chainId, chains, activeChain, fiatTotal, onSelect }
           name={chain.chainName}
           logoUri={chain.chainLogoUri}
           description={`${fiatTotal}`}
-          rightNode={isActive && <SafeFontIcon name="check" color="$primary" />}
+          rightNode={isActive && <SafeFontIcon name="check" color="$color" />}
         />
       </View>
     </TouchableOpacity>

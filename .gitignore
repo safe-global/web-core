@@ -7,11 +7,8 @@
 # testing
 /coverage
 
-# types
-/src/types/contracts/
-
 # next.js
-/.next/
+**/.next/
 /out/
 
 # production
@@ -69,3 +66,20 @@ certificates
 # os
 THUMBS_DB
 thumbs.db
+
+# web
+apps/web/.next/*
+apps/web/out/*
+apps/web/public/sw.js
+apps/web/public/workbox-*.js
+apps/web/public/worker-development.js
+apps/web/src/types/
+apps/web/tsconfig.tsbuildinfo
+node_modules/*
+out/*
+tsconfig.tsbuildinfo
+apps/web/.env
+apps/web/node_modules/*
+apps/web/public/fallback-development.js
+apps/web/.env
+apps/web/src/types/contracts/*

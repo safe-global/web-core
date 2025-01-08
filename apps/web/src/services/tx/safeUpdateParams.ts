@@ -37,7 +37,7 @@ export const createUpdateSafeTxs = async (safe: SafeInfo, chain: ChainInfo): Pro
 
   // 1.3.0 Safes are updated using a delegate call to a migration contract
   if (semverSatisfies(safe.version, '1.3.0')) {
-    return [createUpdateMigration(chain)]
+    return [createUpdateMigration(chain, safe.version, safe.fallbackHandler?.value)]
   }
 
   // For older Safes, we need to create two transactions

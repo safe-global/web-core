@@ -8,7 +8,6 @@ import { getMultiSendContractDeployment } from '@/services/contracts/deployments
 import { createTx } from '@/services/tx/tx-sender/create'
 import { Safe__factory } from '@/types/contracts'
 import { type TransactionDetails } from '@safe-global/safe-gateway-typescript-sdk'
-import { zeroPadValue } from 'ethers'
 import DecodedData from '../DecodedData'
 import ErrorMessage from '@/components/tx/ErrorMessage'
 import { useSafeSDK } from '@/hooks/coreSDK/safeCoreSDK'
@@ -38,7 +37,7 @@ export const MigrationToL2TxData = ({ txDetails }: { txDetails: TransactionDetai
     if (!multiSendAddress) {
       return undefined
     }
-    const searchString = `${execTransactionSelector}${zeroPadValue(multiSendAddress, 32).slice(2)}`
+    const searchString = execTransactionSelector
     const indexOfTx = txData?.indexOf(searchString)
     if (indexOfTx && txData) {
       // Now we need to find the tx Data

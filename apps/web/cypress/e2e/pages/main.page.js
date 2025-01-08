@@ -4,6 +4,8 @@ const acceptSelection = 'Save settings'
 const executeStr = 'Execute'
 const connectedOwnerBlock = '[data-testid="open-account-center"]'
 export const modalDialogCloseBtn = '[data-testid="modal-dialog-close-btn"]'
+const closeOutreachPopupBtn = 'button[aria-label="close outreach popup"]'
+
 export const noRelayAttemptsError = 'Not enough relay attempts remaining'
 
 export function checkElementBackgroundColor(element, color) {
@@ -199,6 +201,16 @@ export function acceptCookies2() {
   cy.get('body').then(($body) => {
     if ($body.find('button:contains(' + acceptSelection + ')').length > 0) {
       cy.contains('button', acceptSelection).click()
+      cy.wait(500)
+    }
+  })
+}
+
+export function closeOutreachPopup() {
+  cy.wait(1000)
+  cy.get('body').then(($body) => {
+    if ($body.find(closeOutreachPopupBtn).length > 0) {
+      cy.get(closeOutreachPopupBtn).click()
       cy.wait(500)
     }
   })

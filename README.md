@@ -1,18 +1,22 @@
-# Safe Global Monorepo 🙋‍♂️
+# <img src="https://github.com/user-attachments/assets/b8249113-d515-4c91-a12a-f134813614e8" height="60" valign="middle" alt="Safe{Wallet}" style="background: #fff; padding: 20px; margin: 0 -20px" />
+
+# Safe{Wallet} monorepo
+
+🌐 [Safe{Wallet} web app](/apps/web/README.md) ・ 📱 [Safe{Wallet} mobile app](/apps/mobile/README.md)
 
 ## Overview
 
-Welcome to the Safe Global Monorepo! This repository houses multiple applications and packages managed under a unified
+Welcome to the Safe{Wallet} monorepo! This repository houses multiple applications and packages managed under a unified
 structure using Yarn Workspaces. The monorepo setup simplifies dependency management and ensures consistent development
 practices across projects.
 
-### Key Components
+### Key components
 
-- **apps/**: Contains application projects (e.g., `mobile` for the Safe Mobile App).
+- **apps/**: Contains application projects (e.g., `mobile` for the Safe{Wallet} mobile app).
 - **packages/**: Shared libraries and utilities.
 - **config/**: Configuration files for the monorepo.
 
-## Getting Started
+## Getting started
 
 To get started, ensure you have the required tools installed and follow these steps:
 
@@ -40,7 +44,7 @@ This will install the required version of yarn and resolve all dependencies.
 > Corepack is a tool to help with managing versions of your package managers. It exposes binary proxies for each supported package manager that, when called, will identify whatever package manager is
 > configured for the current project, download it if needed, and finally run it.
 
-### Initial Setup
+### Initial setup
 
 1. Clone the repository:
 
@@ -55,11 +59,11 @@ cd monorepo
 yarn install
 ```
 
-## Monorepo Commands
+## Monorepo commands
 
 Here are some essential commands to help you navigate the monorepo:
 
-### Workspace Management
+### Workspace management
 
 - **Run a script in a specific workspace:**
 
@@ -101,7 +105,7 @@ yarn workspace <workspace-name> remove <package-name>
 > yarn workspace @safe-global/web cypress:open
 > ```
 
-### Linting and Formatting
+### Linting and formatting
 
 - **Run ESLint across all workspaces:**
 
@@ -119,7 +123,7 @@ yarn test
 
 ## Contributing
 
-### Adding a New Workspace
+### Adding a new workspace
 
 1. Create a new directory under `apps/` or `packages/`.
 2. Add a `package.json` file with the appropriate configuration.
@@ -129,13 +133,13 @@ yarn test
 yarn install
 ```
 
-### Best Practices
+### Best practices
 
 - Use Yarn Workspaces commands for managing dependencies.
 - Ensure tests and linting pass before pushing changes.
 - Follow the commit message guidelines.
 
-### Tools & Configurations
+### Tools & configurations
 
 - **Husky**: Pre-commit hooks for linting and tests.
 - **ESLint & Prettier**: Enforce coding standards and formatting.
@@ -143,7 +147,7 @@ yarn install
 - **Expo**: Mobile app framework for the `mobile` workspace.
 - **Next.js**: React framework for the `web` workspace.
 
-## Useful Links
+## Useful links
 
 - [Yarn Workspaces Documentation](https://classic.yarnpkg.com/en/docs/workspaces/)
 - [Expo Documentation](https://docs.expo.dev/)

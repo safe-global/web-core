@@ -1,11 +1,15 @@
 import type { ReactNode } from 'react'
 import { Alert, AlertTitle, Box, Divider, Stack, Typography } from '@mui/material'
+import semverSatisfies from 'semver/functions/satisfies'
 import { LATEST_SAFE_VERSION } from '@/config/constants'
 import { useCurrentChain } from '@/hooks/useChains'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import { useQueuedTxsLength } from '@/hooks/useTxQueue'
 import ExternalLink from '@/components/common/ExternalLink'
 import { maybePlural } from '@/utils/formatters'
+import madProps from '@/utils/mad-props'
+
+const QUEUE_WARNING_VERSION = '<1.3.0'
 
 function BgBox({ children, light }: { children: ReactNode; light?: boolean }) {
   return (
@@ -23,28 +27,34 @@ function BgBox({ children, light }: { children: ReactNode; light?: boolean }) {
   )
 }
 
-function UpdateSafe() {
-  const { safe } = useSafeInfo()
-  const chain = useCurrentChain()
-  const queueSize = useQueuedTxsLength()
+export function _UpdateSafe({
+  safeVersion,
+  queueSize,
+  chain,
+}: {
+  safeVersion: string
+  queueSize: string
+  chain: ReturnType<typeof useCurrentChain>
+}) {
+  const showQueueWarning = queueSize && semverSatisfies(safeVersion, QUEUE_WARNING_VERSION)
   const latestSafeVersion = chain?.recommendedMasterCopyVersion || LATEST_SAFE_VERSION
 
   return (
     <>
       <Stack direction="row" alignItems="center" spacing={2}>
-        <BgBox>Current version: {safe.version}</BgBox>
+        <BgBox>Current version: {safeVersion}</BgBox>
         <Box fontSize={28}>→</Box>
         <BgBox light>New version: {latestSafeVersion}</BgBox>
       </Stack>
 
-      <Typography mb={1}>
+      <Typography>
         Read about the updates in the new Safe contracts version in the{' '}
         <ExternalLink href={`https://github.com/safe-global/safe-contracts/releases/tag/v${latestSafeVersion}`}>
           version {latestSafeVersion} changelog
         </ExternalLink>
       </Typography>
 
-      {queueSize && (
+      {showQueueWarning && (
         <Alert severity="warning">
           <AlertTitle sx={{ fontWeight: 700 }}>This upgrade will invalidate all queued transactions!</AlertTitle>
           You have {queueSize} unexecuted transaction{maybePlural(parseInt(queueSize))}. Please make sure to execute or
@@ -52,9 +62,20 @@ function UpdateSafe() {
         </Alert>
       )}
 
-      <Divider sx={{ mt: 1, mx: -3 }} />
+      <Divider sx={{ my: 1, mx: -3 }} />
     </>
   )
 }
+
+function useSafeVersion() {
+  const { safe } = useSafeInfo()
+  return safe?.version || ''
+}
+
+const UpdateSafe = madProps(_UpdateSafe, {
+  chain: useCurrentChain,
+  safeVersion: useSafeVersion,
+  queueSize: useQueuedTxsLength,
+})
 
 export default UpdateSafe

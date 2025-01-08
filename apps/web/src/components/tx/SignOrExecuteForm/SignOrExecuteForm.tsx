@@ -33,6 +33,7 @@ import ConfirmationView from '../confirmation-views'
 import { SignerForm } from './SignerForm'
 import { useSigner } from '@/hooks/wallets/useWallet'
 import { trackTxEvents } from './tracking'
+import { TxNoteForm, encodeTxNote } from '@/features/tx-notes'
 
 export type SubmitCallback = (txId: string, isExecuted?: boolean) => void
 
@@ -64,6 +65,7 @@ export const SignOrExecuteForm = ({
   isCreation?: boolean
   txDetails?: TransactionDetails
 }): ReactElement => {
+  const [customOrigin, setCustomOrigin] = useState<string | undefined>(props.origin)
   const { transactionExecution } = useAppSelector(selectSettings)
   const [shouldExecute, setShouldExecute] = useState<boolean>(transactionExecution)
   const isNewExecutableTx = useImmediatelyExecutable() && isCreation
@@ -108,10 +110,10 @@ export const SignOrExecuteForm = ({
         isRoleExecution,
         isProposerCreation,
         !!signer?.isSafe,
-        props.origin,
+        customOrigin,
       )
     },
-    [chainId, isCreation, onSubmit, trigger, signer?.isSafe, props.origin],
+    [chainId, isCreation, onSubmit, trigger, signer?.isSafe, customOrigin],
   )
 
   const onRoleExecutionSubmit = useCallback<typeof onFormSubmit>(
@@ -123,6 +125,49 @@ export const SignOrExecuteForm = ({
     (txId, isExecuted) => onFormSubmit(txId, isExecuted, false, true),
     [onFormSubmit],
   )
+
+  const onNoteSubmit = useCallback(
+    (note: string) => {
+      setCustomOrigin(encodeTxNote(note, props.origin))
+    },
+    [setCustomOrigin, props.origin],
+  )
+
+  const getForm = () => {
+    const commonProps = {
+      ...props,
+      safeTx,
+      isCreation,
+      origin: customOrigin,
+      onSubmit: onFormSubmit,
+    }
+    if (isCounterfactualSafe && !isProposing) {
+      return <CounterfactualForm {...commonProps} onlyExecute />
+    }
+
+    if (!isCounterfactualSafe && willExecute && !isProposing) {
+      return <ExecuteForm {...commonProps} />
+    }
+
+    if (!isCounterfactualSafe && willExecuteThroughRole) {
+      return (
+        <ExecuteThroughRoleForm
+          {...commonProps}
+          role={(allowingRole || mostLikelyRole)!}
+          safeTxError={safeTxError}
+          onSubmit={onRoleExecutionSubmit}
+        />
+      )
+    }
+
+    if (!isCounterfactualSafe && !willExecute && !willExecuteThroughRole && !isProposing) {
+      return <SignForm {...commonProps} isBatchable={isBatchable} />
+    }
+
+    if (isProposing) {
+      return <ProposerForm {...commonProps} onSubmit={onProposerFormSubmit} />
+    }
+  }
 
   return (
     <>
@@ -148,6 +193,8 @@ export const SignOrExecuteForm = ({
       </TxCard>
 
       {!isCounterfactualSafe && !props.isRejection && <TxChecks />}
+
+      <TxNoteForm isCreation={isCreation ?? false} onSubmit={onNoteSubmit} txDetails={props.txDetails} />
 
       <SignerForm willExecute={willExecute} />
 
@@ -179,32 +226,7 @@ export const SignOrExecuteForm = ({
 
         <Blockaid />
 
-        {isCounterfactualSafe && !isProposing && (
-          <CounterfactualForm {...props} safeTx={safeTx} isCreation={isCreation} onSubmit={onFormSubmit} onlyExecute />
-        )}
-        {!isCounterfactualSafe && willExecute && !isProposing && (
-          <ExecuteForm {...props} safeTx={safeTx} isCreation={isCreation} onSubmit={onFormSubmit} />
-        )}
-        {!isCounterfactualSafe && willExecuteThroughRole && (
-          <ExecuteThroughRoleForm
-            {...props}
-            safeTx={safeTx}
-            safeTxError={safeTxError}
-            onSubmit={onRoleExecutionSubmit}
-            role={(allowingRole || mostLikelyRole)!}
-          />
-        )}
-        {!isCounterfactualSafe && !willExecute && !willExecuteThroughRole && !isProposing && (
-          <SignForm
-            {...props}
-            safeTx={safeTx}
-            isBatchable={isBatchable}
-            isCreation={isCreation}
-            onSubmit={onFormSubmit}
-          />
-        )}
-
-        {isProposing && <ProposerForm {...props} safeTx={safeTx} onSubmit={onProposerFormSubmit} />}
+        {getForm()}
       </TxCard>
     </>
   )

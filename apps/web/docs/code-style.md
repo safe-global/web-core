@@ -6,9 +6,9 @@
 - Strive for pragmatism
 - Don’t add bells and whistles (newlines, spaces for “beauty”, ordering imports etc.)
 - Avoid unnecessary stylistic changes
-    - They increase the chance of git conflicts (esp. in imports)
-    - They make it harder to review the PR
-    - Ultimately, a waste of time
+  - They increase the chance of git conflicts (esp. in imports)
+  - They make it harder to review the PR
+  - Ultimately, a waste of time
 
 ## Functional code style
 
@@ -33,7 +33,7 @@ Infamously, the hardest problem in computer science.
 - Config-like constants should be in UPPER_CASE, e.g. `INFURA_URL`
 - Regular `const` variables should be in camelCase
 - Avoid prepositions in variable names:
-    - ~`restoreFromLocalStorage`~ 🙅
-    - `restoreStoredValue` 👍
+  - ~`restoreFromLocalStorage`~ 🙅
+  - `restoreStoredValue` 👍
 - Try to name boolean vars with `is`, e.g. `isLoading` vs `loading`
 - If something needs to be exported just for unit tests, export it with a `_` prefix, e.g. `_getOnboardConfig`

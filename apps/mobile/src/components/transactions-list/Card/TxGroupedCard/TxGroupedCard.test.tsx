@@ -4,6 +4,19 @@ import { mockERC20Transfer, mockListItemByType, mockNFTTransfer, mockSwapTransfe
 import { TransactionListItemType, TransactionStatus } from '@safe-global/store/gateway/types'
 import { TransactionItem } from '@safe-global/store/gateway/AUTO_GENERATED/transactions'
 
+jest.mock('@/src/store/chains', () => {
+  const actualModule = jest.requireActual('@/src/store/chains') // Import the real module
+  return {
+    ...actualModule,
+    selectChainById: jest.fn().mockImplementation(() => ({
+      decimals: 8,
+      logoUri: 'http://safe.com/logo.png',
+      name: 'mocked currency',
+      symbol: 'MCC',
+    })),
+  }
+})
+
 describe('TxGroupedCard', () => {
   it('should render the default markup', () => {
     const { getAllByTestId } = render(
