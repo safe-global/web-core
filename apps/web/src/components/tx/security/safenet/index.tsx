@@ -32,16 +32,19 @@ function _getGuaranteeDisplayName(guarantee: string): string {
 function _groupResultGuarantees({
   results,
 }: Pick<SafenetSimulationResponse, 'results'>): { display: string; status: string; link?: string }[] {
-  const groups = results.reduce((groups, { guarantee, status, metadata }) => {
-    const display = _getGuaranteeDisplayName(guarantee)
-    if (status === 'skipped') {
-      return groups
-    }
-    return {
-      ...groups,
-      [display]: { status, link: metadata?.link },
-    }
-  }, {} as Record<string, { status: string; link?: string }>)
+  const groups = results.reduce(
+    (groups, { guarantee, status, metadata }) => {
+      const display = _getGuaranteeDisplayName(guarantee)
+      if (status === 'skipped') {
+        return groups
+      }
+      return {
+        ...groups,
+        [display]: { status, link: metadata?.link },
+      }
+    },
+    {} as Record<string, { status: string; link?: string }>,
+  )
   return Object.entries(groups)
     .map(([display, { status, link }]) => ({ display, status, link }))
     .sort((a, b) => a.display.localeCompare(b.display))

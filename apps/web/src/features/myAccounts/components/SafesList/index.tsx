@@ -14,7 +14,7 @@ type SafeListProps = {
 
 const renderSafeItem = (item: SafeItem | MultiChainSafeItem, onLinkClick?: () => void) => {
   return isMultiChainSafeItem(item) ? (
-    <MultiAccountItem onLinkClick={onLinkClick} multiSafeAccountItem={item} />
+    <MultiAccountItem onLinkClick={onLinkClick} multiSafeAccountItem={item} isSafenetEnabled />
   ) : (
     <SingleAccountItem onLinkClick={onLinkClick} safeItem={item} />
   )

@@ -34,9 +34,9 @@ import { useAppSelector } from '@/store'
 import { selectRpc } from '@/store/settingsSlice'
 import { createSafeAppsWeb3Provider } from '@/hooks/wallets/web3'
 import { useDarkMode } from '@/hooks/useDarkMode'
-import { useGetSafeNetConfigQuery } from '@/store/safenet'
 import { QueryStatus } from '@reduxjs/toolkit/query'
 import { SAFENET_API_URL } from '@/config/constants'
+import { useGetSafenetConfigQuery } from '@/store/safenet'
 
 export enum CommunicatorMessages {
   REJECT_TRANSACTION_MESSAGE = 'Transaction was rejected',

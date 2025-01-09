@@ -45,11 +45,13 @@ import { addOrUpdateSafe, pinSafe, selectAllAddedSafes, unpinSafe } from '@/stor
 import { defaultSafeInfo } from '@/store/safeInfoSlice'
 import { selectOrderByPreference } from '@/store/orderByPreferenceSlice'
 import { getComparator } from '@/features/myAccounts/utils/utils'
+import GradientBoxSafenet from '@/components/common/GradientBoxSafenet'
 
 type MultiAccountItemProps = {
   multiSafeAccountItem: MultiChainSafeItem
   safeOverviews?: SafeOverview[]
   onLinkClick?: () => void
+  isSafenetEnabled?: boolean
 }
 
 const MultichainIndicator = ({ safes }: { safes: SafeItem[] }) => {
@@ -213,7 +215,7 @@ function usePinActions(
   return { addToPinnedList, removeFromPinnedList }
 }
 
-const MultiAccountItem = ({ onLinkClick, multiSafeAccountItem }: MultiAccountItemProps) => {
+const MultiAccountItem = ({ onLinkClick, multiSafeAccountItem, isSafenetEnabled }: MultiAccountItemProps) => {
   const {
     address,
     name,
@@ -242,7 +244,7 @@ const MultiAccountItem = ({ onLinkClick, multiSafeAccountItem }: MultiAccountIte
     })
   }
 
-  return (
+  const listItem = (
     <ListItemButton
       data-testid="safe-list-item"
       selected={isCurrentSafe}
@@ -354,6 +356,11 @@ const MultiAccountItem = ({ onLinkClick, multiSafeAccountItem }: MultiAccountIte
         </AccordionDetails>
       </Accordion>
     </ListItemButton>
+  )
+  return isSafenetEnabled ? (
+    <GradientBoxSafenet className={css.safenetListItem}>{listItem}</GradientBoxSafenet>
+  ) : (
+    listItem
   )
 }
 
