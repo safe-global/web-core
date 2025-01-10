@@ -15,6 +15,8 @@ import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-rean
 import { OnboardingHeader } from '@/src/features/Onboarding/components/OnboardingHeader'
 import { install } from 'react-native-quick-crypto'
 
+import '@walletconnect/react-native-compat'
+// Other imports
 install()
 
 configureReanimatedLogger({

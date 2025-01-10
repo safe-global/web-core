@@ -22,7 +22,7 @@ export default function TransactionsLayout() {
       }}
     >
       <Stack.Screen
-        name="(tabs)"
+        name="qrcode"
         options={({ route }) => ({
           headerTitle: getHeaderTitle(route),
         })}

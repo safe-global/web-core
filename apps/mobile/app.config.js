@@ -45,6 +45,12 @@ export default {
     plugins: [
       'expo-router',
       [
+        'react-native-vision-camera',
+        {
+          cameraPermissionText: 'Safe{Wallet} needs access to your Camera.',
+        },
+      ],
+      [
         'expo-font',
         {
           fonts: ['./assets/fonts/safe-icons/safe-icons.ttf'],
