@@ -15,6 +15,7 @@ import { FEATURES } from '@/utils/chains'
 import css from './styles.module.css'
 import { InconsistentSignerSetupWarning } from '@/features/multichain/components/SignerSetupWarning/InconsistentSignerSetupWarning'
 import useIsStakingBannerEnabled from '@/features/stake/hooks/useIsStakingBannerEnabled'
+import QRCodePOC from './QRCodePOC'
 
 const RecoveryHeader = dynamic(() => import('@/features/recovery/components/RecoveryHeader'))
 
@@ -26,7 +27,9 @@ const Dashboard = (): ReactElement => {
 
   return (
     <>
-      <Grid container spacing={3}>
+      <QRCodePOC />
+
+      {/* <Grid container spacing={3}>
         {supportsRecovery && <RecoveryHeader />}
 
         <Grid item xs={12}>
@@ -70,7 +73,7 @@ const Dashboard = (): ReactElement => {
             </Grid>
           </>
         )}
-      </Grid>
+      </Grid> */}
     </>
   )
 }

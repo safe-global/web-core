@@ -74,6 +74,7 @@ export const getConnectedWallet = (wallets: WalletState[]): ConnectedWallet | nu
       isProposer: false,
     }
   } catch (e) {
+    console.log('### error getting connected wallet', e)
     logError(Errors._106, e)
     return null
   }
@@ -118,7 +119,9 @@ export const connectWallet = async (
   let wallets: WalletState[] | undefined
 
   try {
+    console.log('### options', options)
     wallets = await onboard.connectWallet(options)
+    console.log('### wallets', wallets)
   } catch (e) {
     logError(Errors._302, e)
     isConnecting = false
@@ -189,6 +192,7 @@ export const useInitOnboard = () => {
     if (!onboard) return
 
     const walletSubscription = onboard.state.select('wallets').subscribe((wallets) => {
+      console.log('### new wallet connection', wallets)
       const newWallet = getConnectedWallet(wallets)
       if (newWallet) {
         if (newWallet.label !== lastConnectedWallet) {

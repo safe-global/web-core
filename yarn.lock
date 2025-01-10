@@ -6586,14 +6586,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-async-storage/async-storage@npm:1.23.1":
-  version: 1.23.1
-  resolution: "@react-native-async-storage/async-storage@npm:1.23.1"
+"@react-native-async-storage/async-storage@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@react-native-async-storage/async-storage@npm:2.1.0"
   dependencies:
     merge-options: "npm:^3.0.4"
   peerDependencies:
-    react-native: ^0.0.0-0 || >=0.60 <1.0
-  checksum: 10/9d0acc7edb0ba9ee414d6e62c656e5d571c9d9615e7e9f4748865b965178998f2e73786b8050387ada00ddb6faaca97b5cf2e010ceaeebe91571991364a0f515
+    react-native: ^0.0.0-0 || >=0.65 <1.0
+  checksum: 10/ce7995f456a688042a5a4cd31e97aafff24d42d10c9d573e9e763ca7775156a87e4d1685daa9c9ea67c2721cbceeb464a0b75641723a89b47f45806e5f8960c2
   languageName: node
   linkType: hard
 
@@ -6640,6 +6640,15 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: 10/57b51a9423d3ba49029e2d9905db040f7091285c51578eef5273baf3dd2e22bde6d1a17962a8dc5e0ac588dccff0ab36c9774f9da76363fca458ec42d30c4d66
+  languageName: node
+  linkType: hard
+
+"@react-native-community/netinfo@npm:^11.4.1":
+  version: 11.4.1
+  resolution: "@react-native-community/netinfo@npm:11.4.1"
+  peerDependencies:
+    react-native: ">=0.59"
+  checksum: 10/47f0d61072ca04a545784daaa44a5b1927eb788a3521dce5462184855733485c3b58c52d2a9b790b5c784e806fb342c83bc14e348cc7e55263b63d31e1862f9d
   languageName: node
   linkType: hard
 
@@ -6888,24 +6897,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/core@npm:^7.3.0":
-  version: 7.3.0
-  resolution: "@react-navigation/core@npm:7.3.0"
-  dependencies:
-    "@react-navigation/routers": "npm:^7.1.1"
-    escape-string-regexp: "npm:^4.0.0"
-    nanoid: "npm:3.3.7"
-    query-string: "npm:^7.1.3"
-    react-is: "npm:^18.2.0"
-    use-latest-callback: "npm:^0.2.1"
-    use-sync-external-store: "npm:^1.2.2"
-  peerDependencies:
-    react: ">= 18.2.0"
-  checksum: 10/e7aea4e0b61d00759811ed7edbb502e39c3acac362783daf3aef80e344ea7d8152d1f2c964486833d20d4eec4b847dfe3cbe199ec0dd6439e2915b393b21a0c0
-  languageName: node
-  linkType: hard
-
-"@react-navigation/core@npm:^7.3.1":
+"@react-navigation/core@npm:^7.3.0, @react-navigation/core@npm:^7.3.1":
   version: 7.3.1
   resolution: "@react-navigation/core@npm:7.3.1"
   dependencies:
@@ -7019,15 +7011,6 @@ __metadata:
     react: ">= 18.2.0"
     react-native: "*"
   checksum: 10/6a9987da929141c11bc711c2c44998e4ef74160cc6aba902cf268350b8c78a91f999d90a5be09390063d99d1ef38fb6b43008393a0d1854a96ef41a1aa59395f
-  languageName: node
-  linkType: hard
-
-"@react-navigation/routers@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@react-navigation/routers@npm:7.1.1"
-  dependencies:
-    nanoid: "npm:3.3.7"
-  checksum: 10/6c3487b98148b45817c6aed1823cb2d72c5d5beab95db21cbf10a7bdb673fd5c0015a6b781616bcf22ededc2911a92af064529a78fcb0aabdb26ef802e825d9a
   languageName: node
   linkType: hard
 
@@ -7240,7 +7223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reown/walletkit@npm:^1.1.1":
+"@reown/walletkit@npm:^1.1.1, @reown/walletkit@npm:^1.1.2":
   version: 1.1.2
   resolution: "@reown/walletkit@npm:1.1.2"
   dependencies:
@@ -7413,16 +7396,18 @@ __metadata:
     "@expo/config-plugins": "npm:^9.0.10"
     "@expo/vector-icons": "npm:^14.0.2"
     "@gorhom/bottom-sheet": "npm:^5.0.6"
-    "@react-native-async-storage/async-storage": "npm:1.23.1"
+    "@react-native-async-storage/async-storage": "npm:^2.1.0"
     "@react-native-clipboard/clipboard": "npm:^1.15.0"
     "@react-native-community/blur": "npm:^4.4.1"
     "@react-native-community/datetimepicker": "npm:8.2.0"
+    "@react-native-community/netinfo": "npm:^11.4.1"
     "@react-native-community/slider": "npm:4.5.5"
     "@react-native-menu/menu": "npm:^1.1.6"
     "@react-native/babel-preset": "npm:^0.76.2"
     "@react-navigation/material-top-tabs": "npm:^7.1.0"
     "@react-navigation/native": "npm:^7.0.14"
     "@reduxjs/toolkit": "npm:^2.4.0"
+    "@reown/walletkit": "npm:^1.1.2"
     "@rtk-query/codegen-openapi": "npm:^2.0.0"
     "@safe-global/store": "workspace:^"
     "@storybook/addon-essentials": "npm:^8.4.6"
@@ -7445,10 +7430,14 @@ __metadata:
     "@tamagui/toast": "npm:^1.117.1"
     "@testing-library/react-native": "npm:^12.7.2"
     "@types/eslint__js": "npm:^8.42.3"
+    "@types/fast-text-encoding": "npm:^1"
     "@types/jest": "npm:^29.5.12"
     "@types/lodash": "npm:^4.17.13"
     "@types/node": "npm:^22.9.1"
     "@types/react": "npm:~18.3.12"
+    "@types/react-native-get-random-values": "npm:^1"
+    "@walletconnect/jsonrpc-types": "npm:^1.0.4"
+    "@walletconnect/react-native-compat": "npm:^2.17.3"
     babel-loader: "npm:^8.4.1"
     babel-plugin-react-native-web: "npm:^0.19.13"
     blo: "npm:^1.2.0"
@@ -7461,6 +7450,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.1"
     ethers: "npm:^6.13.4"
     expo: "npm:~52.0.14"
+    expo-application: "npm:~6.0.1"
     expo-blur: "npm:~14.0.1"
     expo-constants: "npm:~17.0.2"
     expo-dev-client: "npm:~5.0.5"
@@ -7473,6 +7463,7 @@ __metadata:
     expo-status-bar: "npm:~2.0.0"
     expo-system-ui: "npm:~4.0.6"
     expo-web-browser: "npm:~14.0.1"
+    fast-text-encoding: "npm:^1.0.6"
     globals: "npm:^15.11.0"
     jest: "npm:^29.7.0"
     jest-expo: "npm:~52.0.2"
@@ -7486,6 +7477,7 @@ __metadata:
     react-native-device-info: "npm:^14.0.1"
     react-native-draggable-flatlist: "npm:^4.0.1"
     react-native-gesture-handler: "npm:~2.20.2"
+    react-native-get-random-values: "npm:^1.11.0"
     react-native-keychain: "npm:^9.2.2"
     react-native-mmkv: "npm:^3.1.0"
     react-native-pager-view: "npm:6.5.1"
@@ -7494,6 +7486,7 @@ __metadata:
     react-native-safe-area-context: "npm:4.12.0"
     react-native-screens: "npm:^4.0.0"
     react-native-svg: "npm:15.8.0"
+    react-native-vision-camera: "npm:^4.6.3"
     react-native-web: "npm:^0.19.13"
     react-redux: "npm:^9.1.2"
     redux: "npm:^5.0.1"
@@ -12051,6 +12044,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/fast-text-encoding@npm:^1":
+  version: 1.0.3
+  resolution: "@types/fast-text-encoding@npm:1.0.3"
+  checksum: 10/34ec2bbaf3e3ee36b7b74375293becc735378f77e9cd93b810ad988b42991ee80d30fb942e6ba03adfc1f0cb0e2024a0aeee84475847563ed6782e21c4c0f5f0
+  languageName: node
+  linkType: hard
+
 "@types/fs-extra@npm:^9.0.13":
   version: 9.0.13
   resolution: "@types/fs-extra@npm:9.0.13"
@@ -12346,6 +12346,13 @@ __metadata:
   version: 2.0.4
   resolution: "@types/react-gtm-module@npm:2.0.4"
   checksum: 10/635699a2d85f958ba92126cda851f9a1b46df75d3846bdc89ce2345524f73d889a266110d00492f6c23e9e42e70ec2246449a93c9cc2c6367bd643a7d2f0e88a
+  languageName: node
+  linkType: hard
+
+"@types/react-native-get-random-values@npm:^1":
+  version: 1.8.2
+  resolution: "@types/react-native-get-random-values@npm:1.8.2"
+  checksum: 10/08f3f82efbb5b6d9acd8f7f55a2dac9f228886323ac3018a1bab46cd1b45f24809d194fd2a3fe02a9ec4196606325e5cfffde0b0057ae785208b658fdc83c821
   languageName: node
   linkType: hard
 
@@ -13046,7 +13053,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/jsonrpc-types@npm:1.0.4, @walletconnect/jsonrpc-types@npm:^1.0.2, @walletconnect/jsonrpc-types@npm:^1.0.3":
+"@walletconnect/jsonrpc-types@npm:1.0.4, @walletconnect/jsonrpc-types@npm:^1.0.2, @walletconnect/jsonrpc-types@npm:^1.0.3, @walletconnect/jsonrpc-types@npm:^1.0.4":
   version: 1.0.4
   resolution: "@walletconnect/jsonrpc-types@npm:1.0.4"
   dependencies:
@@ -13133,6 +13140,26 @@ __metadata:
     "@walletconnect/modal-core": "npm:2.7.0"
     "@walletconnect/modal-ui": "npm:2.7.0"
   checksum: 10/a6b78cc06479e0aa98516784ff1f81b24839777f0ec38d2f9cc85b4dc932ad6e823187bbb699f80f898e7d4b09d1232134f348eb9d12697e74e742eeaec189f2
+  languageName: node
+  linkType: hard
+
+"@walletconnect/react-native-compat@npm:^2.17.3":
+  version: 2.17.3
+  resolution: "@walletconnect/react-native-compat@npm:2.17.3"
+  dependencies:
+    events: "npm:3.3.0"
+    fast-text-encoding: "npm:1.0.6"
+    react-native-url-polyfill: "npm:2.0.0"
+  peerDependencies:
+    "@react-native-async-storage/async-storage": "*"
+    "@react-native-community/netinfo": "*"
+    expo-application: "*"
+    react-native: "*"
+    react-native-get-random-values: "*"
+  peerDependenciesMeta:
+    expo-application:
+      optional: true
+  checksum: 10/45d37ca058048200024f440ba5abaee51391d3e9704e0e73c5c0ea283a4cb04419724a1d05ef6941826332abf8bed46c35aa8e5c563f549c7fbadd01a7074509
   languageName: node
   linkType: hard
 
@@ -19053,6 +19080,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-application@npm:~6.0.1":
+  version: 6.0.1
+  resolution: "expo-application@npm:6.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 10/df4557fa9b0aa75a5ab1f05e6ec08a5c78eca27f4055355fa5f4753d7e1a994dc8260fc77e201056debfb8fe43c690745e7317e143eee0a531760664d6934b5a
+  languageName: node
+  linkType: hard
+
 "expo-asset@npm:~11.0.1":
   version: 11.0.1
   resolution: "expo-asset@npm:11.0.1"
@@ -19467,6 +19503,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-base64-decode@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "fast-base64-decode@npm:1.0.0"
+  checksum: 10/4c59eb1775a7f132333f296c5082476fdcc8f58d023c42ed6d378d2e2da4c328c7a71562f271181a725dd17cdaa8f2805346cc330cdbad3b8e4b9751508bd0a3
+  languageName: node
+  linkType: hard
+
 "fast-deep-equal@npm:^2.0.1":
   version: 2.0.1
   resolution: "fast-deep-equal@npm:2.0.1"
@@ -19553,6 +19596,13 @@ __metadata:
   version: 2.1.1
   resolution: "fast-safe-stringify@npm:2.1.1"
   checksum: 10/dc1f063c2c6ac9533aee14d406441f86783a8984b2ca09b19c2fe281f9ff59d315298bc7bc22fd1f83d26fe19ef2f20e2ddb68e96b15040292e555c5ced0c1e4
+  languageName: node
+  linkType: hard
+
+"fast-text-encoding@npm:1.0.6, fast-text-encoding@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "fast-text-encoding@npm:1.0.6"
+  checksum: 10/f7b9e2e7a21e4ae5f4b8d3729850be83fb45052b28c9c38c09b8366463a291d6dc5448359238bdaf87f6a9e907d5895a94319a2c5e0e9f0786859ad6312d1d06
   languageName: node
   linkType: hard
 
@@ -27897,6 +27947,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-get-random-values@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "react-native-get-random-values@npm:1.11.0"
+  dependencies:
+    fast-base64-decode: "npm:^1.0.0"
+  peerDependencies:
+    react-native: ">=0.56"
+  checksum: 10/eb04833ce2b66309d737f1447ab01ad32aca00a8d1cc4de7b4e751c23f4d9f8059a2643bb16e0b6f3e6b074a9e57e769bb2bf2afc50a912c5661d80a6ce4de34
+  languageName: node
+  linkType: hard
+
 "react-native-helmet-async@npm:2.0.4":
   version: 2.0.4
   resolution: "react-native-helmet-async@npm:2.0.4"
@@ -28076,7 +28137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-url-polyfill@npm:^2.0.0":
+"react-native-url-polyfill@npm:2.0.0, react-native-url-polyfill@npm:^2.0.0":
   version: 2.0.0
   resolution: "react-native-url-polyfill@npm:2.0.0"
   dependencies:
@@ -28084,6 +28145,26 @@ __metadata:
   peerDependencies:
     react-native: "*"
   checksum: 10/6a8d605eeb1b0ee9b0f47f1866acc2edfa2131a4a8fb1ea3839ceb507e225b894ed66f49a3bd826fc964f2c8005b3678c9d3b65d07eb0a3b979be830cb618686
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:^4.6.3":
+  version: 4.6.3
+  resolution: "react-native-vision-camera@npm:4.6.3"
+  peerDependencies:
+    "@shopify/react-native-skia": "*"
+    react: "*"
+    react-native: "*"
+    react-native-reanimated: "*"
+    react-native-worklets-core: "*"
+  peerDependenciesMeta:
+    "@shopify/react-native-skia":
+      optional: true
+    react-native-reanimated:
+      optional: true
+    react-native-worklets-core:
+      optional: true
+  checksum: 10/ff56e8126df423ba5d4c9f8d2b15a1b9b48e8669445464b2f301fa47946ce1759e6e4119c443cb8f02a44f8ab5fd6c52a8d534cfc385fc9d647e857ee46f82e6
   languageName: node
   linkType: hard
 
