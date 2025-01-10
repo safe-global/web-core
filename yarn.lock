@@ -7396,15 +7396,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@safe-global/jest-presets@workspace:config/jest-presets":
-  version: 0.0.0-use.local
-  resolution: "@safe-global/jest-presets@workspace:config/jest-presets"
-  dependencies:
-    jest-transform-stub: "npm:2.0.0"
-    ts-jest: "npm:29.2.5"
-  languageName: unknown
-  linkType: soft
-
 "@safe-global/mobile@workspace:apps/mobile":
   version: 0.0.0-use.local
   resolution: "@safe-global/mobile@workspace:apps/mobile"
@@ -7430,6 +7421,7 @@ __metadata:
     "@reduxjs/toolkit": "npm:^2.4.0"
     "@rtk-query/codegen-openapi": "npm:^2.0.0"
     "@safe-global/store": "workspace:^"
+    "@safe-global/test": "workspace:^"
     "@storybook/addon-essentials": "npm:^8.4.6"
     "@storybook/addon-interactions": "npm:^8.4.6"
     "@storybook/addon-onboarding": "npm:^8.4.6"
@@ -7627,6 +7619,16 @@ __metadata:
     "@types/jest": "npm:^29.5.14"
     jest: "npm:^29.7.0"
     ts-node: "npm:^10.9.2"
+  languageName: unknown
+  linkType: soft
+
+"@safe-global/test@workspace:^, @safe-global/test@workspace:config/test":
+  version: 0.0.0-use.local
+  resolution: "@safe-global/test@workspace:config/test"
+  dependencies:
+    jest: "npm:^29.7.0"
+    jest-transform-stub: "npm:2.0.0"
+    ts-jest: "npm:29.2.5"
   languageName: unknown
   linkType: soft
 
