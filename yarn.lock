@@ -7561,6 +7561,7 @@ __metadata:
   dependencies:
     "@types/jest": "npm:^29.5.14"
     jest: "npm:^29.7.0"
+    ts-node: "npm:^10.9.2"
   languageName: unknown
   linkType: soft
 
@@ -7615,6 +7616,7 @@ __metadata:
     "@safe-global/safe-core-sdk-types": "npm:^5.0.1"
     "@safe-global/safe-gateway-typescript-sdk": "npm:3.22.6-beta.0"
     "@safe-global/safe-modules-deployments": "npm:^2.2.1"
+    "@safe-global/store": "workspace:^"
     "@sentry/react": "npm:^7.91.0"
     "@sentry/types": "npm:^7.74.0"
     "@spindl-xyz/attribution-lite": "npm:^1.4.0"
