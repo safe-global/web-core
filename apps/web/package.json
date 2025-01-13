@@ -125,7 +125,7 @@
     "@types/mdx": "^2.0.13",
     "@types/node": "18.11.18",
     "@types/qrcode": "^1.5.5",
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.0.5",
     "@types/react-dom": "^19.0.0",
     "@types/react-gtm-module": "^2.0.3",
     "@types/semver": "^7.3.10",
