@@ -68,7 +68,7 @@ export function swapOrderBuilder(): IBuilder<SwapOrder> {
     executedFee,
     // TODO: still tbd by CoW but this will be expressed in SURPLUS tokens
     // (BUY tokens for SELL orders and SELL tokens for BUY orders)
-    executedFeeToken: sellToken.address,
+    executedFeeToken: sellToken,
     fullAppData: appDataBuilder().build(),
   })
 }
@@ -92,7 +92,7 @@ export function twapOrderBuilder(): IBuilder<TwapOrder> {
     executedFee,
     // TODO: still tbd by CoW but this will be expressed in SURPLUS tokens
     // (BUY tokens for SELL orders and SELL tokens for BUY orders)
-    executedFeeToken: sellToken.address,
+    executedFeeToken: sellToken,
     fullAppData: appDataBuilder().build(),
     numberOfParts: faker.number.int({ min: 1, max: 10 }).toString(),
     /** @description The amount of sellToken to sell in each part */
