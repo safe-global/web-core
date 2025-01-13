@@ -7,11 +7,10 @@ import { HelpIconTooltip } from '@/features/swap/components/HelpIconTooltip'
 export const SurplusFee = ({
   order,
 }: {
-  order: Pick<Order, 'fullAppData' | 'sellToken' | 'buyToken' | 'status' | 'executedFee' | 'kind'>
+  order: Pick<Order, 'fullAppData' | 'sellToken' | 'buyToken' | 'status' | 'executedFee' | 'executedFeeToken' | 'kind'>
 }) => {
   const bps = getOrderFeeBps(order)
-  const { executedFee, sellToken } = order
-  let token = sellToken
+  const { executedFee, executedFeeToken } = order
 
   if (executedFee === null || typeof executedFee === 'undefined' || executedFee === '0') {
     return null
@@ -34,7 +33,7 @@ export const SurplusFee = ({
       }
       key="widget_fee"
     >
-      {formatVisualAmount(BigInt(executedFee), token.decimals)} {token.symbol}
+      {formatVisualAmount(BigInt(executedFee), executedFeeToken.decimals)} {executedFeeToken.symbol}
     </DataRow>
   )
 }
