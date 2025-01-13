@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
-    "api-generate": " npx @rtk-query/codegen-openapi scripts/openapi-config.ts"
+    "generate-api": " npx @rtk-query/codegen-openapi scripts/openapi-config.ts"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
