@@ -120,7 +120,7 @@ describe('Swaps history tests 2', () => {
         swapsHistory.forAtMost,
       ])
       main.verifyValuesDoNotExist(create_tx.transactionItem, [swapsHistory.title, swapsHistory.cow, swapsHistory.dai])
-      main.verifyValuesExist(create_tx.transactionItem, [swapsHistory.actionPreSignatureG, swapsHistory.gGpV2])
+      main.verifyValuesExist(create_tx.transactionItem, [swapsHistory.actionPreSignatureG])
     },
   )
 

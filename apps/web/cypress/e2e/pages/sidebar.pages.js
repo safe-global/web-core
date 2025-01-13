@@ -167,6 +167,7 @@ export function clickOnSidebarImportBtn() {
 }
 
 export function showAllSafes() {
+  cy.wait(500)
   cy.get('body').then(($body) => {
     if ($body.find(expandSafesList).length > 0) {
       cy.get(expandSafesList).click()

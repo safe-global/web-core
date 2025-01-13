@@ -49,6 +49,7 @@ const deleteTxModalBtn = '[data-testid="delete-tx-btn"]'
 const toggleUntrustedBtn = '[data-testid="toggle-untrusted"]'
 const simulateTxBtn = '[data-testid="simulate-btn"]'
 const simulateSuccess = '[data-testid="simulation-success-msg"]'
+const signBtn = '[data-testid="sign-btn"]'
 
 const viewTransactionBtn = 'View transaction'
 const transactionDetailsTitle = 'Transaction details'
@@ -65,7 +66,6 @@ export const executeStr = 'Execute'
 const editBtnStr = 'Edit'
 const executionParamsStr = 'Execution parameters'
 const noLaterStr = 'No, later'
-const signBtnStr = 'Sign'
 const confirmBtnStr = 'Confirm'
 const expandAllBtnStr = 'Expand all'
 const collapseAllBtnStr = 'Collapse all'
@@ -545,7 +545,7 @@ export function clickOnNoLaterOption() {
 }
 
 export function clickOnSignTransactionBtn() {
-  cy.get('button').contains(signBtnStr).click()
+  cy.get(signBtn).click()
 }
 
 export function clickOnConfirmTransactionBtn() {
