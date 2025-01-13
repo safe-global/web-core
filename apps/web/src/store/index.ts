@@ -119,7 +119,13 @@ export const _hydrationReducer: typeof rootReducer = (state, action) => {
   return rootReducer(state, action) as RootState
 }
 
-export const makeStore = (initialState?: Partial<RootState>): EnhancedStore<RootState, Action> => {
+type MakeStoreOptions = {
+  skipBroadcast?: boolean
+}
+export const makeStore = (
+  initialState?: Partial<RootState>,
+  options?: MakeStoreOptions,
+): EnhancedStore<RootState, Action> => {
   setBaseUrl(GATEWAY_URL)
 
   const store = configureStore({
@@ -132,7 +138,9 @@ export const makeStore = (initialState?: Partial<RootState>): EnhancedStore<Root
     preloadedState: initialState,
   })
 
-  listenToBroadcast(store)
+  if (!options?.skipBroadcast) {
+    listenToBroadcast(store)
+  }
 
   return store
 }
