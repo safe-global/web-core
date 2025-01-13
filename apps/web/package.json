@@ -126,7 +126,7 @@
     "@types/node": "18.11.18",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
+    "@types/react-dom": "^19.0.3",
     "@types/react-gtm-module": "^2.0.3",
     "@types/semver": "^7.3.10",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
