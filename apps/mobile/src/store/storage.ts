@@ -23,7 +23,7 @@ export const reduxStorage: Storage = {
 }
 
 export class safeMMKVStorage {
-  static getLocal(key: string) {
+  static getLocal(key: STORAGE_IDS) {
     if (!key) {
       return
     }
