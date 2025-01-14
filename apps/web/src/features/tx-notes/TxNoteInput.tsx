@@ -1,23 +1,21 @@
 import { useCallback, useState } from 'react'
 import { InputAdornment, Stack, TextField, Typography } from '@mui/material'
 import InfoIcon from '@/public/images/notifications/info.svg'
-import { MODALS_EVENTS, trackEvent } from '@/services/analytics'
 
 const MAX_NOTE_LENGTH = 120
 
-export const TxNoteInput = ({ onSubmit }: { onSubmit: (note: string) => void }) => {
+export const TxNoteInput = ({ onChange }: { onChange: (note: string) => void }) => {
   const [note, setNote] = useState('')
 
   const onInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setNote(e.target.value)
   }, [])
 
-  const onChange = useCallback(
+  const onInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      onSubmit(e.target.value.slice(0, MAX_NOTE_LENGTH))
-      trackEvent(MODALS_EVENTS.ADD_TX_NOTE)
+      onChange(e.target.value.slice(0, MAX_NOTE_LENGTH))
     },
-    [onSubmit],
+    [onChange],
   )
 
   return (
@@ -46,7 +44,7 @@ export const TxNoteInput = ({ onSubmit }: { onSubmit: (note: string) => void }) 
           },
         }}
         onInput={onInput}
-        onChange={onChange}
+        onChange={onInputChange}
       />
 
       <Typography variant="caption" color="text.secondary" display="flex" alignItems="center">

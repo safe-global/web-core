@@ -33,7 +33,7 @@ import ConfirmationView from '../confirmation-views'
 import { SignerForm } from './SignerForm'
 import { useSigner } from '@/hooks/wallets/useWallet'
 import { trackTxEvents } from './tracking'
-import { TxNoteForm, encodeTxNote } from '@/features/tx-notes'
+import { TxNoteForm, encodeTxNote, trackAddNote } from '@/features/tx-notes'
 
 export type SubmitCallback = (txId: string, isExecuted?: boolean) => void
 
@@ -112,8 +112,12 @@ export const SignOrExecuteForm = ({
         !!signer?.isSafe,
         customOrigin,
       )
+
+      if (customOrigin !== props.origin) {
+        trackAddNote()
+      }
     },
-    [chainId, isCreation, onSubmit, trigger, signer?.isSafe, customOrigin],
+    [chainId, isCreation, onSubmit, trigger, signer?.isSafe, customOrigin, props.origin],
   )
 
   const onRoleExecutionSubmit = useCallback<typeof onFormSubmit>(
@@ -126,7 +130,7 @@ export const SignOrExecuteForm = ({
     [onFormSubmit],
   )
 
-  const onNoteSubmit = useCallback(
+  const onNoteChange = useCallback(
     (note: string) => {
       setCustomOrigin(encodeTxNote(note, props.origin))
     },
@@ -194,7 +198,7 @@ export const SignOrExecuteForm = ({
 
       {!isCounterfactualSafe && !props.isRejection && <TxChecks />}
 
-      <TxNoteForm isCreation={isCreation ?? false} onSubmit={onNoteSubmit} txDetails={props.txDetails} />
+      <TxNoteForm isCreation={isCreation ?? false} onChange={onNoteChange} txDetails={props.txDetails} />
 
       <SignerForm willExecute={willExecute} />
 
