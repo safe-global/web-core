@@ -102,7 +102,8 @@ describe('Swaps history tests 2', () => {
   })
 
   // Added to prod
-  it(
+  // Unskip after the decoding bug is fixed on staging
+  it.skip(
     'Verify no decoding if tx was created using CowSwap safe-app in the history',
     { defaultCommandTimeout: 30000 },
     () => {

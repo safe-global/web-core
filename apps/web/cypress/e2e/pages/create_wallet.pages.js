@@ -209,7 +209,7 @@ export function clearWalletName() {
 }
 
 export function openNetworkSelector() {
-  cy.get(expandMoreIcon).parents('div').eq(1).click()
+  cy.get('header').find(expandMoreIcon).parent().click()
 }
 export function selectNetwork(network) {
   cy.wait(1000)
