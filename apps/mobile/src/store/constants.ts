@@ -305,7 +305,7 @@ export enum STORAGE_TYPES {
 }
 
 // Map all non string storage ids to their respective types
-export const mapStorageTypeToIds = (id: string) => {
+export const mapStorageTypeToIds = (id: STORAGE): STORAGE_TYPE => {
   switch (id) {
     case STORAGE_IDS.NOTIFICATIONS:
     case STORAGE_IDS.GLOBAL_PUSH_NOTIFICATION_SETTINGS:
