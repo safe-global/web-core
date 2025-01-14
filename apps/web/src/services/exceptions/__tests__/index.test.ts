@@ -1,29 +1,12 @@
-process.env.NEXT_PUBLIC_IS_PRODUCTION = 'true'
-import { Errors, logError, trackError, CodedException } from '..'
-import * as constants from '@/config/constants'
-import * as Sentry from '@/services/sentry'
-
-jest.mock('@/services/sentry', () => ({
-  __esModule: true,
-  ...jest.requireActual('@/services/sentry'),
-}))
-
-jest.spyOn(Sentry, 'sentryCaptureException').mockImplementation(() => '')
+import { Errors, CodedException } from '..'
 
 describe('CodedException', () => {
   beforeAll(() => {
-    jest.mock('@/config/constants', () => ({
-      __esModule: true,
-      IS_PRODUCTION: false,
-    }))
     console.error = jest.fn()
   })
 
-  afterAll(() => {
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
+  beforeEach(() => {
+    jest.resetModules()
     jest.clearAllMocks()
   })
 
@@ -72,7 +55,9 @@ describe('CodedException', () => {
   })
 
   describe('Logging', () => {
-    it('logs to the console', () => {
+    it('logs to the console', async () => {
+      const { logError } = await import('..')
+
       const err = logError(Errors._100, '123')
       expect(err.message).toBe('Code 100: Invalid input in the address field (123)')
       expect(console.error).toHaveBeenCalledWith(err)
@@ -86,26 +71,57 @@ describe('CodedException', () => {
       expect(console.error).toHaveBeenCalledWith(err)
     })
 
-    // I can't figure out a way to override the IS_PRODUCTION constant
-    it.skip('logs only the error message on prod', () => {
-      jest.spyOn(constants, 'IS_PRODUCTION', 'get').mockImplementation(() => true)
+    it('logs only the error message on prod', async () => {
+      process.env.NEXT_PUBLIC_IS_PRODUCTION = 'true'
+      const { logError, Errors } = await import('..')
+
       logError(Errors._100)
       expect(console.error).toHaveBeenCalledWith('Code 100: Invalid input in the address field')
     })
   })
 
   describe('Tracking', () => {
+    beforeAll(() => {
+      console.error = jest.fn()
+    })
+
+    beforeEach(() => {
+      jest.resetModules()
+      jest.clearAllMocks()
+    })
+
     // I can't figure out a way to override the IS_PRODUCTION constant
-    it.skip('tracks using Sentry on production', () => {
-      jest.spyOn(constants, 'IS_PRODUCTION', 'get').mockImplementation(() => true)
+    it('tracks using Sentry on production', async () => {
+      process.env.NEXT_PUBLIC_IS_PRODUCTION = 'true'
+
+      const mockSentryCaptureException = jest.fn()
+
+      jest.doMock('@/services/sentry', () => ({
+        __esModule: true,
+        ...jest.requireActual('@/services/sentry'),
+        sentryCaptureException: mockSentryCaptureException,
+      }))
+
+      const { trackError, Errors } = await import('..')
+
       const err = trackError(Errors._100)
-      expect(Sentry.sentryCaptureException).toHaveBeenCalled()
+      expect(mockSentryCaptureException).toHaveBeenCalled()
       expect(console.error).toHaveBeenCalledWith(err.message)
     })
 
-    it('does not track using Sentry in non-production envs', () => {
+    it('does not track using Sentry in non-production envs', async () => {
+      const mockSentryCaptureException = jest.fn()
+      jest.doMock('@/services/sentry', () => ({
+        __esModule: true,
+        ...jest.requireActual('@/services/sentry'),
+        sentryCaptureException: mockSentryCaptureException,
+      }))
+
+      process.env.NEXT_PUBLIC_IS_PRODUCTION = 'false'
+      const { trackError, Errors } = await import('..')
+
       const err = trackError(Errors._100)
-      expect(Sentry.sentryCaptureException).not.toHaveBeenCalled()
+      expect(mockSentryCaptureException).not.toHaveBeenCalled()
       expect(console.error).toHaveBeenCalledWith(err)
     })
   })
