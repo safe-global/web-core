@@ -1,13 +1,19 @@
 import { Errors, CodedException } from '..'
 
+const defaultPublicIsProduction = process.env.NEXT_PUBLIC_IS_PRODUCTION
 describe('CodedException', () => {
   beforeAll(() => {
     console.error = jest.fn()
   })
 
   beforeEach(() => {
+    process.env.NEXT_PUBLIC_IS_PRODUCTION = 'false'
     jest.resetModules()
     jest.clearAllMocks()
+  })
+
+  afterAll(() => {
+    process.env.NEXT_PUBLIC_IS_PRODUCTION = defaultPublicIsProduction
   })
 
   it('throws an error if code is not found', () => {
@@ -117,7 +123,6 @@ describe('CodedException', () => {
         sentryCaptureException: mockSentryCaptureException,
       }))
 
-      process.env.NEXT_PUBLIC_IS_PRODUCTION = 'false'
       const { trackError, Errors } = await import('..')
 
       const err = trackError(Errors._100)
