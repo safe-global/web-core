@@ -8,5 +8,5 @@ export const TxNoteForm = featureToggled(TxNoteFormComponent, FEATURES.TX_NOTES)
 export * from './encodeTxNote'
 
 export function trackAddNote() {
-  trackEvent(MODALS_EVENTS.ADD_TX_NOTE)
+  trackEvent(MODALS_EVENTS.SUBMIT_TX_NOTE)
 }
