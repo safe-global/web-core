@@ -26,6 +26,7 @@ import SwapOrder from './SwapOrder'
 import StakingTx from './StakingTx'
 import UpdateSafe from './UpdateSafe'
 import { MigrateToL2Information } from './MigrateToL2Information'
+import useTxPreview from './useTxPreview'
 
 type ConfirmationViewProps = {
   txDetails?: TransactionDetails
@@ -38,51 +39,49 @@ type ConfirmationViewProps = {
   children?: ReactNode
 }
 
-// TODO: Maybe unify this with the if block in TxData
 const getConfirmationViewComponent = ({
-  txDetails,
   txInfo,
+  txData,
   txFlow,
 }: NarrowConfirmationViewProps & { txFlow?: ReactElement }) => {
-  if (isChangeThresholdView(txInfo)) return <ChangeThreshold txDetails={txDetails} />
+  if (isChangeThresholdView(txInfo)) return <ChangeThreshold txInfo={txInfo} />
 
   if (isConfirmBatchView(txFlow)) return <BatchTransactions />
 
-  if (isSettingsChangeView(txInfo)) return <SettingsChange txDetails={txDetails} txInfo={txInfo as SettingsChange} />
+  if (isSettingsChangeView(txInfo)) return <SettingsChange txInfo={txInfo as SettingsChange} />
 
-  if (isOnChainConfirmationTxData(txDetails.txData))
-    return <OnChainConfirmation data={txDetails.txData} isConfirmationView />
+  if (isOnChainConfirmationTxData(txData)) return <OnChainConfirmation data={txData} isConfirmationView />
 
-  if (isExecTxData(txDetails.txData)) return <ExecTransaction data={txDetails.txData} isConfirmationView />
+  if (isExecTxData(txData)) return <ExecTransaction data={txData} isConfirmationView />
 
-  if (isSwapOrderTxInfo(txInfo)) return <SwapOrder txDetails={txDetails} txInfo={txInfo} />
+  if (isSwapOrderTxInfo(txInfo)) return <SwapOrder txInfo={txInfo} txData={txData} />
 
-  if (isAnyStakingTxInfo(txInfo)) return <StakingTx txDetails={txDetails} txInfo={txInfo} />
+  if (isAnyStakingTxInfo(txInfo)) return <StakingTx txInfo={txInfo} />
 
-  if (isCustomTxInfo(txInfo) && isSafeUpdateTxData(txDetails.txData)) return <UpdateSafe />
+  if (isCustomTxInfo(txInfo) && isSafeUpdateTxData(txData)) return <UpdateSafe />
 
-  if (isCustomTxInfo(txInfo) && isSafeToL2MigrationTxData(txDetails.txData)) {
-    return <MigrateToL2Information variant="queue" txData={txDetails.txData} />
+  if (isCustomTxInfo(txInfo) && isSafeToL2MigrationTxData(txData)) {
+    return <MigrateToL2Information variant="queue" txData={txData} />
   }
 
   return null
 }
 
-const ConfirmationView = ({ txDetails, ...props }: ConfirmationViewProps) => {
-  const { txId } = txDetails || {}
+const ConfirmationView = ({ safeTx, txDetails, ...props }: ConfirmationViewProps) => {
+  const { txId } = props
   const { txFlow } = useContext(TxModalContext)
+  const [txPreview] = useTxPreview(safeTx?.data, undefined, txId)
+  const details = txDetails ?? txPreview
 
-  const ConfirmationViewComponent = useMemo(
-    () =>
-      txDetails
-        ? getConfirmationViewComponent({
-            txDetails,
-            txInfo: txDetails.txInfo,
-            txFlow,
-          })
-        : undefined,
-    [txDetails, txFlow],
-  )
+  const ConfirmationViewComponent = useMemo(() => {
+    return details
+      ? getConfirmationViewComponent({
+          txInfo: details.txInfo,
+          txData: details.txData,
+          txFlow,
+        })
+      : undefined
+  }, [details, txFlow])
 
   const showTxDetails =
     txId &&
@@ -95,14 +94,17 @@ const ConfirmationView = ({ txDetails, ...props }: ConfirmationViewProps) => {
   return (
     <>
       {ConfirmationViewComponent ||
-        (showTxDetails && txDetails && <TxData txDetails={txDetails} imitation={false} trusted />)}
+        (showTxDetails && details && (
+          <TxData txData={details?.txData} txInfo={details?.txInfo} txDetails={txDetails} imitation={false} trusted />
+        ))}
 
       {props.children}
 
       <DecodedTx
-        tx={props.safeTx}
+        tx={safeTx}
         txDetails={txDetails}
-        decodedData={txDetails?.txData?.dataDecoded}
+        txData={details?.txData}
+        txInfo={details?.txInfo}
         showMultisend={!props.isBatch}
         showMethodCall={props.showMethodCall && !ConfirmationViewComponent && !showTxDetails && !props.isApproval}
       />

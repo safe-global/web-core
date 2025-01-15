@@ -179,6 +179,7 @@ export const SignOrExecuteForm = ({
         {props.children}
 
         <ConfirmationView
+          txId={props.txId}
           isCreation={isCreation}
           txDetails={props.txDetails}
           safeTx={safeTx}
