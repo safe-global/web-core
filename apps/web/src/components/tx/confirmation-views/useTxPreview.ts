@@ -23,7 +23,7 @@ const useTxPreview = (
     if (txId || !safeTxData?.data) return
     const { operation = Operation.CALL, data = '', to, value } = safeTxData || {}
     return getTxPreview(chainId, address, operation, data, to, value)
-  }, [txId, chainId, address, safeTxData?.data])
+  }, [txId, chainId, address, safeTxData])
 }
 
 export default useTxPreview
