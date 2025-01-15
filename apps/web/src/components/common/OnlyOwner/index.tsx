@@ -9,6 +9,7 @@ type CheckWalletProps = {
 }
 
 enum Message {
+  WalletNotConnected = 'Please connect your wallet',
   NotSafeOwner = 'Your connected wallet is not a signer of this Safe Account',
 }
 
@@ -17,7 +18,15 @@ const OnlyOwner = ({ children }: CheckWalletProps): ReactElement => {
   const isSafeOwner = useIsSafeOwner()
   const connectWallet = useConnectWallet()
 
-  const message = useMemo(() => (!isSafeOwner ? Message.NotSafeOwner : undefined), [isSafeOwner])
+  const message = useMemo(() => {
+    if (!wallet) {
+      return Message.WalletNotConnected
+    }
+
+    if (!isSafeOwner) {
+      return Message.NotSafeOwner
+    }
+  }, [isSafeOwner, wallet])
 
   if (!message) return children(true)
 
