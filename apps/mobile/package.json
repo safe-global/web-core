@@ -79,6 +79,7 @@
     "expo-splash-screen": "^0.29.16",
     "expo-status-bar": "~2.0.0",
     "expo-system-ui": "~4.0.6",
+    "expo-task-manager": "^12.0.4",
     "expo-web-browser": "~14.0.1",
     "lodash": "^4.17.21",
     "moti": "^0.29.0",
