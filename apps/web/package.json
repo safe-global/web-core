@@ -50,6 +50,7 @@
     "@mui/material": "^6.3.0",
     "@mui/x-date-pickers": "^7.23.3",
     "@reduxjs/toolkit": "^2.5.0",
+    "@reown/appkit": "^1.6.4",
     "@reown/walletkit": "^1.1.1",
     "@safe-global/api-kit": "^2.4.6",
     "@safe-global/protocol-kit": "^4.1.3",

@@ -8,6 +8,7 @@ import { Core } from '@walletconnect/core'
 import { WalletKit, WalletKitTypes } from '@reown/walletkit'
 
 import { buildApprovedNamespaces, getSdkError } from '@walletconnect/utils'
+import { ethers } from 'ethers'
 
 const core = new Core({
   projectId: '818ba7e312e2223f49a7dbcf88b1d409',
@@ -29,6 +30,61 @@ const initWalletKit = async () => {
     },
   })
 
+  walletKit.on('session_request', async ({ topic, params, id }) => {
+    console.log('Session request:', { topic, params, id })
+
+    // Check if it's a personal_sign request
+    if (params.request.method === 'personal_sign') {
+      try {
+        const [hexMessage] = params.request.params
+
+        // Convert hex message back to string
+        const message = ethers.toUtf8String(hexMessage)
+        console.log('Received message:', message)
+
+        // Parse if it's JSON
+        try {
+          const eventData = JSON.parse(message)
+          console.log('Parsed event data:', eventData)
+        } catch (e) {
+          console.log('Not JSON data:', e)
+        }
+
+        // Respond to the request (you might want to add your own logic here)
+        await walletKit.respondSessionRequest({
+          topic,
+          response: {
+            id: id,
+            jsonrpc: '2.0',
+            result: JSON.stringify({ name: 'Here is some data' }), // In a real implementation, you'd return an actual signature
+          },
+        })
+
+        // const sessions = walletKit.getActiveSessions()
+        // const sessionTopic = Object.keys(sessions)[0]
+
+        try {
+          walletKit.emitSessionEvent({
+            topic,
+            event: {
+              name: 'custom_wallet_event',
+              data: {
+                message: 'Hello from wallet!',
+                timestamp: Date.now(),
+              },
+            },
+            chainId: 'eip155:1',
+          })
+          console.log('Event emitted successfully')
+        } catch (error) {
+          console.error('Error emitting event:', error)
+        }
+      } catch (error) {
+        console.error('Error handling personal_sign:', error)
+      }
+    }
+  })
+
   walletKit.on('session_proposal', async ({ id, params, ...others }: WalletKitTypes.SessionProposal) => {
     console.log('walletKit', { id, params, ...others })
 
@@ -36,11 +92,12 @@ const initWalletKit = async () => {
       // ------- namespaces builder util ------------ //
       const approvedNamespaces = buildApprovedNamespaces({
         proposal: params,
+
         supportedNamespaces: {
           eip155: {
             chains: ['eip155:1', 'eip155:137', 'eip155:11155111'],
-            methods: ['eth_sendTransaction', 'personal_sign'],
-            events: ['accountsChanged', 'chainChanged'],
+            methods: ['eth_sendTransaction', 'eth_accounts', 'eth_requestAccounts', 'personal_sign', 'eth_chainId'],
+            events: ['chainChanged', 'accountsChanged', 'custom_wallet_event'],
             accounts: [
               'eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb',
               'eip155:137:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb',
