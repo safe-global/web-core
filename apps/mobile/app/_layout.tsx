@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 import 'react-native-reanimated'
-import * as Notifications from 'expo-notifications'
+
 import { SafeThemeProvider } from '@/src/theme/provider/safeTheme'
 import { Provider } from 'react-redux'
 import { persistor, store } from '@/src/store'
@@ -16,16 +16,10 @@ import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-rean
 import { OnboardingHeader } from '@/src/features/Onboarding/components/OnboardingHeader'
 import { install } from 'react-native-quick-crypto'
 import { NotificationProvider } from '@/src/context/NotificationContext'
+import { initNotificationService } from '@/src/services/notifications/FCMService'
 
 install()
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-})
+initNotificationService()
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
