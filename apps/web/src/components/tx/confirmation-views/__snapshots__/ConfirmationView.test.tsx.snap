@@ -148,7 +148,7 @@ exports[`ConfirmationView should display a confirmation screen for a SETTINGS_CH
                 />
               </span>
               <div
-                class="MuiBox-root css-i9gxme"
+                class="MuiBox-root css-1rr4qq7"
               />
               addOwnerWithThreshold
             </span>
@@ -612,7 +612,7 @@ exports[`ConfirmationView should display a confirmation with method call when th
                 />
               </span>
               <div
-                class="MuiBox-root css-i9gxme"
+                class="MuiBox-root css-1rr4qq7"
               />
               addOwnerWithThreshold
             </span>

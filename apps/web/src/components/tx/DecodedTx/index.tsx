@@ -1,11 +1,6 @@
 import { type SyntheticEvent, type ReactElement, memo } from 'react'
 import { ErrorBoundary } from '@sentry/react'
-import {
-  isCustomTxInfo,
-  isMultisigDetailedExecutionInfo,
-  isNativeTokenTransfer,
-  isTransferTxInfo,
-} from '@/utils/transaction-guards'
+import { isCustomTxInfo, isNativeTokenTransfer, isTransferTxInfo } from '@/utils/transaction-guards'
 import { Accordion, AccordionDetails, AccordionSummary, Box, Stack } from '@mui/material'
 import { type SafeTransaction } from '@safe-global/safe-core-sdk-types'
 import type { TransactionDetails } from '@safe-global/safe-gateway-typescript-sdk'
@@ -37,6 +32,10 @@ export const Divider = () => (
   />
 )
 
+const onChangeExpand = (_: SyntheticEvent, expanded: boolean) => {
+  trackEvent({ ...MODALS_EVENTS.TX_DETAILS, label: expanded ? 'Open' : 'Close' })
+}
+
 const DecodedTx = ({
   tx,
   txDetails,
@@ -49,14 +48,6 @@ const DecodedTx = ({
   const decodedData = txData?.dataDecoded
   const isMultisend = decodedData?.parameters && !!decodedData?.parameters[0]?.valueDecoded
   const isMethodCallInAdvanced = showAdvancedDetails && (!showMethodCall || (isMultisend && showMultisend))
-
-  const onChangeExpand = (_: SyntheticEvent, expanded: boolean) => {
-    trackEvent({ ...MODALS_EVENTS.TX_DETAILS, label: expanded ? 'Open' : 'Close' })
-  }
-  const isCreation =
-    txDetails &&
-    isMultisigDetailedExecutionInfo(txDetails.detailedExecutionInfo) &&
-    txDetails.detailedExecutionInfo.confirmations.length === 0
 
   let toInfo = tx && {
     value: tx.data.to,
@@ -71,16 +62,11 @@ const DecodedTx = ({
   return (
     <Stack spacing={2}>
       {!isMethodCallInAdvanced && (
-        <Box
-          sx={{
-            border: '1px solid var(--color-border-light)',
-            borderRadius: 1,
-            p: 2,
-          }}
-        >
+        <Box border="1px solid var(--color-border-light)" borderRadius={1} p={2}>
           {decodedDataBlock}
         </Box>
       )}
+
       {isMultisend && showMultisend && <Multisend txData={txData} compact />}
 
       {showAdvancedDetails && (
@@ -93,14 +79,13 @@ const DecodedTx = ({
             >
               Advanced details
               <HelpToolTip />
-              <Box
-                sx={{
-                  flexGrow: 1,
-                }}
-              />
+              <Box flex={1} />
               {isMethodCallInAdvanced && decodedData?.method}
-              {txInfo && isTransferTxInfo(txInfo) && isNativeTokenTransfer(txInfo.transferInfo) && 'native transfer'}
+              {txInfo && isTransferTxInfo(txInfo) && isNativeTokenTransfer(txInfo.transferInfo) && (
+                <span>native transfer</span>
+              )}
             </AccordionSummary>
+
             <AccordionDetails data-testid="decoded-tx-details">
               {showDecodedData && (
                 <>
@@ -109,7 +94,7 @@ const DecodedTx = ({
                 </>
               )}
 
-              {txDetails && !showDecodedData && !isCreation ? (
+              {txDetails && !showDecodedData ? (
                 <Summary
                   txDetails={txDetails}
                   defaultExpanded

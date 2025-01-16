@@ -18,6 +18,8 @@ interface Props {
   toInfo?: AddressEx
 }
 
+const INTERACTED_WITH = 'Interacted with:'
+
 export const DecodedData = ({ txData, toInfo }: Props): ReactElement | null => {
   const safeAddress = useSafeAddress()
   const chainInfo = useCurrentChain()
@@ -28,7 +30,7 @@ export const DecodedData = ({ txData, toInfo }: Props): ReactElement | null => {
 
     return (
       <SendToBlock
-        title="Interact with"
+        title={INTERACTED_WITH}
         address={toInfo.value}
         name={toInfo.name}
         customAvatar={toInfo.logoUri}
@@ -64,7 +66,7 @@ export const DecodedData = ({ txData, toInfo }: Props): ReactElement | null => {
       {method ? (
         <MethodCall contractAddress={toAddress} contractName={name} contractLogo={avatar} method={method} />
       ) : (
-        <SendToBlock address={toAddress} name={name} title="Interacted with:" avatarSize={26} customAvatar={avatar} />
+        <SendToBlock address={toAddress} name={name} title={INTERACTED_WITH} avatarSize={26} customAvatar={avatar} />
       )}
 
       {amountInWei !== '0' && (

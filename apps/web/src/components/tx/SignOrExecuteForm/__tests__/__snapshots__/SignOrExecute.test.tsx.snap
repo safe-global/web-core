@@ -44,7 +44,7 @@ exports[`SignOrExecute should display a confirmation screen 1`] = `
                     />
                   </span>
                   <div
-                    class="MuiBox-root css-i9gxme"
+                    class="MuiBox-root css-1rr4qq7"
                   />
                 </span>
                 <span
@@ -379,7 +379,7 @@ exports[`SignOrExecute should display an error screen 1`] = `
                     />
                   </span>
                   <div
-                    class="MuiBox-root css-i9gxme"
+                    class="MuiBox-root css-1rr4qq7"
                   />
                 </span>
                 <span

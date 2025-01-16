@@ -7,6 +7,8 @@ import {
   DetailedExecutionInfoType,
   SettingsInfoType,
   TransactionInfoType,
+  TransactionTokenType,
+  TransferDirection,
 } from '@safe-global/safe-gateway-typescript-sdk'
 import type { DecodedDataResponse, TransactionDetails } from '@safe-global/safe-gateway-typescript-sdk'
 
@@ -104,50 +106,54 @@ describe('DecodedTx', () => {
   it('should render a native transfer', async () => {
     const result = render(
       <DecodedTx
-        txDetails={txDetails}
-        showMultisend={false}
+        showMultisend
         tx={
           {
             data: {
-              to: '0x3430d04E42a722c5Ae52C5Bffbf1F230C2677600',
-              value: '1000000',
+              to: '0x474e5Ded6b5D078163BFB8F6dBa355C3aA5478C8',
+              value: '40737664983361196',
               data: '0x',
               operation: 0,
               baseGas: '0',
               gasPrice: '0',
               gasToken: '0x0000000000000000000000000000000000000000',
               refundReceiver: '0x0000000000000000000000000000000000000000',
-              nonce: 58,
+              nonce: 36,
               safeTxGas: '0',
             },
           } as SafeTransaction
         }
-        txInfo={txDetails.txInfo}
-        txData={
-          {
-            ...txDetails.txData,
-            dataDecoded: {
-              method: '',
-              parameters: [
-                {
-                  name: 'to',
-                  type: 'address',
-                  value: '0x3430d04E42a722c5Ae52C5Bffbf1F230C2677600',
-                },
-                {
-                  name: 'value',
-                  type: 'uint256',
-                  value: '1000000',
-                },
-              ],
-            },
-          } as TransactionDetails['txData']
-        }
-        showMethodCall
+        txInfo={{
+          type: TransactionInfoType.TRANSFER,
+          sender: {
+            value: '0xA77DE01e157f9f57C7c4A326eeE9C4874D0598b6',
+          },
+          recipient: {
+            value: '0x474e5Ded6b5D078163BFB8F6dBa355C3aA5478C8',
+          },
+          direction: TransferDirection.OUTGOING,
+          transferInfo: {
+            type: TransactionTokenType.NATIVE_COIN,
+            value: '40737664983361196',
+          },
+        }}
+        txData={{
+          hexData: '0x',
+          dataDecoded: undefined,
+          to: {
+            value: '0x474e5Ded6b5D078163BFB8F6dBa355C3aA5478C8',
+          },
+          value: '40737664983361196',
+          operation: 0,
+          trustedDelegateCallTarget: true,
+          addressInfoIndex: undefined,
+        }}
       />,
     )
 
-    expect(result.queryByText('Value:')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(result.queryByText('native transfer')).toBeInTheDocument()
+    })
 
     fireEvent.click(result.getByText('Advanced details'))
 
@@ -189,8 +195,10 @@ describe('DecodedTx', () => {
       />,
     )
 
-    expect(result.queryByText('Value:')).toBeInTheDocument()
-    expect(result.queryByText('Data (hex-encoded)')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(result.queryByText('Interacted with:')).toBeInTheDocument()
+      expect(result.queryByText('Data (hex-encoded)')).toBeInTheDocument()
+    })
 
     fireEvent.click(result.getByText('Advanced details'))
 
@@ -203,7 +211,6 @@ describe('DecodedTx', () => {
   it('should render an ERC20 transfer', async () => {
     const result = render(
       <DecodedTx
-        txDetails={txDetails}
         showMethodCall
         showMultisend={false}
         tx={
@@ -360,7 +367,6 @@ describe('DecodedTx', () => {
   it('should render a function call without parameters', async () => {
     const result = render(
       <DecodedTx
-        txDetails={txDetails}
         tx={
           {
             data: {
