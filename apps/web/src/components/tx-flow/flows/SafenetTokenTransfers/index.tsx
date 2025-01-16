@@ -1,8 +1,8 @@
 import { TokenAmountFields } from '@/components/common/TokenAmountInput'
 import TxLayout from '@/components/tx-flow/common/TxLayout'
+import useTxStepper from '@/components/tx-flow/useTxStepper'
 import AssetsIcon from '@/public/images/sidebar/assets.svg'
 import { ZERO_ADDRESS } from '@safe-global/protocol-kit/dist/src/utils/constants'
-import useTxStepper from '../../useTxStepper'
 import CreateTokenTransfers from './CreateTokenTransfers'
 import ReviewTokenTransfers from './ReviewTokenTransfers'
 
