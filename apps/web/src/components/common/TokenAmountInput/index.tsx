@@ -1,13 +1,13 @@
+import NumberField from '@/components/common/NumberField'
+import { AutocompleteItem } from '@/components/tx-flow/flows/TokenTransfer/CreateTokenTransfer'
 import { safeFormatUnits } from '@/utils/formatters'
+import { validateDecimalLength, validateLimitedAmount } from '@/utils/validation'
 import { Button, Divider, FormControl, InputLabel, MenuItem, TextField } from '@mui/material'
 import { type SafeBalanceResponse } from '@safe-global/safe-gateway-typescript-sdk'
-import css from './styles.module.css'
-import NumberField from '@/components/common/NumberField'
-import { validateDecimalLength, validateLimitedAmount } from '@/utils/validation'
-import { AutocompleteItem } from '@/components/tx-flow/flows/TokenTransfer/CreateTokenTransfer'
-import { useFormContext } from 'react-hook-form'
 import classNames from 'classnames'
 import { useCallback } from 'react'
+import { useFormContext } from 'react-hook-form'
+import css from './styles.module.css'
 
 export enum TokenAmountFields {
   tokenAddress = 'tokenAddress',
@@ -19,22 +19,29 @@ const TokenAmountInput = ({
   selectedToken,
   maxAmount,
   validate,
+  groupName,
 }: {
   balances: SafeBalanceResponse['items']
   selectedToken: SafeBalanceResponse['items'][number] | undefined
   maxAmount?: bigint
   validate?: (value: string) => string | undefined
+  groupName?: string
 }) => {
+  const fields = {
+    tokenAddress: groupName ? `${groupName}.${TokenAmountFields.tokenAddress}` : TokenAmountFields.tokenAddress,
+    amount: groupName ? `${groupName}.${TokenAmountFields.amount}` : TokenAmountFields.amount
+  }
+
   const {
     formState: { errors },
     register,
     resetField,
     watch,
     setValue,
-  } = useFormContext<{ [TokenAmountFields.tokenAddress]: string; [TokenAmountFields.amount]: string }>()
+  } = useFormContext()
 
-  const tokenAddress = watch(TokenAmountFields.tokenAddress)
-  const isAmountError = !!errors[TokenAmountFields.tokenAddress] || !!errors[TokenAmountFields.amount]
+  const tokenAddress = watch(fields.tokenAddress)
+  const isAmountError = !!errors[fields.tokenAddress] || !!errors[fields.amount]
 
   const validateAmount = useCallback(
     (value: string) => {
@@ -47,7 +54,7 @@ const TokenAmountInput = ({
   const onMaxAmountClick = useCallback(() => {
     if (!selectedToken || maxAmount === undefined) return
 
-    setValue(TokenAmountFields.amount, safeFormatUnits(maxAmount.toString(), selectedToken.tokenInfo.decimals), {
+    setValue(fields.amount, safeFormatUnits(maxAmount.toString(), selectedToken.tokenInfo.decimals), {
       shouldValidate: true,
     })
   }, [maxAmount, selectedToken, setValue])
@@ -59,7 +66,7 @@ const TokenAmountInput = ({
       fullWidth
     >
       <InputLabel shrink required className={css.label}>
-        {errors[TokenAmountFields.tokenAddress]?.message || errors[TokenAmountFields.amount]?.message || 'Amount'}
+        {errors[fields.tokenAddress]?.message || errors[fields.amount]?.message || 'Amount' }
       </InputLabel>
       <div className={css.inputs}>
         <NumberField
@@ -76,7 +83,7 @@ const TokenAmountInput = ({
           className={css.amount}
           required
           placeholder="0"
-          {...register(TokenAmountFields.amount, {
+          {...register(fields.amount, {
             required: true,
             validate: validate ?? validateAmount,
           })}
@@ -90,10 +97,10 @@ const TokenAmountInput = ({
             disableUnderline: true,
           }}
           className={css.select}
-          {...register(TokenAmountFields.tokenAddress, {
+          {...register(fields.tokenAddress, {
             required: true,
             onChange: () => {
-              resetField(TokenAmountFields.amount, { defaultValue: '' })
+              resetField(fields.amount, { defaultValue: '' })
             },
           })}
           value={tokenAddress}
