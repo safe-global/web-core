@@ -4,10 +4,10 @@ import TxCard from '@/components/tx-flow/common/TxCard'
 import commonCss from '@/components/tx-flow/common/styles.module.css'
 import AddIcon from '@/public/images/common/add.svg'
 import { formatVisualAmount } from '@/utils/formatters'
-import { Button, CardActions, Divider, Grid, SvgIcon, Typography } from '@mui/material'
+import { Alert, Button, CardActions, Divider, Grid, SvgIcon, Typography } from '@mui/material'
 import { ZERO_ADDRESS } from '@safe-global/protocol-kit/dist/src/utils/constants'
 import { type TokenInfo } from '@safe-global/safe-gateway-typescript-sdk'
-import { useContext, useEffect, type ReactElement } from 'react'
+import { useContext, useEffect, useState, type ReactElement } from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { TokenTransfersFields, type TokenTransfersParams } from '.'
 import RecipientRow from './RecipientRow'
@@ -48,6 +48,7 @@ export const CreateTokenTransfers = ({
   onSubmit: (data: TokenTransfersParams) => void
   txNonce?: number
 }): ReactElement => {
+  const [maxRecipientsAlert, setMaxRecipientsAlert] = useState<boolean>(false)
   const { setNonce, setNonceNeeded } = useContext(SafeTxContext)
 
   useEffect(() => {
@@ -79,6 +80,17 @@ export const CreateTokenTransfers = ({
     remove(index)
   }
   
+  const addRecipient = (): void => {
+    if (recipientFields.length === 1) {
+      setMaxRecipientsAlert(true)
+    }
+    append({
+      recipient: '',
+      tokenAddress: ZERO_ADDRESS,
+      amount: ''
+    })
+  }
+
   useEffect(() => {
     setNonceNeeded(true)
   }, [setNonceNeeded])
@@ -88,13 +100,27 @@ export const CreateTokenTransfers = ({
       <FormProvider {...formMethods}>
         <form onSubmit={handleSubmit(onSubmit)} className={commonCss.form}>
           {recipientFields.map((field, i) => (
-            <RecipientRow
-              key={field.id}
-              index={i}
-              removable={i > 0}
-              groupName={TokenTransfersFields.recipients}
-              remove={removeRecipient}
-            />
+            <>
+              <RecipientRow
+                key={field.id}
+                index={i}
+                removable={i > 0}
+                groupName={TokenTransfersFields.recipients}
+                remove={removeRecipient}
+              />
+              {((i < recipientFields.length - 1) || (maxRecipientsAlert && i === 0)) && (
+                <Divider sx={{ mb: 3 }} />
+              )}
+              {maxRecipientsAlert && i === 0 && (
+                <Alert
+                  severity={'info'}
+                  sx={{ mb: 2 }}
+                  onClose={() => setMaxRecipientsAlert(false)}
+                >
+                  If you want to add more than 5 recipients, use CSV Airdrop.
+                </Alert>
+              )}
+            </>
           ))}
 
           <Grid 
@@ -110,11 +136,7 @@ export const CreateTokenTransfers = ({
               <Button
                 data-testid="add-recipient-btn"
                 variant="text"
-                onClick={() => append({
-                  recipient: '',
-                  tokenAddress: ZERO_ADDRESS,
-                  amount: ''
-                })}
+                onClick={addRecipient}
                 startIcon={<SvgIcon component={AddIcon} inheritViewBox fontSize="small" />}
                 size="large"
               >

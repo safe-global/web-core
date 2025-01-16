@@ -1,7 +1,7 @@
 import AddressBookInput from '@/components/common/AddressBookInput'
 import TokenAmountInput from '@/components/common/TokenAmountInput'
 import DeleteIcon from '@/public/images/common/delete.svg'
-import { Divider, FormControl, Grid, IconButton, SvgIcon, Typography } from '@mui/material'
+import { FormControl, Grid, IconButton, SvgIcon, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { TokenTransfersFields, TokenTransfersParams } from '..'
 import { useTokenAmount, useVisibleTokens } from '../utils'
@@ -35,9 +35,6 @@ export const RecipientRow = ({
 
   return (
     <>
-      {index > 0 && (
-        <Divider sx={{ mb: 3 }} />
-      )}
       <Grid
         container
         xs={12}
