@@ -49,7 +49,6 @@ const TxData = ({
   imitation: boolean
 }): ReactElement => {
   const chainId = useChainId()
-  const toInfo = isCustomTxInfo(txInfo) ? txInfo.to : undefined
 
   if (isOrderTxInfo(txInfo)) {
     return <SwapOrder txData={txData} txInfo={txInfo} />
@@ -86,9 +85,12 @@ const TxData = ({
     return <RejectionTxInfo nonce={txDetails.detailedExecutionInfo?.nonce} isTxExecuted={!!txDetails.executedAt} />
   }
 
-  const method = txData?.dataDecoded?.method as SpendingLimitMethods
-  if (isCustomTxInfo(txInfo) && isSupportedSpendingLimitAddress(txInfo, chainId) && isSpendingLimitMethod(method)) {
-    return <SpendingLimits txData={txData} txInfo={txInfo} type={method} />
+  if (
+    isCustomTxInfo(txInfo) &&
+    isSupportedSpendingLimitAddress(txInfo, chainId) &&
+    isSpendingLimitMethod(txData?.dataDecoded?.method)
+  ) {
+    return <SpendingLimits txData={txData} txInfo={txInfo} type={txData?.dataDecoded?.method as SpendingLimitMethods} />
   }
 
   if (txDetails && isMigrateToL2TxData(txData, chainId)) {
@@ -107,7 +109,7 @@ const TxData = ({
     return <SafeUpdate txData={txData} />
   }
 
-  return <DecodedData txData={txData} toInfo={toInfo} />
+  return <DecodedData txData={txData} toInfo={isCustomTxInfo(txInfo) ? txInfo.to : undefined} />
 }
 
 export default TxData
