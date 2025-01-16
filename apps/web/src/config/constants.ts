@@ -61,7 +61,12 @@ export enum SafeAppsTag {
   TX_BUILDER = 'transaction-builder',
   SAFE_GOVERNANCE_APP = 'safe-governance-app',
   ONRAMP = 'onramp',
-  RECOVERY_SYGNUM = 'recovery-sygnum',
+  RECOVERY_SYGNUM = 'recovery-sygnum'
+}
+
+// Safe Apps names
+export enum SafeAppsName {
+  CSV = 'CSV Airdrop'
 }
 
 // Help Center
