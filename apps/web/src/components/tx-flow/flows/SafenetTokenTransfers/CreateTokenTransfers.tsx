@@ -2,14 +2,17 @@ import TokenIcon from '@/components/common/TokenIcon'
 import { SafeTxContext } from '@/components/tx-flow/SafeTxProvider'
 import TxCard from '@/components/tx-flow/common/TxCard'
 import commonCss from '@/components/tx-flow/common/styles.module.css'
+import { SafeAppsName } from '@/config/constants'
+import { useRemoteSafeApps } from '@/hooks/safe-apps/useRemoteSafeApps'
 import AddIcon from '@/public/images/common/add.svg'
 import { formatVisualAmount } from '@/utils/formatters'
-import { Alert, Button, CardActions, Divider, Grid, SvgIcon, Typography } from '@mui/material'
+import { Alert, Button, CardActions, Divider, Grid, Link, SvgIcon, Typography } from '@mui/material'
 import { ZERO_ADDRESS } from '@safe-global/protocol-kit/dist/src/utils/constants'
 import { type TokenInfo } from '@safe-global/safe-gateway-typescript-sdk'
 import { useContext, useEffect, useState, type ReactElement } from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { TokenTransfersFields, type TokenTransfersParams } from '.'
+import CSVAirdropAppModal from './CSVAirdropAppModal'
 import RecipientRow from './RecipientRow'
 
 export const AutocompleteItem = (item: { tokenInfo: TokenInfo; balance: string }): ReactElement => (
@@ -48,8 +51,12 @@ export const CreateTokenTransfers = ({
   onSubmit: (data: TokenTransfersParams) => void
   txNonce?: number
 }): ReactElement => {
+  const [csvAirdropModalOpen, setCsvAirdropModalOpen] = useState<boolean>(false)
   const [maxRecipientsAlert, setMaxRecipientsAlert] = useState<boolean>(false)
   const { setNonce, setNonceNeeded } = useContext(SafeTxContext)
+  const [safeApps] = useRemoteSafeApps({ name: SafeAppsName.CSV })
+
+  const maxRecipients = 5
 
   useEffect(() => {
     if (txNonce !== undefined) {
@@ -81,6 +88,11 @@ export const CreateTokenTransfers = ({
   }
   
   const addRecipient = (): void => {
+    if (recipientFields.length === maxRecipients) {
+      setCsvAirdropModalOpen(true)
+      return
+    }
+
     if (recipientFields.length === 1) {
       setMaxRecipientsAlert(true)
     }
@@ -94,7 +106,7 @@ export const CreateTokenTransfers = ({
   useEffect(() => {
     setNonceNeeded(true)
   }, [setNonceNeeded])
-  
+
   return (
     <TxCard>
       <FormProvider {...formMethods}>
@@ -117,7 +129,16 @@ export const CreateTokenTransfers = ({
                   sx={{ mb: 2 }}
                   onClose={() => setMaxRecipientsAlert(false)}
                 >
-                  If you want to add more than 5 recipients, use CSV Airdrop.
+                  <Typography variant="body2">
+                    If you want to add more than {maxRecipients} recipients, use{' '}
+                    <Link
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => setCsvAirdropModalOpen(true)}
+                    >
+                      CSV Airdrop
+                    </Link>
+                    {' '}.
+                  </Typography>
                 </Alert>
               )}
             </>
@@ -132,19 +153,17 @@ export const CreateTokenTransfers = ({
               mb: 4
             }}
             >
-            {recipientFields.length < 5 && (
-              <Button
-                data-testid="add-recipient-btn"
-                variant="text"
-                onClick={addRecipient}
-                startIcon={<SvgIcon component={AddIcon} inheritViewBox fontSize="small" />}
-                size="large"
-              >
-                Add new recipient
-              </Button>
-            )}
+            <Button
+              data-testid="add-recipient-btn"
+              variant="text"
+              onClick={addRecipient}
+              startIcon={<SvgIcon component={AddIcon} inheritViewBox fontSize="small" />}
+              size="large"
+            >
+              Add new recipient
+            </Button>
             <Typography variant="body2">
-              {`${recipientFields.length}/5`}
+              {`${recipientFields.length}/${maxRecipients}`}
             </Typography>
           </Grid>
 
@@ -157,6 +176,13 @@ export const CreateTokenTransfers = ({
           </CardActions>
         </form>
       </FormProvider>
+      
+      {csvAirdropModalOpen && (
+        <CSVAirdropAppModal
+          onClose={() => setCsvAirdropModalOpen(false)}
+          appUrl={safeApps?.[0]?.url}
+        />
+      )}
     </TxCard>
   )
 }
