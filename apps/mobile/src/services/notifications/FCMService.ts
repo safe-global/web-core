@@ -2,7 +2,8 @@ import { Platform } from 'react-native'
 import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import Constants from 'expo-constants'
-import { STORAGE_IDS } from '@/src/store/constants'
+import * as TaskManager from 'expo-task-manager'
+import { BACKGROUND_NOTIFICATION_TASK, STORAGE_IDS } from '@/src/store/constants'
 import Logger from '@/src/utils/logger'
 
 function handleRegistrationError(errorMessage: string) {
@@ -49,4 +50,24 @@ export async function registerForPushNotificationsAsync() {
   } else {
     handleRegistrationError('Must use physical device for push notifications')
   }
+}
+
+export async function initNotificationService(): Promise<void> {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  })
+  TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, async ({ data, error, executionInfo }) => {
+    console.log('✅ Received a notification in the background!', {
+      data,
+      error,
+      executionInfo,
+    })
+    // TODO: Implement Notifee to handle notifications in the background
+    return Promise.resolve()
+  })
+  Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK)
 }

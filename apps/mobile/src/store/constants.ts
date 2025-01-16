@@ -322,3 +322,5 @@ export const mapStorageTypeToIds = (id: STORAGE_IDS): STORAGE_TYPES => {
       return STORAGE_TYPES.STRING
   }
 }
+
+export const BACKGROUND_NOTIFICATION_TASK = 'BACKGROUND-NOTIFICATION-TASK'
