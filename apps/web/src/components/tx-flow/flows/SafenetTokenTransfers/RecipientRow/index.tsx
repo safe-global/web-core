@@ -10,7 +10,7 @@ export const RecipientRow = ({
   index,
   groupName,
   removable = true,
-  remove
+  remove,
 }: {
   index: number
   removable?: boolean
@@ -18,11 +18,11 @@ export const RecipientRow = ({
   remove?: (index: number) => void
 }) => {
   const balancesItems = useVisibleTokens()
-  
+
   const fieldName = `${groupName}.${index}`
   const {
     watch,
-    formState: { errors }
+    formState: { errors },
   } = useFormContext<TokenTransfersParams>()
 
   const recipient = watch(TokenTransfersFields.recipients)
@@ -30,7 +30,7 @@ export const RecipientRow = ({
   // TODO: Review tokens available for selection and max amount
   const selectedToken = balancesItems.find((item) => item.tokenInfo.symbol === 'USDC')
   const { maxAmount } = useTokenAmount(selectedToken)
-  
+
   const isAddressValid = !!recipient && !errors[TokenTransfersFields.recipients]?.[index]?.recipient
 
   return (
@@ -41,27 +41,31 @@ export const RecipientRow = ({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}
       >
         <Typography
           variant="body1"
           sx={{
             mb: 2,
-            fontWeight: 'bold' 
+            fontWeight: 'bold',
           }}
         >
           {`Recipient ${index > 0 ? index + 1 : ''}`}
         </Typography>
         {removable && (
           <>
-            <IconButton data-testid="remove-recipient-btn" onClick={() => remove?.(index)} aria-label="Remove recipient">
+            <IconButton
+              data-testid="remove-recipient-btn"
+              onClick={() => remove?.(index)}
+              aria-label="Remove recipient"
+            >
               <SvgIcon component={DeleteIcon} inheritViewBox />
             </IconButton>
           </>
         )}
       </Grid>
-      
+
       <FormControl fullWidth sx={{ mt: 1 }}>
         <AddressBookInput name={`${fieldName}.recipient`} canAdd={isAddressValid} />
       </FormControl>

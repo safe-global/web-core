@@ -17,8 +17,8 @@ const SendAmountBlock = ({
   amountInWei: number | string
   tokenInfo: Omit<TokenInfo, 'name' | 'logoUri'> & { logoUri?: string }
   children?: ReactNode
-  title?: string,
-  safenet?: boolean,
+  title?: string
+  safenet?: boolean
   tokenSize?: number
 }) => {
   return (

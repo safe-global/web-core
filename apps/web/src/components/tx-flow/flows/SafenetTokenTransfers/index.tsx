@@ -7,7 +7,7 @@ import CreateTokenTransfers from './CreateTokenTransfers'
 import ReviewTokenTransfers from './ReviewTokenTransfers'
 
 enum Fields {
-  recipient = 'recipient'
+  recipient = 'recipient',
 }
 
 export const TokenTransferFields = { ...Fields, ...TokenAmountFields }
@@ -19,7 +19,7 @@ export type TokenTransferParams = {
 }
 
 enum TransfersFields {
-  recipients = 'recipients'
+  recipients = 'recipients',
 }
 
 export const TokenTransfersFields = { ...TransfersFields }
@@ -33,18 +33,19 @@ type TokenTransferFlowProps = Partial<TokenTransfersParams> & {
 }
 
 const defaultParams: TokenTransfersParams = {
-  recipients: [{
-    recipient: '',
-    tokenAddress: ZERO_ADDRESS,
-    amount: ''
-  }]
+  recipients: [
+    {
+      recipient: '',
+      tokenAddress: ZERO_ADDRESS,
+      amount: '',
+    },
+  ],
 }
 
 const SafenetTokenTransfersFlow = ({ txNonce, ...params }: TokenTransferFlowProps) => {
-
   const { data, step, nextStep, prevStep } = useTxStepper<TokenTransfersParams>({
     ...defaultParams,
-    ...params
+    ...params,
   })
 
   const steps = [
@@ -54,7 +55,7 @@ const SafenetTokenTransfersFlow = ({ txNonce, ...params }: TokenTransferFlowProp
       txNonce={txNonce}
       onSubmit={(formData) => nextStep({ ...data, ...formData })}
     />,
-    <ReviewTokenTransfers key={1} params={data} txNonce={txNonce} onSubmit={() => null} />
+    <ReviewTokenTransfers key={1} params={data} txNonce={txNonce} onSubmit={() => null} />,
   ]
 
   return (

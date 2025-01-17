@@ -29,22 +29,24 @@ const ReviewTokenTransfers = ({
       setNonce(txNonce)
     }
 
-    const calls = params.recipients.map(recipient => {
-      const token = balances.items.find((item) => item.tokenInfo.address === recipient.tokenAddress)
-      
-      if (!token) return
+    const calls = params.recipients
+      .map((recipient) => {
+        const token = balances.items.find((item) => item.tokenInfo.address === recipient.tokenAddress)
 
-      return createTokenTransferParams(
-        recipient.recipient,
-        recipient.amount,
-        token?.tokenInfo.decimals,
-        recipient.tokenAddress,
-      )
-    }).filter((transfer): transfer is MetaTransactionData => !!transfer)
+        if (!token) return
+
+        return createTokenTransferParams(
+          recipient.recipient,
+          recipient.amount,
+          token?.tokenInfo.decimals,
+          recipient.tokenAddress,
+        )
+      })
+      .filter((transfer): transfer is MetaTransactionData => !!transfer)
 
     createMultiSendCallOnlyTx(calls).then(setSafeTx).catch(setSafeTxError)
   }, [params, txNonce, setNonce, setSafeTx, setSafeTxError])
-  
+
   return (
     <SignOrExecuteForm onSubmit={onSubmit}>
       {params.recipients.map((recipient, index) => {
@@ -54,16 +56,18 @@ const ReviewTokenTransfers = ({
         return (
           <>
             {index > 0 && <Divider sx={{ mb: 3 }} />}
-            
+
             <Grid
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 16
+                gap: 16,
               }}
               key={`${recipient.recipient}_${token?.tokenInfo.address}`}
             >
-              {token && <SendAmountBlock amountInWei={amountInWei} tokenInfo={token.tokenInfo} safenet tokenSize={32} />}
+              {token && (
+                <SendAmountBlock amountInWei={amountInWei} tokenInfo={token.tokenInfo} safenet tokenSize={32} />
+              )}
               <SendToBlock address={recipient.recipient} name={`Recipient ${index + 1}`} avatarSize={32} />
             </Grid>
           </>

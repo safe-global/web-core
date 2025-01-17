@@ -72,21 +72,14 @@ export const CreateTokenTransfers = ({
     delayError: 500,
   })
 
-  const {
-    handleSubmit,
-    control
-  } = formMethods
+  const { handleSubmit, control } = formMethods
 
-  const {
-    fields: recipientFields,
-    append,
-    remove,
-  } = useFieldArray({ control, name: TokenTransfersFields.recipients })
+  const { fields: recipientFields, append, remove } = useFieldArray({ control, name: TokenTransfersFields.recipients })
 
   const removeRecipient = (index: number): void => {
     remove(index)
   }
-  
+
   const addRecipient = (): void => {
     if (recipientFields.length === maxRecipients) {
       setCsvAirdropModalOpen(true)
@@ -99,7 +92,7 @@ export const CreateTokenTransfers = ({
     append({
       recipient: '',
       tokenAddress: ZERO_ADDRESS,
-      amount: ''
+      amount: '',
     })
   }
 
@@ -120,39 +113,30 @@ export const CreateTokenTransfers = ({
                 groupName={TokenTransfersFields.recipients}
                 remove={removeRecipient}
               />
-              {((i < recipientFields.length - 1) || (maxRecipientsAlert && i === 0)) && (
-                <Divider sx={{ mb: 3 }} />
-              )}
+              {(i < recipientFields.length - 1 || (maxRecipientsAlert && i === 0)) && <Divider sx={{ mb: 3 }} />}
               {maxRecipientsAlert && i === 0 && (
-                <Alert
-                  severity={'info'}
-                  sx={{ mb: 2 }}
-                  onClose={() => setMaxRecipientsAlert(false)}
-                >
+                <Alert severity={'info'} sx={{ mb: 2 }} onClose={() => setMaxRecipientsAlert(false)}>
                   <Typography variant="body2">
                     If you want to add more than {maxRecipients} recipients, use{' '}
-                    <Link
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => setCsvAirdropModalOpen(true)}
-                    >
+                    <Link sx={{ cursor: 'pointer' }} onClick={() => setCsvAirdropModalOpen(true)}>
                       CSV Airdrop
-                    </Link>
-                    {' '}.
+                    </Link>{' '}
+                    .
                   </Typography>
                 </Alert>
               )}
             </>
           ))}
 
-          <Grid 
+          <Grid
             xs={12}
             sx={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              mb: 4
+              mb: 4,
             }}
-            >
+          >
             <Button
               data-testid="add-recipient-btn"
               variant="text"
@@ -162,9 +146,7 @@ export const CreateTokenTransfers = ({
             >
               Add new recipient
             </Button>
-            <Typography variant="body2">
-              {`${recipientFields.length}/${maxRecipients}`}
-            </Typography>
+            <Typography variant="body2">{`${recipientFields.length}/${maxRecipients}`}</Typography>
           </Grid>
 
           <Divider className={commonCss.nestedDivider} />
@@ -176,12 +158,9 @@ export const CreateTokenTransfers = ({
           </CardActions>
         </form>
       </FormProvider>
-      
+
       {csvAirdropModalOpen && (
-        <CSVAirdropAppModal
-          onClose={() => setCsvAirdropModalOpen(false)}
-          appUrl={safeApps?.[0]?.url}
-        />
+        <CSVAirdropAppModal onClose={() => setCsvAirdropModalOpen(false)} appUrl={safeApps?.[0]?.url} />
       )}
     </TxCard>
   )

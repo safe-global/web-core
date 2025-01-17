@@ -29,7 +29,7 @@ const TokenAmountInput = ({
 }) => {
   const fields = {
     tokenAddress: groupName ? `${groupName}.${TokenAmountFields.tokenAddress}` : TokenAmountFields.tokenAddress,
-    amount: groupName ? `${groupName}.${TokenAmountFields.amount}` : TokenAmountFields.amount
+    amount: groupName ? `${groupName}.${TokenAmountFields.amount}` : TokenAmountFields.amount,
   }
 
   const {
@@ -66,7 +66,7 @@ const TokenAmountInput = ({
       fullWidth
     >
       <InputLabel shrink required className={css.label}>
-        {errors[fields.tokenAddress]?.message || errors[fields.amount]?.message || 'Amount' }
+        {errors[fields.tokenAddress]?.message || errors[fields.amount]?.message || 'Amount'}
       </InputLabel>
       <div className={css.inputs}>
         <NumberField
