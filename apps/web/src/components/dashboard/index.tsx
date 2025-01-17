@@ -1,20 +1,22 @@
-import FirstSteps from '@/components/dashboard/FirstSteps'
-import useSafeInfo from '@/hooks/useSafeInfo'
-import { type ReactElement } from 'react'
-import dynamic from 'next/dynamic'
-import { Grid } from '@mui/material'
-import PendingTxsList from '@/components/dashboard/PendingTxs/PendingTxsList'
 import AssetsWidget from '@/components/dashboard/Assets'
-import Overview from '@/components/dashboard/Overview/Overview'
-import SafeAppsDashboardSection from '@/components/dashboard/SafeAppsDashboardSection/SafeAppsDashboardSection'
+import FirstSteps from '@/components/dashboard/FirstSteps'
 import GovernanceSection from '@/components/dashboard/GovernanceSection/GovernanceSection'
-import { useIsRecoverySupported } from '@/features/recovery/hooks/useIsRecoverySupported'
+import Overview from '@/components/dashboard/Overview/Overview'
+import PendingTxsList from '@/components/dashboard/PendingTxs/PendingTxsList'
+import SafeAppsDashboardSection from '@/components/dashboard/SafeAppsDashboardSection/SafeAppsDashboardSection'
 import StakingBanner from '@/components/dashboard/StakingBanner'
-import { useHasFeature } from '@/hooks/useChains'
-import { FEATURES } from '@/utils/chains'
-import css from './styles.module.css'
 import { InconsistentSignerSetupWarning } from '@/features/multichain/components/SignerSetupWarning/InconsistentSignerSetupWarning'
+import { useIsRecoverySupported } from '@/features/recovery/hooks/useIsRecoverySupported'
+import { SafenetHeader } from '@/features/safenet/SafenetHeader'
 import useIsStakingBannerEnabled from '@/features/stake/hooks/useIsStakingBannerEnabled'
+import { useHasFeature } from '@/hooks/useChains'
+import useIsSafenetEnabled from '@/hooks/useIsSafenetEnabled'
+import useSafeInfo from '@/hooks/useSafeInfo'
+import { FEATURES } from '@/utils/chains'
+import { Grid } from '@mui/material'
+import dynamic from 'next/dynamic'
+import { type ReactElement } from 'react'
+import css from './styles.module.css'
 
 const RecoveryHeader = dynamic(() => import('@/features/recovery/components/RecoveryHeader'))
 
@@ -23,6 +25,7 @@ const Dashboard = (): ReactElement => {
   const showSafeApps = useHasFeature(FEATURES.SAFE_APPS)
   const isStakingBannerEnabled = useIsStakingBannerEnabled()
   const supportsRecovery = useIsRecoverySupported()
+  const isSafenetEnabled = useIsSafenetEnabled()
 
   return (
     <>
@@ -32,6 +35,12 @@ const Dashboard = (): ReactElement => {
         <Grid item xs={12}>
           <InconsistentSignerSetupWarning />
         </Grid>
+
+        {!isSafenetEnabled && (
+          <Grid item xs={12}>
+            <SafenetHeader />
+          </Grid>
+        )}
 
         <Grid item xs={12}>
           <Overview />
