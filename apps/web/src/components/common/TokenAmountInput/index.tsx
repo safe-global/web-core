@@ -69,7 +69,7 @@ const TokenAmountInput = ({
       fullWidth
     >
       <InputLabel shrink required className={css.label}>
-        {errors[fields.tokenAddress]?.message || errors[fields.amount]?.message || 'Amount'}
+        {errors[fields.tokenAddress]?.message?.toString() || errors[fields.amount]?.message?.toString() || 'Amount'}
       </InputLabel>
       <div className={css.inputs}>
         <NumberField
