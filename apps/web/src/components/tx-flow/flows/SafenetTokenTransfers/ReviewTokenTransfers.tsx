@@ -8,7 +8,7 @@ import { createTokenTransferParams } from '@/services/tx/tokenTransferParams'
 import { createMultiSendCallOnlyTx } from '@/services/tx/tx-sender'
 import { safeParseUnits } from '@/utils/formatters'
 import { Divider, Grid } from '@mui/material'
-import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
+import type { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
 import { useContext, useEffect } from 'react'
 import type { TokenTransfersParams } from '.'
 
@@ -45,7 +45,7 @@ const ReviewTokenTransfers = ({
       .filter((transfer): transfer is MetaTransactionData => !!transfer)
 
     createMultiSendCallOnlyTx(calls).then(setSafeTx).catch(setSafeTxError)
-  }, [params, txNonce, setNonce, setSafeTx, setSafeTxError])
+  }, [params, txNonce, setNonce, balances, setSafeTx, setSafeTxError])
 
   return (
     <SignOrExecuteForm onSubmit={onSubmit}>

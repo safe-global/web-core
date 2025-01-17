@@ -1,4 +1,4 @@
-import { SafeAppsName, SafeAppsTag } from '@/config/constants'
+import type { SafeAppsName, SafeAppsTag } from '@/config/constants'
 import useChainId from '@/hooks/useChainId'
 import { Errors, logError } from '@/services/exceptions'
 import type { SafeAppsResponse } from '@safe-global/safe-gateway-typescript-sdk'

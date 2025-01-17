@@ -5,7 +5,7 @@ import { validateDecimalLength, validateLimitedAmount } from '@/utils/validation
 import { Button, Divider, FormControl, InputLabel, MenuItem, TextField } from '@mui/material'
 import { type SafeBalanceResponse } from '@safe-global/safe-gateway-typescript-sdk'
 import classNames from 'classnames'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useFormContext } from 'react-hook-form'
 import css from './styles.module.css'
 
@@ -27,10 +27,13 @@ const TokenAmountInput = ({
   validate?: (value: string) => string | undefined
   groupName?: string
 }) => {
-  const fields = {
-    tokenAddress: groupName ? `${groupName}.${TokenAmountFields.tokenAddress}` : TokenAmountFields.tokenAddress,
-    amount: groupName ? `${groupName}.${TokenAmountFields.amount}` : TokenAmountFields.amount,
-  }
+  const fields = useMemo(
+    () => ({
+      tokenAddress: groupName ? `${groupName}.${TokenAmountFields.tokenAddress}` : TokenAmountFields.tokenAddress,
+      amount: groupName ? `${groupName}.${TokenAmountFields.amount}` : TokenAmountFields.amount,
+    }),
+    [groupName],
+  )
 
   const {
     formState: { errors },
@@ -57,7 +60,7 @@ const TokenAmountInput = ({
     setValue(fields.amount, safeFormatUnits(maxAmount.toString(), selectedToken.tokenInfo.decimals), {
       shouldValidate: true,
     })
-  }, [maxAmount, selectedToken, setValue])
+  }, [maxAmount, selectedToken, setValue, fields])
 
   return (
     <FormControl

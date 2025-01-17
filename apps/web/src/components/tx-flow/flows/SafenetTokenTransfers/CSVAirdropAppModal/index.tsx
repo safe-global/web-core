@@ -27,8 +27,8 @@ const CSVAirdropAppModal = ({ onClose, appUrl }: { onClose: () => void; appUrl?:
             Use CSV Airdrop
           </Typography>
           <Typography variant="body2">
-            You've reached the limit of 5 recipients. To add more use CSV Airdrop, where you can simply upload you CSV
-            file and send to endless number of recipients.
+            You&apos;ve reached the limit of 5 recipients. To add more use CSV Airdrop, where you can simply upload you
+            CSV file and send to endless number of recipients.
           </Typography>
         </Grid>
       </DialogContent>

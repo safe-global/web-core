@@ -23,7 +23,7 @@ const NewTxFlow = () => {
       return
     }
     setTxFlow(<TokenTransferFlow />)
-  }, [setTxFlow])
+  }, [setTxFlow, isSafenetEnabled])
 
   const progress = 10
 

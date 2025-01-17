@@ -3,7 +3,8 @@ import TokenAmountInput from '@/components/common/TokenAmountInput'
 import DeleteIcon from '@/public/images/common/delete.svg'
 import { FormControl, Grid, IconButton, SvgIcon, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
-import { TokenTransfersFields, TokenTransfersParams } from '..'
+import type { TokenTransfersParams } from '..'
+import { TokenTransfersFields } from '..'
 import { useTokenAmount, useVisibleTokens } from '../utils'
 
 export const RecipientRow = ({

@@ -115,7 +115,7 @@ export const CreateTokenTransfers = ({
               />
               {(i < recipientFields.length - 1 || (maxRecipientsAlert && i === 0)) && <Divider sx={{ mb: 3 }} />}
               {maxRecipientsAlert && i === 0 && (
-                <Alert severity={'info'} sx={{ mb: 2 }} onClose={() => setMaxRecipientsAlert(false)}>
+                <Alert severity="info" sx={{ mb: 2 }} onClose={() => setMaxRecipientsAlert(false)}>
                   <Typography variant="body2">
                     If you want to add more than {maxRecipients} recipients, use{' '}
                     <Link sx={{ cursor: 'pointer' }} onClick={() => setCsvAirdropModalOpen(true)}>
