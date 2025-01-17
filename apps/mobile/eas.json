@@ -42,6 +42,16 @@
       "extends": "base",
       "environment": "production",
       "autoIncrement": true,
+      "ios": {
+        "env": {
+          "GOOGLE_SERVICES_FILE": "./GoogleService-Info.plist"
+        }
+      },
+      "android": {
+        "env": {
+          "GOOGLE_SERVICES_FILE": "./google-services.json"
+        }
+      },
       "env": {
         "APP_VARIANT": "production"
       }
