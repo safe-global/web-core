@@ -11,20 +11,27 @@ export const SafenetHeader = () => {
   return (
     <Grid className={palette.mode === 'dark' ? css.darkBanner : css.lightBanner}>
       <Box className={css.title}>
-        <Typography variant="h1" sx={{
-          fontSize: 40,
-          color: darkPalette.text.primary
-        }}>
+        <Typography
+          variant="h1"
+          sx={{
+            fontSize: 40,
+            color: darkPalette.text.primary,
+          }}
+        >
           UPDAGRADE TO
         </Typography>
         <SafenetLogo />
       </Box>
       <Typography color={darkPalette.text.primary}>
-        Supercharge your finances by enjoying a unified experience across networks while keeping the main treasury secured.
+        Supercharge your finances by enjoying a unified experience across networks while keeping the main treasury
+        secured.
       </Typography>
-      <Button className={css.bannerButton} sx={{
-        color: lightPalette.text.primary
-      }}>
+      <Button
+        className={css.bannerButton}
+        sx={{
+          color: lightPalette.text.primary,
+        }}
+      >
         Learn more
       </Button>
     </Grid>
