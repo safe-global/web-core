@@ -1,3 +1,4 @@
+import type { TransactionPreview } from '@safe-global/safe-gateway-typescript-sdk'
 import { type TransactionDetails } from '@safe-global/safe-gateway-typescript-sdk'
 import DecodedTx from '../DecodedTx'
 import type { SafeTransaction } from '@safe-global/safe-core-sdk-types'
@@ -26,10 +27,10 @@ import SwapOrder from './SwapOrder'
 import StakingTx from './StakingTx'
 import UpdateSafe from './UpdateSafe'
 import { MigrateToL2Information } from './MigrateToL2Information'
-import useTxPreview from './useTxPreview'
 
 type ConfirmationViewProps = {
   txDetails?: TransactionDetails
+  txPreview?: TransactionPreview
   safeTx?: SafeTransaction
   txId?: string
   isBatch?: boolean
@@ -67,10 +68,9 @@ const getConfirmationViewComponent = ({
   return null
 }
 
-const ConfirmationView = ({ safeTx, txDetails, ...props }: ConfirmationViewProps) => {
+const ConfirmationView = ({ safeTx, txPreview, txDetails, ...props }: ConfirmationViewProps) => {
   const { txId } = props
   const { txFlow } = useContext(TxModalContext)
-  const [txPreview] = useTxPreview(safeTx?.data, undefined, txId)
   const details = txDetails ?? txPreview
 
   const ConfirmationViewComponent = useMemo(() => {
