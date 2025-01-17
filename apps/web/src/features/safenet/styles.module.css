@@ -1,0 +1,40 @@
+.lightBanner,
+.darkBanner {
+  align-items: flex-start;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.lightBanner {
+  background: radial-gradient(94.6% 266.69% at 95.54% 76.33%, #003F54 0%, #000000 100%);
+}
+
+.darkBanner {
+  background-image:
+    radial-gradient(94.6% 266.69% at 95.54% 76.33%, #003F54 0%, #000000 100%),
+    radial-gradient(119.01% 132.63% at 119.01% -14.15%, #FF5F00 0%, #FFD200 50%, #12FF80 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.title {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-2);
+}
+
+.bannerButton {
+  background: radial-gradient(119.01% 132.63% at 119.01% -14.15%, #FF5F00 0%, #FFD200 50%, #12FF80 100%);
+}
+
+@media (max-width: 700px) {
+  .title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
